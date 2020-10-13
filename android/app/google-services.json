@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "934792592663",
+    "firebase_url": "https://fitnet-79c45.firebaseio.com",
+    "project_id": "fitnet-79c45",
+    "storage_bucket": "fitnet-79c45.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934792592663:android:bdeac5a0a54c491dfa0b52",
+        "android_client_info": {
+          "package_name": "com.fitnet.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "934792592663-4rq9g34f214aac1u7s3o54kh7tk2b2ov.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fitnet.app",
+            "certificate_hash": "2b020d0102f397f1ffc2d36030e11563e3e8de1b"
+          }
+        },
+        {
+          "client_id": "934792592663-tvarkv0ih4ug7n6dgqtd8vs6r3sh3581.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIpDunrylwsEisnAMG84EMKsc6vq0AVbo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "934792592663-tvarkv0ih4ug7n6dgqtd8vs6r3sh3581.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
