@@ -2,7 +2,7 @@ import 'package:fitnet/services/auth-service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpPage extends StatelessWidget {
   final AuthService authService = AuthService();
 
   @override

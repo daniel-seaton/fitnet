@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fitnet/app/tempScreen.dart';
-import 'package:fitnet/models/AppUser.dart';
-import 'package:fitnet/services/auth-service.dart';
+import 'models/AppUser.dart';
+import 'services/auth-service.dart';
+import 'src/app/tempScreen.dart';
+import 'src/authScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'app/authScreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
