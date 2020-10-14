@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnet/models/AppUser.dart';
 import 'package:fitnet/services/user-service.dart';
@@ -13,7 +15,7 @@ class AuthService {
     try {
       UserCredential userCredentials = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
-      user = await userService.getUserForCredentials(userCredentials);
+      user = await userService.getUser(userCredentials.user.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -31,8 +33,8 @@ class AuthService {
     try {
       UserCredential userCredentials = await firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
-      user = await userService.createNew(
-          userCredentials, firstName, lastName, city, state, weight, height);
+      user = await userService.createNew(userCredentials.user.uid, firstName,
+          lastName, city, state, weight, height);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -47,5 +49,14 @@ class AuthService {
 
   Future<void> signOut() async {
     await firebaseAuth.signOut();
+  }
+
+  Stream<AppUser> getLoggedInUser() {
+    return firebaseAuth.authStateChanges().asyncMap((User user) {
+      if (user != null) {
+        return userService.getUser(user.uid);
+      }
+      return null;
+    });
   }
 }

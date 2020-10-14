@@ -1,9 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnet/models/WeightLog.dart';
 
 class AppUser {
-  UserCredential credentials;
+  String uid;
   String firstName;
   String lastName;
   String city;
@@ -11,7 +9,7 @@ class AppUser {
   List<WeightLog> weightLogs = [];
   int height;
 
-  AppUser(this.credentials, this.firstName, this.lastName,
+  AppUser(this.uid, this.firstName, this.lastName,
       [this.city, this.state, int initialWeight, this.height]) {
     if (initialWeight != null) {
       weightLogs.add(WeightLog(initialWeight));
@@ -19,21 +17,21 @@ class AppUser {
   }
 
   AppUser.fromMap(Map<String, dynamic> userMap) {
-    credentials = userMap['credentials'];
+    uid = userMap['uid'];
     firstName = userMap['firstName'];
     lastName = userMap['lastName'];
 
-    if (userMap['city']) city = userMap['city'];
-    if (userMap['state']) state = userMap['state'];
-    if (userMap['weightLogs']) weightLogs = userMap['weightLogs'];
-    if (userMap['height']) height = userMap['height'];
+    if (userMap['city'] != null) city = userMap['city'];
+    if (userMap['state'] != null) state = userMap['state'];
+    if (userMap['weightLogs'] != null) weightLogs = userMap['weightLogs'];
+    if (userMap['height'] != null) height = userMap['height'];
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       'firstName': firstName,
       'lastName': lastName,
-      'credentials': credentials,
+      'uid': uid,
     };
 
     if (city != null) map['city'] = city;

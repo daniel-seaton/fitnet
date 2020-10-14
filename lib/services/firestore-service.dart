@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnet/models/AppUser.dart';
 
 class FirestoreService {
@@ -18,10 +17,10 @@ class FirestoreService {
     }
   }
 
-  Future<AppUser> getUserByCredential(UserCredential userCredentials) async {
+  Future<AppUser> getUser(String uid) async {
     CollectionReference appUsersRef = firestore.collection('appUsers');
     List<QueryDocumentSnapshot> userSnapshots = await appUsersRef
-        .where('credentials', isEqualTo: userCredentials)
+        .where('uid', isEqualTo: uid)
         .get()
         .then((QuerySnapshot query) {
       return query.docs;
@@ -30,7 +29,7 @@ class FirestoreService {
       print('Too many users exist for credentials');
       throw Error();
     } else if (userSnapshots.length == 0) {
-      print('No user exists for credentials $userCredentials');
+      print('No user exists for uid $uid');
       return null;
     } else {
       return AppUser.fromMap(userSnapshots[0].data());
