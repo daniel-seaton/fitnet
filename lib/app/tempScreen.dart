@@ -10,12 +10,17 @@ class TempScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppUser user = Provider.of<AppUser>(context);
-    return Center(
-      child: Column(children: [
-        Text('Hey there ${user.firstName} ${user.lastName}'),
-        ElevatedButton(
-            child: Text('Sign Out'), onPressed: () => auth.signOut()),
-      ]),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Fitnet'),
+      ),
+      body: Center(
+        child: Column(children: [
+          Text('Hey there ${user.firstName} ${user.lastName}'),
+          ElevatedButton(
+              child: Text('Sign Out'), onPressed: () => auth.signOut()),
+        ]),
+      ),
     );
   }
 }

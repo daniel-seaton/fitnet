@@ -12,7 +12,7 @@ void main() {
 }
 
 class Fitnet extends StatelessWidget {
-  final Future<FirebaseApp> _firebaseInit = Firebase.initializeApp();
+  final Future<FirebaseApp> firebaseInit = Firebase.initializeApp();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -22,44 +22,44 @@ class Fitnet extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Fitnet'),
-        ),
-        body: FutureBuilder(
-            future: _firebaseInit,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return MyHomePage();
-              } else {
-                return Center(child: Text('Loading'));
-              }
-            }),
-      ),
+      home: FutureBuilder(
+          future: firebaseInit,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Scaffold(
+                  appBar: AppBar(
+                    title: Text('Fitnet'),
+                  ),
+                  body: LandingPage());
+            } else {
+              return LoadingScreen();
+            }
+          }),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class LoadingScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(title: Text('Fitnet')),
+        body: Center(child: Text('Loading')));
+  }
+}
+
+class LandingPage extends StatelessWidget {
   final AuthService auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return StreamProvider.value(
       value: auth.getLoggedInUser(),
       child: Consumer<AppUser>(builder: (context, user, _) {
-        List<Widget> children = [];
         if (user != null) {
-          children.add(TempScreen());
+          return TempScreen();
         } else {
-          children.add(AuthScreen());
+          return AuthScreen();
         }
-
-        return SingleChildScrollView(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: children),
-        );
       }),
     );
   }

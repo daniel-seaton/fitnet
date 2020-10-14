@@ -11,17 +11,34 @@ class AuthScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 2,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start, children: [
-        TabBar(tabs: [
-          Tab(child: Text('Log In', style: TextStyle(color: Colors.black))),
-          Tab(child: Text('Sign Up', style: TextStyle(color: Colors.black))),
-        ]),
-        Container(
-          height: 500,
-          child: TabBarView(children: [LoginScreen(), SignUpScreen()]),
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight),
+          child: Container(
+            height: 50,
+            child: TabBar(tabs: [
+              Tab(
+                child: Text(
+                  'Log In',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+              Tab(
+                child: Text(
+                  'Sign Up',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ]),
+          ),
         ),
-      ]),
+        body: SingleChildScrollView(
+          child: Container(
+            height: 500,
+            child: TabBarView(children: [LoginScreen(), SignUpScreen()]),
+          ),
+        ),
+      ),
     );
   }
 }
