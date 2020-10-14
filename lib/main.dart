@@ -4,7 +4,7 @@ import 'package:fitnet/models/AppUser.dart';
 import 'package:fitnet/services/auth-service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'app/loginScreen.dart';
+import 'app/authScreen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,21 +44,23 @@ class MyHomePage extends StatelessWidget {
   final AuthService auth = AuthService();
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: StreamProvider.value(
-        value: auth.getLoggedInUser(),
-        child: Consumer<AppUser>(builder: (context, user, _) {
-          List<Widget> children = [];
-          if (user != null) {
-            children.add(TempScreen());
-          } else {
-            children.add(LoginScreen());
-          }
+    return StreamProvider.value(
+      value: auth.getLoggedInUser(),
+      child: Consumer<AppUser>(builder: (context, user, _) {
+        List<Widget> children = [];
+        if (user != null) {
+          children.add(TempScreen());
+        } else {
+          children.add(AuthScreen());
+        }
 
-          return Column(
-              mainAxisAlignment: MainAxisAlignment.center, children: children);
-        }),
-      ),
+        return SingleChildScrollView(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: children),
+        );
+      }),
     );
   }
 }
