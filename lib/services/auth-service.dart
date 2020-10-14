@@ -3,13 +3,10 @@ import 'package:fitnet/models/AppUser.dart';
 import 'package:fitnet/services/user-service.dart';
 
 class AuthService {
-  FirebaseAuth firebaseAuth;
-  UserService userService;
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final UserService userService = UserService();
 
-  AuthService() {
-    firebaseAuth = FirebaseAuth.instance;
-    userService = UserService();
-  }
+  AuthService();
 
   Future<AppUser> login(String email, String password) async {
     AppUser user;

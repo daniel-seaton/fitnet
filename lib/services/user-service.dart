@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitnet/models/AppUser.dart';
+import 'package:fitnet/services/firestore-service.dart';
 
 class UserService {
+  final FirestoreService firebaseService = FirestoreService();
+
   UserService();
 
   Future<AppUser> getUserForCredentials(UserCredential credentials) async {
@@ -13,6 +16,6 @@ class UserService {
       [String city, String state, int weight, int height]) async {
     AppUser user =
         AppUser(credentials, firstName, lastName, city, state, weight, height);
-    // TODO implement
+    return await firebaseService.addUser(user);
   }
 }
