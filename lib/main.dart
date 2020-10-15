@@ -1,10 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'models/AppUser.dart';
-import 'services/auth-service.dart';
-import 'src/app/tempScreen.dart';
-import 'src/authScreen.dart';
+import 'package:fitnet/src/authRouter.dart';
+import 'package:fitnet/src/loadingScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,43 +21,11 @@ class Fitnet extends StatelessWidget {
       ),
       home: FutureBuilder(
           future: firebaseInit,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return Scaffold(
-                  appBar: AppBar(
-                    title: Text('Fitnet'),
-                  ),
-                  body: LandingPage());
-            } else {
-              return LoadingScreen();
-            }
-          }),
+          builder: (context, snapshot) =>
+              getPageForConnectionState(snapshot.connectionState)),
     );
   }
-}
 
-class LoadingScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: Text('Fitnet')),
-        body: Center(child: Text('Loading')));
-  }
-}
-
-class LandingPage extends StatelessWidget {
-  final AuthService auth = AuthService();
-  @override
-  Widget build(BuildContext context) {
-    return StreamProvider.value(
-      value: auth.getLoggedInUser(),
-      child: Consumer<AppUser>(builder: (context, user, _) {
-        if (user != null) {
-          return TempScreen();
-        } else {
-          return AuthScreen();
-        }
-      }),
-    );
-  }
+  Widget getPageForConnectionState(ConnectionState state) =>
+      state == ConnectionState.done ? AuthRouter() : LoadingScreen();
 }
