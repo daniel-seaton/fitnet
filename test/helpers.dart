@@ -6,7 +6,7 @@ import 'package:firebase_core_platform_interface/firebase_core_platform_interfac
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'serviceInjector.dart';
+import 'testServiceInjector.dart';
 
 typedef Callback(MethodCall call);
 
