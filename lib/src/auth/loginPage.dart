@@ -2,10 +2,10 @@ import 'package:fitnet/services/authService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
-  final AuthService authService;
+import '../../serviceInjector.dart';
 
-  LoginPage({this.authService});
+class LoginPage extends StatelessWidget {
+  final AuthService authService = injector<AuthService>();
 
   @override
   Widget build(BuildContext context) {
