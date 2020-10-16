@@ -5,9 +5,10 @@ import '../serviceInjector.dart';
 
 class FirestoreService {
   final FirebaseFirestore firestore = injector<FirebaseFirestore>();
+  final String userCollection = 'appUsers';
 
   Future<AppUser> addUser(AppUser user) async {
-    CollectionReference appUsersRef = firestore.collection('appUsers');
+    CollectionReference appUsersRef = firestore.collection(userCollection);
     try {
       await appUsersRef.add(user.toMap());
       return user;
@@ -18,7 +19,7 @@ class FirestoreService {
   }
 
   Future<AppUser> getUser(String uid) async {
-    CollectionReference appUsersRef = firestore.collection('appUsers');
+    CollectionReference appUsersRef = firestore.collection(userCollection);
     List<QueryDocumentSnapshot> userSnapshots = await appUsersRef
         .where('uid', isEqualTo: uid)
         .get()
@@ -27,7 +28,7 @@ class FirestoreService {
     });
     if (userSnapshots.length > 1) {
       print('Too many users exist for credentials');
-      throw Error();
+      throw Exception();
     } else if (userSnapshots.length == 0) {
       print('No user exists for uid $uid');
       return null;

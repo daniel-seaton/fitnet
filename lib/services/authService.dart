@@ -22,6 +22,8 @@ class AuthService {
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
       }
+    } catch (e) {
+      print(e);
     }
     return user;
   }

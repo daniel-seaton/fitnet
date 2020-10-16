@@ -48,8 +48,6 @@ void main() {
         (WidgetTester tester) async {
       final MockAuthService serviceMock = MockAuthService();
 
-      var numInvocations = 0;
-
       await tester.pumpWidget(
           createWidgetForTesting(LoginPage(authService: serviceMock)));
 
@@ -58,16 +56,11 @@ void main() {
       await tester.enterText(
           find.widgetWithText(TextField, 'Password'), '12345');
 
-      when(serviceMock.login('test@test.com', '12345')).thenAnswer((_) {
-        numInvocations++;
-        return;
-      });
-
       await tester.tap(find.byType(ElevatedButton));
 
       await tester.pump();
 
-      expect(numInvocations, 1);
+      verify(serviceMock.login('test@test.com', '12345')).called(1);
     });
   });
 }

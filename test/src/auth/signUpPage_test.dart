@@ -18,10 +18,11 @@ import '../../services/authService_test.dart';
 void main() {
   initTests();
   GetIt injector = GetIt.instance;
-
+  AuthService serviceMock;
   setUp(() {
     injector.unregister<AuthService>();
-    injector.registerSingleton<AuthService>(MockAuthService());
+    serviceMock = MockAuthService();
+    injector.registerSingleton<AuthService>(serviceMock);
   });
 
   group('Unit Tests', () {
@@ -61,17 +62,6 @@ void main() {
 
     testWidgets('should call authService sign up on button click',
         (WidgetTester tester) async {
-      var numInvocations = 0;
-
-      MockAuthService serviceMock = MockAuthService();
-      when(serviceMock.signUp('test@test.com', '12345', 'First', 'Last'))
-          .thenAnswer((_) {
-        numInvocations++;
-        return;
-      });
-      injector.unregister<AuthService>();
-      injector.registerSingleton<AuthService>(serviceMock);
-
       await tester.pumpWidget(createWidgetForTesting(SignUpPage()));
 
       await tester.enterText(
@@ -87,7 +77,8 @@ void main() {
 
       await tester.pump();
 
-      expect(numInvocations, 1);
+      verify(serviceMock.signUp('test@test.com', '12345', 'First', 'Last'))
+          .called(1);
     });
   });
 }
