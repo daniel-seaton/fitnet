@@ -1,4 +1,4 @@
-import 'package:fitnet/services/auth-service.dart';
+import 'package:fitnet/services/authService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

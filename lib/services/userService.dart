@@ -1,5 +1,5 @@
-import 'package:fitnet/models/AppUser.dart';
-import 'package:fitnet/services/firestore-service.dart';
+import 'package:fitnet/models/appUser.dart';
+import 'package:fitnet/services/firestoreService.dart';
 
 class UserService {
   final FirestoreService firestoreService = FirestoreService();
