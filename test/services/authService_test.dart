@@ -5,10 +5,14 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:flutter/material.dart';
+import 'package:fitnet/models/appUser.dart';
+import 'package:fitnet/services/authService.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:mockito/mockito.dart';
 
 import '../helpers.dart';
+
+class MockAuthService extends Mock implements AuthService {}
 
 void main() {
   initTests();

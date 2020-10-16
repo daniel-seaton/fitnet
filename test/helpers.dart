@@ -6,17 +6,20 @@ import 'package:firebase_core_platform_interface/firebase_core_platform_interfac
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'serviceInjector.dart';
+
+typedef Callback(MethodCall call);
+
 void initTests() async {
   TestWidgetsFlutterBinding.ensureInitialized();
   setupFirebaseAuthMocks();
   Firebase.initializeApp();
+  setupTestServiceInjector();
 }
 
 Widget createWidgetForTesting(Widget child) {
   return MaterialApp(home: Scaffold(body: child));
 }
-
-typedef Callback(MethodCall call);
 
 setupFirebaseAuthMocks([Callback customHandlers]) {
   MethodChannelFirebase.channel.setMockMethodCallHandler((call) async {

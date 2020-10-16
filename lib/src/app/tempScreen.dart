@@ -4,8 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../serviceinjector.dart';
+
 class TempScreen extends StatelessWidget {
-  final AuthService auth = AuthService();
+  final AuthService auth = injector<AuthService>();
 
   @override
   Widget build(BuildContext context) {

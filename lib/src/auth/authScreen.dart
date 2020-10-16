@@ -38,14 +38,7 @@ class AuthScreen extends StatelessWidget {
           body: SingleChildScrollView(
             child: Container(
               height: 500,
-              child: TabBarView(children: [
-                LoginPage(
-                  authService: AuthService(),
-                ),
-                SignUpPage(
-                  authService: AuthService(),
-                )
-              ]),
+              child: TabBarView(children: [LoginPage(), SignUpPage()]),
             ),
           ),
         ),

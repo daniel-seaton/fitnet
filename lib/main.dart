@@ -1,36 +1,25 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fitnet/services/authService.dart';
+import 'package:fitnet/serviceinjector.dart';
 import 'package:fitnet/src/authRouter.dart';
-import 'package:fitnet/src/loadingScreen.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  setupServiceInjector();
   runApp(Fitnet());
 }
 
 class Fitnet extends StatelessWidget {
-  final Future<FirebaseApp> firebaseInit = Firebase.initializeApp();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Fitnet',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: FutureBuilder(
-          future: firebaseInit,
-          builder: (context, snapshot) =>
-              getPageForConnectionState(snapshot.connectionState)),
-    );
+        title: 'Fitnet',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        home: AuthRouter());
   }
-
-  Widget getPageForConnectionState(ConnectionState state) =>
-      state == ConnectionState.done
-          ? AuthRouter(
-              authService: AuthService(),
-            )
-          : LoadingScreen();
 }

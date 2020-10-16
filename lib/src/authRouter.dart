@@ -5,10 +5,10 @@ import 'package:fitnet/src/auth/authScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-class AuthRouter extends StatelessWidget {
-  final AuthService authService;
+import '../serviceinjector.dart';
 
-  AuthRouter({@required this.authService});
+class AuthRouter extends StatelessWidget {
+  final AuthService authService = injector<AuthService>();
 
   @override
   Widget build(BuildContext context) {

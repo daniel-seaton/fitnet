@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnet/models/appUser.dart';
 
-class FirestoreService {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
+import '../serviceInjector.dart';
 
-  FirestoreService();
+class FirestoreService {
+  final FirebaseFirestore firestore = injector<FirebaseFirestore>();
 
   Future<AppUser> addUser(AppUser user) async {
     CollectionReference appUsersRef = firestore.collection('appUsers');

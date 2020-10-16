@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class LoginPage extends StatelessWidget {
   final AuthService authService;
 
-  LoginPage({@required this.authService});
+  LoginPage({this.authService});
 
   @override
   Widget build(BuildContext context) {

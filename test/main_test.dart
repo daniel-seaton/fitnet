@@ -5,9 +5,6 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:fitnet/src/authRouter.dart';
-import 'package:fitnet/src/loadingScreen.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:fitnet/main.dart';
@@ -19,17 +16,7 @@ void main() {
   Fitnet widget = Fitnet();
 
   group('Unit Tests', () {
-    group('getPageForConnectionState', () {
-      test('should return AuthRouter if connectionState is Done', () {
-        Widget output = widget.getPageForConnectionState(ConnectionState.done);
-        expect(output.runtimeType, AuthRouter);
-      });
-      test('should return LoadingScreen if connectionState is NOT Done', () {
-        Widget output =
-            widget.getPageForConnectionState(ConnectionState.waiting);
-        expect(output.runtimeType, LoadingScreen);
-      });
-    });
+    // No unit tests needed
   });
 
   group('Component Tests', () {

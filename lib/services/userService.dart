@@ -1,8 +1,10 @@
 import 'package:fitnet/models/appUser.dart';
 import 'package:fitnet/services/firestoreService.dart';
 
+import '../serviceinjector.dart';
+
 class UserService {
-  final FirestoreService firestoreService = FirestoreService();
+  final FirestoreService firestoreService = injector<FirestoreService>();
 
   UserService();
 
