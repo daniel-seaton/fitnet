@@ -6,11 +6,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 class AuthRouter extends StatelessWidget {
-  final AuthService auth = AuthService();
+  final AuthService authService;
+
+  AuthRouter({@required this.authService});
+
   @override
   Widget build(BuildContext context) {
     return StreamProvider.value(
-        value: auth.getLoggedInUser(),
+        value: authService.getLoggedInUser(),
         child: Consumer<AppUser>(
             builder: (context, user, _) =>
                 getScreenForAuthStatus(user != null)));

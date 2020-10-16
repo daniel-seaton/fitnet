@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fitnet/services/auth-service.dart';
 import 'package:fitnet/src/authRouter.dart';
 import 'package:fitnet/src/loadingScreen.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class Fitnet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Fitnet',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -27,5 +28,9 @@ class Fitnet extends StatelessWidget {
   }
 
   Widget getPageForConnectionState(ConnectionState state) =>
-      state == ConnectionState.done ? AuthRouter() : LoadingScreen();
+      state == ConnectionState.done
+          ? AuthRouter(
+              authService: AuthService(),
+            )
+          : LoadingScreen();
 }

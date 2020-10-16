@@ -8,8 +8,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:fitnet/main.dart';
+import 'helpers.dart';
 
 void main() {
-  testWidgets('TODO', (WidgetTester tester) async {});
+  initTests();
+
+  group('Unit Tests', () {
+    // TODO add unit tests
+  });
+
+  group('Component Tests', () {
+    // TODO add component tests
+  });
 }

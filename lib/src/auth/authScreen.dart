@@ -1,12 +1,11 @@
+import 'package:fitnet/services/auth-service.dart';
+
 import 'loginPage.dart';
 import 'signUpPage.dart';
-import 'package:fitnet/services/auth-service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class AuthScreen extends StatelessWidget {
-  final AuthService authService = AuthService();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +38,14 @@ class AuthScreen extends StatelessWidget {
           body: SingleChildScrollView(
             child: Container(
               height: 500,
-              child: TabBarView(children: [LoginPage(), SignUpPage()]),
+              child: TabBarView(children: [
+                LoginPage(
+                  authService: AuthService(),
+                ),
+                SignUpPage(
+                  authService: AuthService(),
+                )
+              ]),
             ),
           ),
         ),

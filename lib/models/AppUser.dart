@@ -27,6 +27,12 @@ class AppUser {
     if (userMap['height'] != null) height = userMap['height'];
   }
 
+  AppUser.mock() {
+    uid = '1234567';
+    firstName = 'Mock';
+    lastName = 'User';
+  }
+
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       'firstName': firstName,
