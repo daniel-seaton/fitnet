@@ -1,4 +1,4 @@
-import 'package:fitnet/models/WeightLog.dart';
+import 'package:fitnet/models/weightLog.dart';
 
 class AppUser {
   String uid;

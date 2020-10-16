@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fitnet/models/AppUser.dart';
-import 'package:fitnet/services/user-service.dart';
+import 'package:fitnet/models/appUser.dart';
+import 'package:fitnet/services/userService.dart';
 
 class AuthService {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;

@@ -1,5 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fitnet/services/auth-service.dart';
+import 'package:fitnet/services/authService.dart';
 import 'package:fitnet/src/authRouter.dart';
 import 'package:fitnet/src/loadingScreen.dart';
 import 'package:flutter/material.dart';

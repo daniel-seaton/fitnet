@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fitnet/models/AppUser.dart';
-import 'package:fitnet/services/auth-service.dart';
+import 'package:fitnet/models/appUser.dart';
+import 'package:fitnet/services/authService.dart';
 import 'package:fitnet/src/app/tempScreen.dart';
 import 'package:fitnet/src/auth/authScreen.dart';
 import 'package:fitnet/src/authRouter.dart';
