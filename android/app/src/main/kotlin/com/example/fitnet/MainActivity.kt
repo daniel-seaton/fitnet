@@ -1,4 +1,4 @@
-package com.example.fitnet
+package com.fitnet.app
 
 import io.flutter.embedding.android.FlutterActivity
 
