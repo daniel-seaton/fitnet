@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:fitnet/models/weightLog.dart';
+import 'package:flutter/services.dart';
 
 class AppUser {
   String uid;
@@ -8,6 +12,7 @@ class AppUser {
   String state;
   List<WeightLog> weightLogs = [];
   int height;
+  Uint8List profileImage;
 
   AppUser(this.uid, this.firstName, this.lastName,
       [this.city, this.state, int initialWeight, this.height]) {
@@ -23,7 +28,11 @@ class AppUser {
 
     if (userMap['city'] != null) city = userMap['city'];
     if (userMap['state'] != null) state = userMap['state'];
-    if (userMap['weightLogs'] != null) weightLogs = userMap['weightLogs'];
+    if (userMap['weightLogs'] != null) {
+      List<WeightLog> logs = [];
+      userMap['weightLogs'].forEach((log) => logs.add(WeightLog.fromMap(log)));
+      weightLogs = logs;
+    }
     if (userMap['height'] != null) height = userMap['height'];
   }
 

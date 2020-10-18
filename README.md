@@ -19,3 +19,4 @@ samples, guidance on mobile development, and a full API reference.
 TODO
  * set up iOS firebase access 
  * add email verification
+ * figure out how to store profile images better (maybe a table and have a reference to that document?)
