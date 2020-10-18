@@ -1,7 +1,6 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:fitnet/models/appUser.dart';
 import 'package:fitnet/services/authService.dart';
-import 'package:fitnet/src/app/tempScreen.dart';
+import 'package:fitnet/src/app/homeScreen.dart';
 import 'package:fitnet/src/auth/authScreen.dart';
 import 'package:fitnet/src/authRouter.dart';
 import 'package:flutter/material.dart';
@@ -25,13 +24,13 @@ void main() async {
 
   group('Unit Tests', () {
     group('getScreenForAuthStatus', () {
-      test('should return TempScreen if logged in is true', () {
+      test('should return HomeScreen if logged in is true', () {
         when(serviceMock.getLoggedInUser())
             .thenAnswer((_) => Stream.value(AppUser.mock()));
 
         Widget output = AuthRouter().getScreenForAuthStatus(true);
 
-        expect(output.runtimeType, TempScreen);
+        expect(output.runtimeType, HomeScreen);
       });
 
       test('should return AuthScreen if logged in is false', () {

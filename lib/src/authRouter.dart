@@ -1,11 +1,11 @@
 import 'package:fitnet/models/appUser.dart';
 import 'package:fitnet/services/authService.dart';
-import 'package:fitnet/src/app/tempScreen.dart';
 import 'package:fitnet/src/auth/authScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
 import '../serviceinjector.dart';
+import 'app/homeScreen.dart';
 
 class AuthRouter extends StatelessWidget {
   final AuthService authService = injector<AuthService>();
@@ -20,5 +20,5 @@ class AuthRouter extends StatelessWidget {
   }
 
   Widget getScreenForAuthStatus(bool loggedIn) =>
-      loggedIn ? TempScreen() : AuthScreen();
+      loggedIn ? HomeScreen() : AuthScreen();
 }

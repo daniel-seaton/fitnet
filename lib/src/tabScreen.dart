@@ -38,6 +38,7 @@ class TabScreen extends StatelessWidget {
             ),
           ),
           bottomNavigationBar: Material(
+              color: Colors.blue,
               child: lowerTabs.length > 0
                   ? TabBar(tabs: lowerTabs)
                   : Container(
