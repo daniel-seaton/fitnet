@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -9,5 +10,9 @@ class FirebaseStorageService {
 
   Future<String> getImageDownloadUrl(String filename) async {
     return await storage.ref().child(filename).getDownloadURL();
+  }
+
+  Future<StorageUploadTask> uploadFile(String uid, File file) async {
+    return storage.ref().child(uid).putFile(file);
   }
 }

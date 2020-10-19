@@ -7,6 +7,10 @@ import 'package:flutter/material.dart';
 import '../tabScreen.dart';
 
 class HomeScreen extends StatelessWidget {
+  final String userId;
+
+  HomeScreen({@required this.userId});
+
   @override
   Widget build(BuildContext context) {
     return TabScreen(
@@ -30,7 +34,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ],
-      tabPages: [CreatePage(), WorkoutPage(), ProfilePage()],
+      tabPages: [CreatePage(), WorkoutPage(), ProfilePage(userId: userId)],
     );
   }
 }

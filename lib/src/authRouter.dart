@@ -12,13 +12,14 @@ class AuthRouter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider.value(
-        value: authService.getLoggedInUser(),
-        child: Consumer<AppUser>(
-            builder: (context, user, _) =>
-                getScreenForAuthStatus(user != null)));
+    return StreamProvider(
+        create: (_) => authService
+            .getLoggedInUser()
+            .map((user) => user != null ? user.uid : null),
+        child: Consumer<String>(
+            builder: (_, uid, __) => getScreenForAuthStatus(uid)));
   }
 
-  Widget getScreenForAuthStatus(bool loggedIn) =>
-      loggedIn ? HomeScreen() : AuthScreen();
+  Widget getScreenForAuthStatus(String uid) =>
+      uid != null ? HomeScreen(userId: uid) : AuthScreen();
 }

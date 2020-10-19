@@ -8,7 +8,7 @@ class AppUser {
   String state;
   List<WeightLog> weightLogs = [];
   int height;
-  String profileImageFilename;
+  num profileImageVersion;
 
   AppUser(this.uid, this.firstName, this.lastName,
       [this.city, this.state, int initialWeight, this.height]) {
@@ -30,8 +30,11 @@ class AppUser {
       weightLogs = logs;
     }
     if (userMap['height'] != null) height = userMap['height'];
-    if (userMap['profileImageFilename'] != null)
-      profileImageFilename = userMap['profileImageFilename'];
+    if (userMap['profileImageVersion'] != null) {
+      profileImageVersion = userMap['profileImageVersion'];
+    } else {
+      profileImageVersion = 0;
+    }
   }
 
   AppUser.mock() {
