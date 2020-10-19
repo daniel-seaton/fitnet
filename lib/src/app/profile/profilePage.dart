@@ -31,31 +31,7 @@ class ProfilePage extends StatelessWidget {
               '${user.firstName} ${user.lastName}',
               style: TextStyle(fontSize: 24),
             ),
-            user.profileImageVersion > 0
-                ? FutureProvider.value(
-                    value: userService.getImageDownloadUrl(user.uid),
-                    child: Consumer<String>(
-                      builder: (_, downloadUrl, __) => Container(
-                          height: 190,
-                          width: 190,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  fit: BoxFit.fill,
-                                  image: NetworkImage(downloadUrl)))),
-                    ),
-                  )
-                : Container(
-                    height: 190,
-                    width: 190,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        fit: BoxFit.fill,
-                        image: AssetImage('lib/assets/default-user.jpg'),
-                      ),
-                    ),
-                  ),
+            getImageWidget(user),
             Transform.translate(
               offset: const Offset(50, -40),
               child: RawMaterialButton(
@@ -74,6 +50,33 @@ class ProfilePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget getImageWidget(AppUser user) {
+    return user.profileImageVersion > 0
+        ? FutureProvider.value(
+            value: userService.getImageDownloadUrl(user.uid),
+            child: Consumer<String>(
+              builder: (_, downloadUrl, __) => Container(
+                  height: 190,
+                  width: 190,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                          fit: BoxFit.fill, image: NetworkImage(downloadUrl)))),
+            ),
+          )
+        : Container(
+            height: 190,
+            width: 190,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage('lib/assets/default-user.jpg'),
+              ),
+            ),
+          );
   }
 
   String userHeightAndWeight(AppUser user) {
