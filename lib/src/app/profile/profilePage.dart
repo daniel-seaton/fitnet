@@ -22,19 +22,25 @@ class ProfilePage extends StatelessWidget {
           '${user.firstName} ${user.lastName}',
           style: TextStyle(fontSize: 24),
         ),
-        Container(
-          height: 190,
-          width: 190,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: user.profileImage != null
-                  ? MemoryImage(user.profileImage)
-                  : AssetImage('lib/assets/default-user.jpg'),
-            ),
-          ),
-        ),
+        user.profileImageFilename != null
+            ? FutureProvider.value(
+                value:
+                    userService.getImageDownloadUrl(user.profileImageFilename),
+                child: Consumer<String>(
+                  builder: (_, downloadUrl, __) => Container(
+                      height: 190,
+                      width: 190,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: NetworkImage(downloadUrl)))),
+                ),
+              )
+            : DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage('lib/assets/default-user.jpg'),
+              ),
         Transform.translate(
           offset: const Offset(50, -40),
           child: RawMaterialButton(

@@ -1,8 +1,4 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:fitnet/models/weightLog.dart';
-import 'package:flutter/services.dart';
 
 class AppUser {
   String uid;
@@ -12,7 +8,7 @@ class AppUser {
   String state;
   List<WeightLog> weightLogs = [];
   int height;
-  Uint8List profileImage;
+  String profileImageFilename;
 
   AppUser(this.uid, this.firstName, this.lastName,
       [this.city, this.state, int initialWeight, this.height]) {
@@ -34,6 +30,8 @@ class AppUser {
       weightLogs = logs;
     }
     if (userMap['height'] != null) height = userMap['height'];
+    if (userMap['profileImageFilename'] != null)
+      profileImageFilename = userMap['profileImageFilename'];
   }
 
   AppUser.mock() {
