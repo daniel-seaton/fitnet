@@ -20,7 +20,19 @@ class TabScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fitnet'),
+        title: Center(
+          child: Container(
+            height: 50,
+            width: 100,
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage('lib/assets/logo-white-2.png'),
+              ),
+            ),
+          ),
+        ),
       ),
       body: DefaultTabController(
         length: numTabs,
