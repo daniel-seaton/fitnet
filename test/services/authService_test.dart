@@ -15,11 +15,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
 import '../helpers.dart';
-import 'userService_test.dart';
-
-class MockAuthService extends Mock implements AuthService {}
-
-class MockFirebaseAuth2 extends Mock implements FirebaseAuth {}
+import '../mocks.dart';
 
 void main() {
   initTests();

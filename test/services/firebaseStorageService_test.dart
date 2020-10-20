@@ -3,15 +3,11 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_storage_mocks/firebase_storage_mocks.dart';
 import 'package:fitnet/services/firebaseStorageService.dart';
-import 'package:mockito/mockito.dart';
 
 import '../helpers.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../testServiceInjector.dart';
-
-class MockFirebaseStorageService extends Mock
-    implements FirebaseStorageService {}
 
 void main() {
   initTests();

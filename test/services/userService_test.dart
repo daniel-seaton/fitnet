@@ -16,14 +16,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import '../helpers.dart';
+import '../mocks.dart';
 import '../testServiceInjector.dart';
-
-class MockUserService extends Mock implements UserService {}
 
 void main() {
   initTests();
 
-  FirestoreService serviceMock = injector<FirestoreService>();
+  MockFirestoreService serviceMock = injector<FirestoreService>();
   FirebaseStorageService storageMock = injector<FirebaseStorageService>();
 
   group('Unit Tests', () {

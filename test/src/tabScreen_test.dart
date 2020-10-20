@@ -19,14 +19,6 @@ void main() {
   });
 
   group('Component Tests', () {
-    testWidgets('should display asset image', (WidgetTester tester) async {
-      await tester.pumpWidget(createWidgetForTesting(TabScreen(
-        tabPages: [TestWidget()],
-      )));
-
-      expect(find.byType(AssetImage), findsOneWidget);
-    });
-
     testWidgets('should have upper tab if added', (WidgetTester tester) async {
       await tester.pumpWidget(createWidgetForTesting(TabScreen(
         upperTabs: [Tab(child: Text('Upper'))],

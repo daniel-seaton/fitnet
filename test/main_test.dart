@@ -3,18 +3,13 @@ import 'package:fitnet/services/authService.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'helpers.dart';
-import 'services/authService_test.dart';
+import 'mocks.dart';
 
 void main() {
   initTests();
 
-  AuthService serviceMock;
+  MockAuthService serviceMock = injector<AuthService>();
 
-  setUp(() {
-    injector.unregister<AuthService>();
-    serviceMock = MockAuthService();
-    injector.registerSingleton<AuthService>(serviceMock);
-  });
   group('Unit Tests', () {
     // No unit tests needed
   });

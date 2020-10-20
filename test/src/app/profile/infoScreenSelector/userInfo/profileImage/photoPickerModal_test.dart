@@ -11,8 +11,6 @@ import 'package:mockito/mockito.dart';
 import '../../../../../../helpers.dart';
 import '../../../../../../testServiceInjector.dart';
 
-class MockImagePicker extends Mock implements ImagePicker {}
-
 void main() {
   initTests();
 

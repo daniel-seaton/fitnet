@@ -14,12 +14,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
 import '../helpers.dart';
-
-class MockFirestoreService extends Mock implements FirestoreService {}
-
-class MockFirestoreInstance2 extends Mock implements FirebaseFirestore {}
-
-class MockCollectionReference extends Mock implements CollectionReference {}
+import '../mocks.dart';
 
 void main() {
   initTests();

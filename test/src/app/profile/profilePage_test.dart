@@ -6,23 +6,17 @@ import 'package:fitnet/src/app/profile/infoScreenSelector/userStats/userStats.da
 import 'package:fitnet/src/app/profile/profilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../../helpers.dart';
-import '../../../services/userService_test.dart';
+import '../../../mocks.dart';
+import '../../../testServiceInjector.dart';
 
 void main() {
   initTests();
 
-  GetIt injector = GetIt.instance;
-  UserService serviceMock;
+  MockUserService serviceMock = injector<UserService>();
 
-  setUp(() {
-    injector.unregister<UserService>();
-    serviceMock = MockUserService();
-    injector.registerSingleton<UserService>(serviceMock);
-  });
   group('Unit Tests', () {
     // Nothing to unit test
   });
