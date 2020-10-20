@@ -10,8 +10,6 @@ void main() async {
   runApp(Fitnet());
 }
 
-void enableFlutterDriverExtension() {}
-
 class Fitnet extends StatelessWidget {
   // This widget is the root of your application.
   @override
