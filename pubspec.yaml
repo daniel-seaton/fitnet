@@ -38,6 +38,7 @@ dependencies:
   cloud_firestore_mocks: ^0.5.0+1
 
   image_picker: ^0.6.7+12
+  path_provider: ^1.6.21
 
   mockito: ^4.1.2
   get_it: ^3.1.0
@@ -48,6 +49,8 @@ dependencies:
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  flutter_driver:
     sdk: flutter
 
 # For information on the generic Dart part of this file, see the

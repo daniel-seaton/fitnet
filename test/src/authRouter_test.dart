@@ -24,20 +24,20 @@ void main() async {
 
   group('Unit Tests', () {
     group('getScreenForAuthStatus', () {
-      test('should return HomeScreen if logged in is true', () {
+      test('should return HomeScreen if uid is not null', () {
         when(serviceMock.getLoggedInUser())
             .thenAnswer((_) => Stream.value(AppUser.mock()));
 
-        Widget output = AuthRouter().getScreenForAuthStatus(true);
+        Widget output = AuthRouter().getScreenForAuthStatus('123456');
 
         expect(output.runtimeType, HomeScreen);
       });
 
-      test('should return AuthScreen if logged in is false', () {
+      test('should return AuthScreen if uid is null', () {
         when(serviceMock.getLoggedInUser())
             .thenAnswer((_) => Stream.value(null));
 
-        Widget output = AuthRouter().getScreenForAuthStatus(false);
+        Widget output = AuthRouter().getScreenForAuthStatus(null);
         expect(output.runtimeType, AuthScreen);
       });
     });

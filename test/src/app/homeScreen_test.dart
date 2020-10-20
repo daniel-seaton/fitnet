@@ -1,3 +1,4 @@
+import 'package:fitnet/models/appUser.dart';
 import 'package:fitnet/src/app/create/createPage.dart';
 import 'package:fitnet/src/app/homeScreen.dart';
 import 'package:fitnet/src/app/profile/profilePage.dart';
@@ -16,31 +17,36 @@ void main() {
 
   group('Component Tests', () {
     testWidgets('should have Create tab', (WidgetTester tester) async {
-      await tester.pumpWidget(createWidgetForTesting(HomeScreen()));
+      await tester.pumpWidget(
+          createWidgetForTesting(HomeScreen(userId: AppUser.mock().uid)));
 
       expect(find.widgetWithText(Tab, 'Create'), findsOneWidget);
     });
 
     testWidgets('should have Workout tab', (WidgetTester tester) async {
-      await tester.pumpWidget(createWidgetForTesting(HomeScreen()));
+      await tester.pumpWidget(
+          createWidgetForTesting(HomeScreen(userId: AppUser.mock().uid)));
 
       expect(find.widgetWithText(Tab, 'Workout'), findsOneWidget);
     });
 
     testWidgets('should have Profile tab', (WidgetTester tester) async {
-      await tester.pumpWidget(createWidgetForTesting(HomeScreen()));
+      await tester.pumpWidget(
+          createWidgetForTesting(HomeScreen(userId: AppUser.mock().uid)));
 
       expect(find.widgetWithText(Tab, 'Profile'), findsOneWidget);
     });
 
     testWidgets('should have CreatePage', (WidgetTester tester) async {
-      await tester.pumpWidget(createWidgetForTesting(HomeScreen()));
+      await tester.pumpWidget(
+          createWidgetForTesting(HomeScreen(userId: AppUser.mock().uid)));
 
       expect(find.byType(CreatePage), findsOneWidget);
     });
 
     testWidgets('should have WorkoutPage', (WidgetTester tester) async {
-      await tester.pumpWidget(createWidgetForTesting(HomeScreen()));
+      await tester.pumpWidget(
+          createWidgetForTesting(HomeScreen(userId: AppUser.mock().uid)));
 
       final TabController controller = DefaultTabController.of(
           tester.element(find.widgetWithText(Tab, 'Workout')));
@@ -60,7 +66,8 @@ void main() {
     });
 
     testWidgets('should have ProfilePage', (WidgetTester tester) async {
-      await tester.pumpWidget(createWidgetForTesting(HomeScreen()));
+      await tester.pumpWidget(
+          createWidgetForTesting(HomeScreen(userId: AppUser.mock().uid)));
 
       final TabController controller = DefaultTabController.of(
           tester.element(find.widgetWithText(Tab, 'Profile')));

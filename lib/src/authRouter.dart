@@ -1,4 +1,3 @@
-import 'package:fitnet/models/appUser.dart';
 import 'package:fitnet/services/authService.dart';
 import 'package:fitnet/src/auth/authScreen.dart';
 import 'package:flutter/cupertino.dart';

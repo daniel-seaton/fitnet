@@ -35,6 +35,6 @@ class UserService {
     StorageUploadTask uploadTask =
         await storageService.uploadFile(user.uid, image);
     await uploadTask.onComplete;
-    await firestoreService.updateProfileImageFilenameForUser(user);
+    await firestoreService.updateProfileImageVersion(user);
   }
 }

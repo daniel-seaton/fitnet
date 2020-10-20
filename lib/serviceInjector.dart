@@ -7,6 +7,7 @@ import 'package:fitnet/services/firestoreService.dart';
 import 'package:fitnet/services/userService.dart';
 
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 
 GetIt injector = GetIt.instance;
 
@@ -18,4 +19,5 @@ setupServiceInjector() {
   injector.registerSingleton<FirebaseStorageService>(FirebaseStorageService());
   injector.registerSingleton<UserService>(UserService());
   injector.registerSingleton<AuthService>(AuthService());
+  injector.registerSingleton<ImagePicker>(ImagePicker());
 }

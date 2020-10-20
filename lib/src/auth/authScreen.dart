@@ -1,5 +1,3 @@
-import 'package:fitnet/services/authService.dart';
-
 import '../tabScreen.dart';
 import 'loginPage.dart';
 import 'signUpPage.dart';

@@ -41,6 +41,7 @@ class AppUser {
     uid = '1234567';
     firstName = 'Mock';
     lastName = 'User';
+    profileImageVersion = 0;
   }
 
   Map<String, dynamic> toMap() {

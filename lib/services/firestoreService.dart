@@ -47,7 +47,7 @@ class FirestoreService {
         .map((QuerySnapshot query) => AppUser.fromMap(query.docs[0].data()));
   }
 
-  Future<void> updateProfileImageFilenameForUser(AppUser user) async {
+  Future<void> updateProfileImageVersion(AppUser user) async {
     CollectionReference appUsersRef = firestore.collection(userCollection);
     List<QueryDocumentSnapshot> userSnapshots = await appUsersRef
         .where('uid', isEqualTo: user.uid)

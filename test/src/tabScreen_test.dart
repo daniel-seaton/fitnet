@@ -1,6 +1,3 @@
-import 'package:fitnet/src/auth/authScreen.dart';
-import 'package:fitnet/src/auth/loginPage.dart';
-import 'package:fitnet/src/auth/signUpPage.dart';
 import 'package:fitnet/src/tabScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,12 +19,12 @@ void main() {
   });
 
   group('Component Tests', () {
-    testWidgets('should have title Fitnet', (WidgetTester tester) async {
+    testWidgets('should display asset image', (WidgetTester tester) async {
       await tester.pumpWidget(createWidgetForTesting(TabScreen(
         tabPages: [TestWidget()],
       )));
 
-      expect(find.text('Fitnet'), findsOneWidget);
+      expect(find.byType(AssetImage), findsOneWidget);
     });
 
     testWidgets('should have upper tab if added', (WidgetTester tester) async {

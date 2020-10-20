@@ -16,11 +16,21 @@ class ProfileImage extends StatelessWidget {
     return Column(children: [
       FutureProvider.value(
         initialData: null,
-        value: user.profileImageVersion > 0
+        value: user.profileImageVersion != null && user.profileImageVersion > 0
             ? userService.getImageDownloadUrl(user.uid)
             : Future.value(null),
         child: Consumer<String>(
-          builder: (_, downloadUrl, __) => getProfileImageForUrl(downloadUrl),
+          builder: (_, downloadUrl, __) => Container(
+            height: 190,
+            width: 190,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                fit: BoxFit.fill,
+                image: getProfileImageForUrl(downloadUrl),
+              ),
+            ),
+          ),
         ),
       ),
       Transform.translate(
@@ -41,18 +51,9 @@ class ProfileImage extends StatelessWidget {
         builder: (BuildContext context) => PhotoPickerModal(user: user));
   }
 
-  Widget getProfileImageForUrl(String downloadUrl) {
-    ImageProvider image = downloadUrl != null
+  ImageProvider getProfileImageForUrl(String downloadUrl) {
+    return downloadUrl != null
         ? NetworkImage(downloadUrl)
         : AssetImage('lib/assets/default-user.jpg');
-
-    return Container(
-      height: 190,
-      width: 190,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        image: DecorationImage(fit: BoxFit.fill, image: image),
-      ),
-    );
   }
 }

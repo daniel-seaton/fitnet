@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 
 class PhotoPickerModal extends StatelessWidget {
   final UserService userService = injector<UserService>();
+  final ImagePicker imagePicker = injector<ImagePicker>();
   final AppUser user;
 
   PhotoPickerModal({@required this.user});
@@ -41,8 +42,8 @@ class PhotoPickerModal extends StatelessWidget {
   }
 
   imageFromGallery(AppUser user) async {
-    PickedFile image = await ImagePicker()
-        .getImage(source: ImageSource.gallery, imageQuality: 50);
+    PickedFile image = await imagePicker.getImage(
+        source: ImageSource.gallery, imageQuality: 50);
 
     await userService.uploadImageForUser(user, File(image.path));
 
@@ -51,8 +52,8 @@ class PhotoPickerModal extends StatelessWidget {
   }
 
   imageFromCamera(AppUser user) async {
-    PickedFile image = await ImagePicker()
-        .getImage(source: ImageSource.camera, imageQuality: 50);
+    PickedFile image = await imagePicker.getImage(
+        source: ImageSource.camera, imageQuality: 50);
 
     await userService.uploadImageForUser(user, File(image.path));
 
