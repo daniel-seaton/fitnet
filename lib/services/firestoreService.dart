@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitnet/models/appUser.dart';
+import 'package:fitnet/models/workout.dart';
 
 import '../serviceInjector.dart';
 
 class FirestoreService {
   final FirebaseFirestore firestore = injector<FirebaseFirestore>();
   final String userCollection = 'appUsers';
+  final String workoutCollection = 'workouts';
 
   Future<AppUser> addUser(AppUser user) async {
     CollectionReference appUsersRef = firestore.collection(userCollection);
@@ -65,5 +67,12 @@ class FirestoreService {
     return appUsersRef
         .doc(userSnapshots[0].id)
         .update({'profileImageVersion': user.profileImageVersion + 1});
+  }
+
+  Stream<List<Workout>> getWorkoutStreamForUser(String uid) {
+    CollectionReference workoutRep = firestore.collection(workoutCollection);
+    return workoutRep.where('uid', isEqualTo: uid).snapshots().map(
+        (QuerySnapshot query) =>
+            query.docs.map((doc) => Workout.fromMap(doc.data())));
   }
 }
