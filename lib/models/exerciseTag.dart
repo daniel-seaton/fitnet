@@ -1,0 +1,3 @@
+class ExerciseTag {
+  String name;
+}
