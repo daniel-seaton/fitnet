@@ -18,46 +18,27 @@ class TabScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Container(
-            height: 50,
-            width: 100,
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage('lib/assets/logo-white-2.png'),
-              ),
-            ),
-          ),
+    return DefaultTabController(
+      length: numTabs,
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight),
+          child: upperTabs.length > 0
+              ? Container(height: 50, child: TabBar(tabs: upperTabs))
+              : Container(height: 0, width: 0),
         ),
-      ),
-      body: DefaultTabController(
-        length: numTabs,
-        child: Scaffold(
-          appBar: PreferredSize(
-            preferredSize: Size.fromHeight(kToolbarHeight),
-            child: upperTabs.length > 0
-                ? Container(height: 50, child: TabBar(tabs: upperTabs))
-                : Container(height: 0, width: 0),
-          ),
-          body: SingleChildScrollView(
-            child: Container(
-              height: 500,
-              child: TabBarView(children: tabPages),
-            ),
-          ),
-          bottomNavigationBar: Material(
-              color: Colors.blue,
-              child: lowerTabs.length > 0
-                  ? TabBar(tabs: lowerTabs)
-                  : Container(
-                      height: 0,
-                      width: 0,
-                    )),
+        body: Container(
+          height: MediaQuery.of(context).size.height - 50,
+          child: TabBarView(children: tabPages),
         ),
+        bottomNavigationBar: Material(
+            color: Colors.blue,
+            child: lowerTabs.length > 0
+                ? TabBar(tabs: lowerTabs)
+                : Container(
+                    height: 0,
+                    width: 0,
+                  )),
       ),
     );
   }

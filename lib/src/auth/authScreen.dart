@@ -7,22 +7,57 @@ import 'package:flutter/material.dart';
 class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return TabScreen(
-      upperTabs: [
-        Tab(
-          child: Text(
-            'Log In',
-            style: TextStyle(color: Colors.black),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          color: Colors.blue,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                height: 100,
+                width: 200,
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  image: DecorationImage(
+                    image: AssetImage('lib/assets/logo-white-2.png'),
+                  ),
+                ),
+              ),
+              Container(
+                height: 375,
+                width: MediaQuery.of(context).size.width - 50,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(6.0))),
+                child: Padding(
+                  padding: EdgeInsets.all(15),
+                  child: TabScreen(
+                    upperTabs: [
+                      Tab(
+                        child: Text(
+                          'Log In',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                      Tab(
+                        child: Text(
+                          'Sign Up',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                    ],
+                    tabPages: [LoginPage(), SignUpPage()],
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
-        Tab(
-          child: Text(
-            'Sign Up',
-            style: TextStyle(color: Colors.black),
-          ),
-        ),
-      ],
-      tabPages: [LoginPage(), SignUpPage()],
+      ),
     );
   }
 }
