@@ -107,7 +107,7 @@ void main() {
     group('uploadImageForUser', () {
       test('should call storageService.uploadFile once', () async {
         AppUser user = AppUser.mock();
-        File file = File('lib/assets/defalt-user.jpg');
+        File file = File('assets/images/defalt-user.jpg');
 
         when(storageMock.uploadFile(user.uid, file)).thenAnswer(
             (_) => Future.value(MockFirebaseStorage().ref().putFile(file)));
@@ -120,7 +120,7 @@ void main() {
 
       test('should call firestoreService updateProfileImageVersion', () async {
         AppUser user = AppUser.mock();
-        File file = File('lib/assets/defalt-user.jpg');
+        File file = File('assets/images/defalt-user.jpg');
 
         when(storageMock.uploadFile(user.uid, file)).thenAnswer(
             (_) => Future.value(MockFirebaseStorage().ref().putFile(file)));

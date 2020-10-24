@@ -1,6 +1,11 @@
-import 'package:fitnet/models/exerciseTag.dart';
-
 class Exercise {
   String name;
-  List<ExerciseTag> tags;
+  List<String> tags;
+
+  Exercise.fromMap(Map<String, dynamic> map) {
+    name = map['name'];
+    List<String> mappedTags = [];
+    map['tags'].forEach((tag) => mappedTags.add(tag.toString()));
+    tags = mappedTags;
+  }
 }

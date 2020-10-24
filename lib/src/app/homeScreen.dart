@@ -23,7 +23,7 @@ class HomeScreen extends StatelessWidget {
               shape: BoxShape.rectangle,
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: AssetImage('lib/assets/logo-white-2.png'),
+                image: AssetImage('assets/images/logo-white-2.png'),
               ),
             ),
           ),
@@ -55,7 +55,7 @@ class HomeScreen extends StatelessWidget {
             ],
             tabPages: [
               CreatePage(),
-              WorkoutPage(),
+              WorkoutPage(userId: userId),
               ProfilePage(userId: userId)
             ],
           ),

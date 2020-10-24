@@ -20,7 +20,7 @@ void main() {
         mockStorage
             .ref()
             .child('filename')
-            .putFile(File('lib/assets/default-user.jpg'));
+            .putFile(File('assets/images/default-user.jpg'));
         FirebaseStorageService service = FirebaseStorageService();
         var output = await service.getImageDownloadUrl('filename');
         expect(
@@ -33,7 +33,7 @@ void main() {
         FirebaseStorageService service = FirebaseStorageService();
 
         await service.uploadFile(
-            'filename', File('lib/assets/default-user.jpg'));
+            'filename', File('assets/images/default-user.jpg'));
 
         var path = mockStorage.ref().child('filename').path;
         expect(path, isNotNull);

@@ -23,7 +23,7 @@ class AuthScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   image: DecorationImage(
-                    image: AssetImage('lib/assets/logo-white-2.png'),
+                    image: AssetImage('assets/images/logo-white-2.png'),
                   ),
                 ),
               ),

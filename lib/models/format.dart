@@ -1,8 +1,12 @@
-enum FormatType { SetBased, RepsForTime, AMRAP }
+class FormatType {
+  static const SetBased = 'SetBased';
+  static const RepsForTime = 'RepsForTime';
+  static const AMRAP = 'AMRAP';
+}
 
 class Format {
   String displayValue;
-  FormatType value;
+  String value;
 
   Format({this.displayValue, this.value});
 

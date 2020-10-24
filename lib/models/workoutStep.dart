@@ -3,14 +3,16 @@ import 'package:fitnet/models/format.dart';
 import 'package:fitnet/models/set.dart';
 
 class WorkoutStepFactory {
-  WorkoutStepFactory.getForType(
-      FormatType formatType, Map<String, dynamic> map) {
+  static WorkoutStep getForType(String formatType, Map<String, dynamic> map) {
     switch (formatType) {
       case FormatType.SetBased:
+        return SetBasedStep.fromMap(map);
         break;
       case FormatType.RepsForTime:
+        return RepsForTimeStep.fromMap(map);
         break;
       case FormatType.AMRAP:
+        return AMRAPStep.fromMap(map);
         break;
     }
   }
@@ -18,7 +20,7 @@ class WorkoutStepFactory {
 
 class WorkoutStep {
   Format format;
-  FormatType formatType;
+  String formatType;
   Exercise exercise;
 
   WorkoutStep({this.formatType, this.exercise}) {
@@ -34,9 +36,12 @@ class SetBasedStep extends WorkoutStep {
       : super(formatType: FormatType.SetBased, exercise: exercise);
 
   SetBasedStep.fromMap(Map<String, dynamic> map) {
+    formatType = map['formatType'];
+    format = Format.forType(this.formatType);
+    exercise = Exercise.fromMap(map['exercise']);
     minimumRest = map['minimumRest'];
     if (map['sets'] != null) {
-      const mappedSets = [];
+      List<Set> mappedSets = [];
       map['sets'].forEach((s) => mappedSets.add(Set.fromMap(s)));
       sets = mappedSets;
     }
@@ -52,10 +57,13 @@ class RepsForTimeStep extends WorkoutStep {
       : super(formatType: FormatType.SetBased, exercise: exercise);
 
   RepsForTimeStep.fromMap(Map<String, dynamic> map) {
+    formatType = map['formatType'];
+    format = Format.forType(this.formatType);
+    exercise = Exercise.fromMap(map['exercise']);
     targetTime = map['targetTime'];
     targetReps = map['targetReps'];
     if (map['sets'] != null) {
-      const mappedSets = [];
+      List<Set> mappedSets = [];
       map['sets'].forEach((s) => mappedSets.add(Set.fromMap(s)));
       sets = mappedSets;
     }
@@ -71,6 +79,9 @@ class AMRAPStep extends WorkoutStep {
       : super(formatType: FormatType.SetBased, exercise: exercise);
 
   AMRAPStep.fromMap(Map<String, dynamic> map) {
+    formatType = map['formatType'];
+    format = Format.forType(this.formatType);
+    exercise = Exercise.fromMap(map['exercise']);
     targetTime = map['targetTime'];
     targetReps = map['targetReps'];
     if (map['actualReps'] != null) actualReps = map['actualReps'];

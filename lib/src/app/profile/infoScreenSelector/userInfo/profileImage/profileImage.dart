@@ -54,6 +54,6 @@ class ProfileImage extends StatelessWidget {
   ImageProvider getProfileImageForUrl(String downloadUrl) {
     return downloadUrl != null
         ? NetworkImage(downloadUrl)
-        : AssetImage('lib/assets/default-user.jpg');
+        : AssetImage('assets/images/default-user.jpg');
   }
 }

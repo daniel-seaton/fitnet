@@ -71,8 +71,13 @@ class FirestoreService {
 
   Stream<List<Workout>> getWorkoutStreamForUser(String uid) {
     CollectionReference workoutRep = firestore.collection(workoutCollection);
-    return workoutRep.where('uid', isEqualTo: uid).snapshots().map(
-        (QuerySnapshot query) =>
-            query.docs.map((doc) => Workout.fromMap(doc.data())));
+    return workoutRep
+        .where('uid', isEqualTo: uid)
+        .snapshots()
+        .map((QuerySnapshot query) {
+      List<Workout> workouts = [];
+      query.docs.forEach((doc) => workouts.add(Workout.fromMap(doc.data())));
+      return workouts;
+    });
   }
 }

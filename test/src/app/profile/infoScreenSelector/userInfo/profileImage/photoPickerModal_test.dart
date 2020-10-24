@@ -24,8 +24,8 @@ void main() {
         var user = AppUser.mock();
 
         when(pickerMock.getImage(source: ImageSource.gallery, imageQuality: 50))
-            .thenAnswer(
-                (_) => Future.value(PickedFile('lib/assets/default-user.jpg')));
+            .thenAnswer((_) =>
+                Future.value(PickedFile('assets/images/default-user.jpg')));
 
         PhotoPickerModal modal = PhotoPickerModal(user: user);
         await modal.imageFromGallery(user);
@@ -37,7 +37,7 @@ void main() {
 
       test('should call userService uploadImageForUser', () async {
         var user = AppUser.mock();
-        var pickedFile = PickedFile('lib/assets/default-user.jpg');
+        var pickedFile = PickedFile('assets/images/default-user.jpg');
 
         when(pickerMock.getImage(source: ImageSource.gallery, imageQuality: 50))
             .thenAnswer((_) => Future.value(pickedFile));
@@ -60,8 +60,8 @@ void main() {
         var user = AppUser.mock();
 
         when(pickerMock.getImage(source: ImageSource.camera, imageQuality: 50))
-            .thenAnswer(
-                (_) => Future.value(PickedFile('lib/assets/default-user.jpg')));
+            .thenAnswer((_) =>
+                Future.value(PickedFile('assets/images/default-user.jpg')));
 
         PhotoPickerModal modal = PhotoPickerModal(user: user);
         await modal.imageFromCamera(user);
@@ -73,7 +73,7 @@ void main() {
 
       test('should call userService uploadImageForUser', () async {
         var user = AppUser.mock();
-        var pickedFile = PickedFile('lib/assets/default-user.jpg');
+        var pickedFile = PickedFile('assets/images/default-user.jpg');
 
         when(pickerMock.getImage(source: ImageSource.camera, imageQuality: 50))
             .thenAnswer((_) => Future.value(pickedFile));
