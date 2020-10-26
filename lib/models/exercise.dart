@@ -8,4 +8,8 @@ class Exercise {
     map['tags'].forEach((tag) => mappedTags.add(tag.toString()));
     tags = mappedTags;
   }
+
+  Map<String, dynamic> toMap() {
+    return {'name': name, 'tags': tags};
+  }
 }

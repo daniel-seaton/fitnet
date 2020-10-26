@@ -1,3 +1,5 @@
+import 'package:fitnet/models/workout.dart';
+import 'package:fitnet/src/app/workout/editWorkoutScreen/editWorkoutScreen.dart';
 import 'package:flutter/material.dart';
 
 class CreateWorkoutButton extends StatelessWidget {
@@ -10,7 +12,7 @@ class CreateWorkoutButton extends StatelessWidget {
     return OutlineButton(
       borderSide: BorderSide(color: Colors.grey, width: 1),
       color: Colors.grey,
-      onPressed: () => showNewWorkoutScreen(),
+      onPressed: () => showNewWorkoutScreen(context),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -21,7 +23,11 @@ class CreateWorkoutButton extends StatelessWidget {
     );
   }
 
-  showNewWorkoutScreen() {
-    print('TODO showNewWorkoutScreen');
+  showNewWorkoutScreen(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                EditWorkoutScreen(workout: Workout(uid: userId))));
   }
 }

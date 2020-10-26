@@ -1,5 +1,6 @@
 import 'package:fitnet/models/format.dart';
 import 'package:fitnet/models/workoutStep.dart';
+import 'package:flutter/material.dart';
 
 class Workout {
   String uid;
@@ -9,6 +10,12 @@ class Workout {
   DateTime scheduled;
   List<WorkoutStep> steps = [];
   Format defaultFormat;
+
+  Workout({@required this.uid, this.name, this.scheduled, this.defaultFormat}) {
+    if (scheduled == null) scheduled = DateTime.now();
+    if (defaultFormat == null)
+      defaultFormat = Format.forType(FormatType.SetBased);
+  }
 
   Workout.fromMap(Map<String, dynamic> map) {
     uid = map['uid'];
@@ -28,5 +35,20 @@ class Workout {
               step['formatType'] ?? defaultFormat, step)));
       steps = mappedSteps;
     }
+  }
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = {
+      'uid': uid,
+      'name': name,
+    };
+    if (defaultFormat != null) map['defaultFormat'] = defaultFormat.value;
+    if (start != null) map['start'] = start;
+    if (end != null) map['end'] = end;
+    if (scheduled != null) map['scheduled'] = scheduled;
+    if (steps != null)
+      map['steps'] =
+          steps.map((step) => WorkoutStepFactory.toMap(step)).toList();
+    return map;
   }
 }

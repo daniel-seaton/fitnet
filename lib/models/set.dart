@@ -14,4 +14,14 @@ class Set {
     if (map['end'])
       start = DateTime.fromMillisecondsSinceEpoch(map['end'].seconds * 1000);
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'goal': goal,
+      'actual': actual,
+      'weight': weight,
+      'start': start,
+      'end': end
+    };
+  }
 }

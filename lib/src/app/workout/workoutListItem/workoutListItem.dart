@@ -1,4 +1,5 @@
 import 'package:fitnet/models/workout.dart';
+import 'package:fitnet/src/app/workout/editWorkoutScreen/editWorkoutScreen.dart';
 import 'package:fitnet/src/app/workout/workoutListItem/tagsDisplay/tagsDisplayRow.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +13,7 @@ class WorkoutListItem extends StatelessWidget {
     return Column(
       children: [
         FlatButton(
-          onPressed: () => showWorkoutScreen(),
+          onPressed: () => showEditWorkoutScreen(context),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,8 +31,11 @@ class WorkoutListItem extends StatelessWidget {
     );
   }
 
-  showWorkoutScreen() {
-    print('TODO showWorkoutScreen');
+  showEditWorkoutScreen(BuildContext context) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => EditWorkoutScreen(workout: workout)));
   }
 
   getDateDisplay() {

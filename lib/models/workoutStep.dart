@@ -16,6 +16,20 @@ class WorkoutStepFactory {
         break;
     }
   }
+
+  static Map<String, dynamic> toMap(WorkoutStep step) {
+    switch (step.formatType) {
+      case FormatType.SetBased:
+        return (step as SetBasedStep).toMap();
+        break;
+      case FormatType.RepsForTime:
+        return (step as RepsForTimeStep).toMap();
+        break;
+      case FormatType.AMRAP:
+        return (step as RepsForTimeStep).toMap();
+        break;
+    }
+  }
 }
 
 class WorkoutStep {
@@ -26,6 +40,20 @@ class WorkoutStep {
   WorkoutStep({this.formatType, this.exercise}) {
     format = Format.forType(this.formatType);
   }
+
+  WorkoutStep.fromMap(Map<String, dynamic> map) {
+    formatType = map['formatType'];
+    format = Format.forType(this.formatType);
+    exercise = Exercise.fromMap(map['exercise']);
+  }
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = {
+      'formatType': formatType,
+      'exercise': exercise.toMap()
+    };
+    return map;
+  }
 }
 
 class SetBasedStep extends WorkoutStep {
@@ -35,16 +63,20 @@ class SetBasedStep extends WorkoutStep {
   SetBasedStep({this.minimumRest, Exercise exercise})
       : super(formatType: FormatType.SetBased, exercise: exercise);
 
-  SetBasedStep.fromMap(Map<String, dynamic> map) {
-    formatType = map['formatType'];
-    format = Format.forType(this.formatType);
-    exercise = Exercise.fromMap(map['exercise']);
+  SetBasedStep.fromMap(Map<String, dynamic> map) : super.fromMap(map) {
     minimumRest = map['minimumRest'];
     if (map['sets'] != null) {
       List<Set> mappedSets = [];
       map['sets'].forEach((s) => mappedSets.add(Set.fromMap(s)));
       sets = mappedSets;
     }
+  }
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = super.toMap();
+    map['minimumRest'] = minimumRest;
+    map['sets'] = sets.map((s) => s.toMap()).toList();
+    return map;
   }
 }
 
@@ -56,10 +88,7 @@ class RepsForTimeStep extends WorkoutStep {
   RepsForTimeStep({this.targetTime, this.targetReps, Exercise exercise})
       : super(formatType: FormatType.SetBased, exercise: exercise);
 
-  RepsForTimeStep.fromMap(Map<String, dynamic> map) {
-    formatType = map['formatType'];
-    format = Format.forType(this.formatType);
-    exercise = Exercise.fromMap(map['exercise']);
+  RepsForTimeStep.fromMap(Map<String, dynamic> map) : super.fromMap(map) {
     targetTime = map['targetTime'];
     targetReps = map['targetReps'];
     if (map['sets'] != null) {
@@ -67,6 +96,14 @@ class RepsForTimeStep extends WorkoutStep {
       map['sets'].forEach((s) => mappedSets.add(Set.fromMap(s)));
       sets = mappedSets;
     }
+  }
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = super.toMap();
+    map['targetTime'] = targetTime;
+    map['minimumTime'] = targetReps;
+    map['sets'] = sets.map((s) => s.toMap()).toList();
+    return map;
   }
 }
 
@@ -78,12 +115,17 @@ class AMRAPStep extends WorkoutStep {
   AMRAPStep({this.targetTime, this.targetReps, Exercise exercise})
       : super(formatType: FormatType.SetBased, exercise: exercise);
 
-  AMRAPStep.fromMap(Map<String, dynamic> map) {
-    formatType = map['formatType'];
-    format = Format.forType(this.formatType);
-    exercise = Exercise.fromMap(map['exercise']);
+  AMRAPStep.fromMap(Map<String, dynamic> map) : super.fromMap(map) {
     targetTime = map['targetTime'];
     targetReps = map['targetReps'];
     if (map['actualReps'] != null) actualReps = map['actualReps'];
+  }
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> map = super.toMap();
+    map['targetTime'] = targetTime;
+    map['targetReps'] = targetReps;
+    map['actualReps'] = actualReps;
+    return map;
   }
 }

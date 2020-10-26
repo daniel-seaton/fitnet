@@ -2,6 +2,10 @@ class FormatType {
   static const SetBased = 'SetBased';
   static const RepsForTime = 'RepsForTime';
   static const AMRAP = 'AMRAP';
+
+  static List<String> getTypes() {
+    return [SetBased, RepsForTime, AMRAP];
+  }
 }
 
 class Format {

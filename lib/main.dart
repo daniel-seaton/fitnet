@@ -17,11 +17,18 @@ class Fitnet extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(
-            primarySwatch: Colors.blue,
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-            textTheme: TextTheme(
-                headline1: GoogleFonts.anton(fontSize: 30, color: Colors.black),
-                subtitle1: TextStyle(fontSize: 18, color: Colors.grey))),
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          textTheme: TextTheme(
+            // Workout List Item Headline
+            headline1: GoogleFonts.anton(fontSize: 30, color: Colors.black),
+            // Workout List Item Subtitle
+            subtitle1: TextStyle(fontSize: 18, color: Colors.grey),
+            // Edit Workout Text
+            bodyText1: TextStyle(fontSize: 16, color: Colors.black),
+            bodyText2: TextStyle(fontSize: 12, color: Colors.grey),
+          ),
+        ),
         home: AuthRouter());
   }
 }
