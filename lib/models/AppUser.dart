@@ -8,6 +8,7 @@ class AppUser {
   String state;
   List<WeightLog> weightLogs = [];
   int height;
+  num profileImageVersion;
 
   AppUser(this.uid, this.firstName, this.lastName,
       [this.city, this.state, int initialWeight, this.height]) {
@@ -23,14 +24,24 @@ class AppUser {
 
     if (userMap['city'] != null) city = userMap['city'];
     if (userMap['state'] != null) state = userMap['state'];
-    if (userMap['weightLogs'] != null) weightLogs = userMap['weightLogs'];
+    if (userMap['weightLogs'] != null) {
+      List<WeightLog> logs = [];
+      userMap['weightLogs'].forEach((log) => logs.add(WeightLog.fromMap(log)));
+      weightLogs = logs;
+    }
     if (userMap['height'] != null) height = userMap['height'];
+    if (userMap['profileImageVersion'] != null) {
+      profileImageVersion = userMap['profileImageVersion'];
+    } else {
+      profileImageVersion = 0;
+    }
   }
 
   AppUser.mock() {
     uid = '1234567';
     firstName = 'Mock';
     lastName = 'User';
+    profileImageVersion = 0;
   }
 
   Map<String, dynamic> toMap() {

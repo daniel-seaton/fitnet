@@ -9,21 +9,16 @@ import 'package:fitnet/services/authService.dart';
 import 'package:fitnet/src/auth/signUpPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../helpers.dart';
-import '../../services/authService_test.dart';
+import '../../mocks.dart';
+import '../../testServiceInjector.dart';
 
 void main() {
   initTests();
-  GetIt injector = GetIt.instance;
-  AuthService serviceMock;
-  setUp(() {
-    injector.unregister<AuthService>();
-    serviceMock = MockAuthService();
-    injector.registerSingleton<AuthService>(serviceMock);
-  });
+
+  MockAuthService serviceMock = injector<AuthService>();
 
   group('Unit Tests', () {
     // Nothing to unit test

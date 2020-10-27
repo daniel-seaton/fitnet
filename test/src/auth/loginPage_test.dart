@@ -12,11 +12,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../helpers.dart';
-
-class MockAuthService extends Mock implements AuthService {}
+import '../../mocks.dart';
+import '../../testServiceInjector.dart';
 
 void main() {
   initTests();
+
+  MockAuthService serviceMock = injector<AuthService>();
 
   group('Unit Tests', () {
     // Nothing to unit test
@@ -24,32 +26,26 @@ void main() {
 
   group('Component Tests', () {
     testWidgets('should have Email TextField', (WidgetTester tester) async {
-      await tester.pumpWidget(
-          createWidgetForTesting(LoginPage(authService: MockAuthService())));
+      await tester.pumpWidget(createWidgetForTesting(LoginPage()));
 
       expect(find.widgetWithText(TextField, 'Email'), findsOneWidget);
     });
 
     testWidgets('should have Password TextField', (WidgetTester tester) async {
-      await tester.pumpWidget(
-          createWidgetForTesting(LoginPage(authService: MockAuthService())));
+      await tester.pumpWidget(createWidgetForTesting(LoginPage()));
 
       expect(find.widgetWithText(TextField, 'Password'), findsOneWidget);
     });
 
     testWidgets('should have Log In Button', (WidgetTester tester) async {
-      await tester.pumpWidget(
-          createWidgetForTesting(LoginPage(authService: MockAuthService())));
+      await tester.pumpWidget(createWidgetForTesting(LoginPage()));
 
       expect(find.widgetWithText(ElevatedButton, 'Log In'), findsOneWidget);
     });
 
     testWidgets('should call authService login on button click',
         (WidgetTester tester) async {
-      final MockAuthService serviceMock = MockAuthService();
-
-      await tester.pumpWidget(
-          createWidgetForTesting(LoginPage(authService: serviceMock)));
+      await tester.pumpWidget(createWidgetForTesting(LoginPage()));
 
       await tester.enterText(
           find.widgetWithText(TextField, 'Email'), 'test@test.com');

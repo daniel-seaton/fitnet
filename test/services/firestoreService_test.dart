@@ -14,12 +14,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
 
 import '../helpers.dart';
-
-class MockFirestoreService extends Mock implements FirestoreService {}
-
-class MockFirestoreInstance2 extends Mock implements FirebaseFirestore {}
-
-class MockCollectionReference extends Mock implements CollectionReference {}
+import '../mocks.dart';
 
 void main() {
   initTests();
@@ -106,7 +101,6 @@ void main() {
 
       test('should return null if no user exists', () async {
         MockFirestoreInstance instance = MockFirestoreInstance();
-        AppUser expectedUser = AppUser.mock();
 
         when(firestoreMock.collection('appUsers'))
             .thenAnswer((_) => instance.collection('appUsers'));
@@ -127,6 +121,77 @@ void main() {
 
         FirestoreService service = FirestoreService();
         expect(service.getUser(expectedUser.uid), throwsException);
+      });
+    });
+
+    group('getUserStream', () {
+      test('should call firestore collection once', () {
+        when(firestoreMock.collection('appUsers'))
+            .thenAnswer((_) => MockFirestoreInstance().collection('appUsers'));
+
+        FirestoreService service = FirestoreService();
+        service.getUserStream(AppUser.mock().uid);
+        verify(firestoreMock.collection('appUsers')).called(1);
+      });
+
+      test('should return app user stream', () async {
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        AppUser expectedUser = AppUser.mock();
+        await instance.collection('appUsers').add(expectedUser.toMap());
+
+        when(firestoreMock.collection('appUsers'))
+            .thenAnswer((_) => instance.collection('appUsers'));
+
+        FirestoreService service = FirestoreService();
+        Stream<AppUser> output = service.getUserStream(AppUser.mock().uid);
+        var first = await output.first;
+        expect(first.uid, expectedUser.uid);
+      });
+    });
+
+    group('updateProfileImageVersion', () {
+      test('should call firestore collection once', () async {
+        when(firestoreMock.collection('appUsers'))
+            .thenAnswer((_) => MockFirestoreInstance().collection('appUsers'));
+
+        FirestoreService service = FirestoreService();
+        await service.updateProfileImageVersion(AppUser.mock());
+        verify(firestoreMock.collection('appUsers')).called(1);
+      });
+
+      test('should throw error if multiple users exist', () async {
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        AppUser expectedUser = AppUser.mock();
+        await instance.collection('appUsers').add(expectedUser.toMap());
+        await instance.collection('appUsers').add(expectedUser.toMap());
+
+        when(firestoreMock.collection('appUsers'))
+            .thenAnswer((_) => instance.collection('appUsers'));
+
+        FirestoreService service = FirestoreService();
+        expect(
+            service.updateProfileImageVersion(expectedUser), throwsException);
+      });
+
+      test('should update profileImageVersion if only one appUser exists',
+          () async {
+        MockFirestoreInstance instance = MockFirestoreInstance();
+        AppUser expectedUser = AppUser.mock();
+        await instance.collection('appUsers').add(expectedUser.toMap());
+
+        when(firestoreMock.collection('appUsers'))
+            .thenAnswer((_) => instance.collection('appUsers'));
+
+        FirestoreService service = FirestoreService();
+        await service.updateProfileImageVersion(expectedUser);
+
+        AppUser updatedUser = await instance
+            .collection('appUsers')
+            .where('uid', isEqualTo: expectedUser.uid)
+            .get()
+            .then((query) => AppUser.fromMap(query.docs[0].data()));
+        expect(updatedUser.profileImageVersion,
+            expectedUser.profileImageVersion + 1);
       });
     });
   });

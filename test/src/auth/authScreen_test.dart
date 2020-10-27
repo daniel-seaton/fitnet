@@ -21,12 +21,6 @@ void main() {
   });
 
   group('Component Tests', () {
-    testWidgets('should have title Fitnet', (WidgetTester tester) async {
-      await tester.pumpWidget(createWidgetForTesting(AuthScreen()));
-
-      expect(find.text('Fitnet'), findsOneWidget);
-    });
-
     testWidgets('should have Log In tab', (WidgetTester tester) async {
       await tester.pumpWidget(createWidgetForTesting(AuthScreen()));
 
@@ -39,15 +33,13 @@ void main() {
       expect(find.widgetWithText(Tab, 'Sign Up'), findsOneWidget);
     });
 
-    testWidgets('should have LoginPage by default',
-        (WidgetTester tester) async {
+    testWidgets('should have LoginPage', (WidgetTester tester) async {
       await tester.pumpWidget(createWidgetForTesting(AuthScreen()));
 
       expect(find.byType(LoginPage), findsOneWidget);
     });
 
-    testWidgets('should have SignUpPage if tab is tapped',
-        (WidgetTester tester) async {
+    testWidgets('should have SignUpPage', (WidgetTester tester) async {
       await tester.pumpWidget(createWidgetForTesting(AuthScreen()));
 
       final TabController controller = DefaultTabController.of(
