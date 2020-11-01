@@ -8,10 +8,9 @@ class NameField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Transform.translate(
-        offset: Offset(0, 0),
-        child:
-            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
           Container(
             width: 250,
             padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
@@ -32,10 +31,11 @@ class NameField extends StatelessWidget {
             builder: (_, notifier, __) => !notifier.isEdit
                 ? IconButton(
                     icon: Icon(Icons.edit),
-                    onPressed: () => {notifier.setIsEdit(true)})
+                    onPressed: () => notifier.setIsEdit(true),
+                  )
                 : Container(height: 0, width: 0),
           ),
-        ]),
+        ],
       ),
     );
   }

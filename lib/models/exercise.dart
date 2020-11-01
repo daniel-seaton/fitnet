@@ -9,6 +9,10 @@ class Exercise {
     tags = mappedTags;
   }
 
+  Exercise.empty() {
+    tags = [];
+  }
+
   Map<String, dynamic> toMap() {
     return {'name': name, 'tags': tags};
   }

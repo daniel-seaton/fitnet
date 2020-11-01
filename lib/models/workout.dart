@@ -47,8 +47,7 @@ class Workout {
     if (end != null) map['end'] = end;
     if (scheduled != null) map['scheduled'] = scheduled;
     if (steps != null)
-      map['steps'] =
-          steps.map((step) => WorkoutStepFactory.toMap(step)).toList();
+      map['steps'] = steps.map((step) => step.toMap()).toList();
     return map;
   }
 }

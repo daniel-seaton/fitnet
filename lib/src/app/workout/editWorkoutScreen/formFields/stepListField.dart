@@ -1,6 +1,7 @@
 import 'package:fitnet/models/format.dart';
 import 'package:fitnet/models/workoutStep.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/editChangeNotifier.dart';
+import 'package:fitnet/src/app/workout/editWorkoutScreen/formFields/editStep/editStepModal.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -35,41 +36,54 @@ class StepListField extends StatelessWidget {
                     if (!editNotifier.isEdit) return;
                     if (x != y) {
                       WorkoutStep step = workoutNotifier.removeStep(x);
-                      workoutNotifier.addStep(y > x ? y - 1 : y, step);
+                      workoutNotifier.addStep(step, index: y > x ? y - 1 : y);
                     }
                   },
                   children: List.generate(
                     steps.length,
                     (index) {
                       WorkoutStep step = steps[index];
-                      return Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(color: Colors.grey, width: 0.5),
-                          ),
-                        ),
+                      return InkWell(
                         key: Key(step.exercise.name),
-                        padding: EdgeInsets.all(10),
-                        height: 60,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(step.exercise.name,
-                                    style:
-                                        Theme.of(context).textTheme.bodyText1),
-                                Text(step.format.displayValue,
-                                    style:
-                                        Theme.of(context).textTheme.bodyText2),
-                              ],
+                        onTap: () => showStepModal(
+                          context,
+                          step: step,
+                          isEdit: editNotifier.isEdit,
+                          onSave: (WorkoutStep step) => workoutNotifier
+                              .addStep(step, index: index, isEdit: true),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom:
+                                  BorderSide(color: Colors.grey, width: 0.5),
                             ),
-                            editNotifier.isEdit
-                                ? IconButton(
-                                    icon: Icon(Icons.reorder), onPressed: null)
-                                : Container(width: 0, height: 0)
-                          ],
+                          ),
+                          padding: EdgeInsets.all(10),
+                          height: 60,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(step.exercise.name,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1),
+                                  Text(step.format.displayValue,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyText2),
+                                ],
+                              ),
+                              editNotifier.isEdit
+                                  ? IconButton(
+                                      icon: Icon(Icons.reorder),
+                                      onPressed: null)
+                                  : Container(width: 0, height: 0)
+                            ],
+                          ),
                         ),
                       );
                     },
@@ -78,16 +92,23 @@ class StepListField extends StatelessWidget {
               ),
             ),
             editNotifier.isEdit
-                ? OutlineButton(
-                    key: Key('addStepButton'),
-                    color: Colors.grey,
-                    onPressed: () => {print('TODO add step modal')},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.add, color: Colors.grey),
-                        Text('Add Step', style: TextStyle(color: Colors.grey))
-                      ],
+                ? Consumer<WorkoutChangeNotifier>(
+                    builder: (_, workoutNotifier, __) => OutlineButton(
+                      key: Key('addStepButton'),
+                      color: Colors.grey,
+                      onPressed: () => showStepModal(
+                        context,
+                        isEdit: true,
+                        onSave: (WorkoutStep step) =>
+                            workoutNotifier.addStep(step),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.add, color: Colors.grey),
+                          Text('Add Step', style: TextStyle(color: Colors.grey))
+                        ],
+                      ),
                     ),
                   )
                 : Container(key: Key('emptyContainer'), height: 0)
@@ -95,5 +116,14 @@ class StepListField extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  showStepModal(BuildContext context,
+      {@required Function onSave, WorkoutStep step, isEdit = false}) async {
+    if (step == null) step = WorkoutStep.empty();
+    await showDialog(
+        context: context,
+        builder: (context) =>
+            EditStepModal(step: step, isEdit: isEdit, onSave: onSave));
   }
 }

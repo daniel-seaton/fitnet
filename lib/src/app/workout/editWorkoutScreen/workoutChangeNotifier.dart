@@ -22,8 +22,14 @@ class WorkoutChangeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addStep(num index, WorkoutStep step) {
-    workout.steps.insert(index, step);
+  void addStep(WorkoutStep step, {num index, bool isEdit = false}) {
+    if (index == null) {
+      workout.steps.add(step);
+    } else if (isEdit) {
+      workout.steps[index] = step;
+    } else {
+      workout.steps.insert(index, step);
+    }
     notifyListeners();
   }
 

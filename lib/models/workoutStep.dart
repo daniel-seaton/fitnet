@@ -16,20 +16,6 @@ class WorkoutStepFactory {
         break;
     }
   }
-
-  static Map<String, dynamic> toMap(WorkoutStep step) {
-    switch (step.formatType) {
-      case FormatType.SetBased:
-        return (step as SetBasedStep).toMap();
-        break;
-      case FormatType.RepsForTime:
-        return (step as RepsForTimeStep).toMap();
-        break;
-      case FormatType.AMRAP:
-        return (step as RepsForTimeStep).toMap();
-        break;
-    }
-  }
 }
 
 class WorkoutStep {
@@ -39,6 +25,10 @@ class WorkoutStep {
 
   WorkoutStep({this.formatType, this.exercise}) {
     format = Format.forType(this.formatType);
+  }
+
+  WorkoutStep.empty() {
+    this.exercise = Exercise.empty();
   }
 
   WorkoutStep.fromMap(Map<String, dynamic> map) {
