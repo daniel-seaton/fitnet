@@ -27,7 +27,9 @@ class CreateWorkoutButton extends StatelessWidget {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                EditWorkoutScreen(workout: Workout(uid: userId))));
+            builder: (context) => EditWorkoutScreen(
+                  workout: Workout(uid: userId),
+                  isEdit: true,
+                )));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:fitnet/models/format.dart';
+import 'package:fitnet/src/app/workout/editWorkoutScreen/editChangeNotifier.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -18,16 +19,25 @@ class DefaultFormatField extends StatelessWidget {
         ),
         Container(
           width: MediaQuery.of(context).size.width / 1.5,
-          child: Consumer<WorkoutChangeNotifier>(
-            builder: (_, notifier, __) => DropdownButtonFormField(
-                value: notifier.workout.defaultFormat.value,
-                items: FormatType.getTypes()
-                    .map((type) => DropdownMenuItem(
-                        child: Text(Format.forType(type).displayValue,
-                            style: Theme.of(context).textTheme.bodyText1),
-                        value: type))
-                    .toList(),
-                onChanged: (value) => notifier.setDefaultFormat(value)),
+          child: Consumer<EditChangeNotifier>(
+            builder: (_, editNotifier, __) => Consumer<WorkoutChangeNotifier>(
+              builder: (_, workoutNotifier, __) => DropdownButtonFormField(
+                  disabledHint: Text(
+                      workoutNotifier.workout.defaultFormat.displayValue,
+                      style: Theme.of(context).textTheme.bodyText1),
+                  value: workoutNotifier.workout.defaultFormat != null
+                      ? workoutNotifier.workout.defaultFormat.value
+                      : null,
+                  items: FormatType.getTypes()
+                      .map((type) => DropdownMenuItem(
+                          child: Text(Format.forType(type).displayValue,
+                              style: Theme.of(context).textTheme.bodyText1),
+                          value: type))
+                      .toList(),
+                  onChanged: editNotifier.isEdit
+                      ? (value) => workoutNotifier.setDefaultFormat(value)
+                      : null),
+            ),
           ),
         ),
       ],

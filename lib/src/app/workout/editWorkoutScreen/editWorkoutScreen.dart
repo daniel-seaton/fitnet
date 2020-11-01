@@ -1,4 +1,5 @@
 import 'package:fitnet/models/workout.dart';
+import 'package:fitnet/src/app/workout/editWorkoutScreen/editChangeNotifier.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,46 +12,40 @@ import 'formFields/stepListField.dart';
 
 class EditWorkoutScreen extends StatelessWidget {
   final Workout workout;
+  final isEdit;
 
-  EditWorkoutScreen({@required this.workout});
+  EditWorkoutScreen({@required this.workout, @required this.isEdit});
 
   @override
   Widget build(BuildContext context) {
     WorkoutChangeNotifier workoutChangeNotifier =
         WorkoutChangeNotifier(workout: workout);
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Transform.translate(
-            offset: Offset(-30, 0),
-            child: Container(
-              height: 50,
-              width: 100,
-              decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: AssetImage('assets/images/logo-white-2.png'),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-      body: ChangeNotifierProvider.value(
-        value: workoutChangeNotifier,
-        builder: (context, width) => Form(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: workoutChangeNotifier),
+        ChangeNotifierProvider.value(value: EditChangeNotifier(isEdit: isEdit))
+      ],
+      builder: (context, width) => Scaffold(
+        appBar: AppBar(title: NameField()),
+        body: Form(
           child: ListView(
             children: [
-              ...getWorkoutFields(context),
+              DefaultFormatField(),
+              ScheduledDateField(),
+              StepListField(
+                  steps: workout.steps != null ? workout.steps : [],
+                  defaultFormat: workout.defaultFormat),
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
                 child: Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      print('TODO save');
-                    },
-                    child: Text('Save'),
+                  child: Consumer<EditChangeNotifier>(
+                    builder: (_, notifier, __) => ElevatedButton(
+                      onPressed: () {
+                        if (notifier.isEdit) notifier.setIsEdit(false);
+                        print('TODO save');
+                      },
+                      child: Text(notifier.isEdit ? 'Save' : 'Start Workout'),
+                    ),
                   ),
                 ),
               ),
@@ -59,24 +54,5 @@ class EditWorkoutScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  List<Widget> getWorkoutFields(BuildContext context) {
-    return workout.toMap().keys.map((field) {
-      switch (field) {
-        case 'defaultFormat':
-          return DefaultFormatField();
-        case 'name':
-          return NameField();
-        case 'scheduled':
-          return ScheduledDateField();
-        case 'steps':
-          return StepListField(
-              steps: workout.steps != null ? workout.steps : [],
-              defaultFormat: workout.defaultFormat);
-        default:
-          return Container(height: 0, width: 0);
-      }
-    }).toList();
   }
 }

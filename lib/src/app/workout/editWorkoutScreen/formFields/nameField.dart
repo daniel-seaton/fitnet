@@ -2,29 +2,41 @@ import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.d
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../editChangeNotifier.dart';
+
 class NameField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-          padding: EdgeInsets.fromLTRB(0, 5, 10, 5),
-          width: MediaQuery.of(context).size.width / 4,
-          child: Text('Name:',
-              textAlign: TextAlign.right,
-              style: Theme.of(context).textTheme.bodyText1),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width / 1.5,
-          child: Consumer<WorkoutChangeNotifier>(
-            builder: (_, notifier, __) => TextFormField(
-                style: Theme.of(context).textTheme.bodyText1,
-                initialValue: notifier.workout.name,
-                onChanged: (value) => notifier.setName(value)),
+    return Center(
+      child: Transform.translate(
+        offset: Offset(0, 0),
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Container(
+            width: 250,
+            padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
+            child: Consumer<EditChangeNotifier>(
+              builder: (_, editNotifier, __) => Consumer<WorkoutChangeNotifier>(
+                builder: (_, workoutNotifier, __) => TextFormField(
+                    readOnly: !editNotifier.isEdit,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 24, color: Colors.white),
+                    initialValue: workoutNotifier.workout.name != null
+                        ? workoutNotifier.workout.name
+                        : 'Enter Name',
+                    onChanged: (value) => workoutNotifier.setName(value)),
+              ),
+            ),
           ),
-        ),
-      ],
+          Consumer<EditChangeNotifier>(
+            builder: (_, notifier, __) => !notifier.isEdit
+                ? IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () => {notifier.setIsEdit(true)})
+                : Container(height: 0, width: 0),
+          ),
+        ]),
+      ),
     );
   }
 }

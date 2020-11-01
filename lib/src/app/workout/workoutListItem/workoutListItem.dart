@@ -35,7 +35,8 @@ class WorkoutListItem extends StatelessWidget {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => EditWorkoutScreen(workout: workout)));
+            builder: (context) =>
+                EditWorkoutScreen(workout: workout, isEdit: false)));
   }
 
   getDateDisplay() {

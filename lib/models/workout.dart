@@ -13,8 +13,6 @@ class Workout {
 
   Workout({@required this.uid, this.name, this.scheduled, this.defaultFormat}) {
     if (scheduled == null) scheduled = DateTime.now();
-    if (defaultFormat == null)
-      defaultFormat = Format.forType(FormatType.SetBased);
   }
 
   Workout.fromMap(Map<String, dynamic> map) {
