@@ -76,8 +76,20 @@ class FirestoreService {
         .snapshots()
         .map((QuerySnapshot query) {
       List<Workout> workouts = [];
-      query.docs.forEach((doc) => workouts.add(Workout.fromMap(doc.data())));
+      query.docs.forEach((doc) =>
+          workouts.add(Workout.fromMap({...doc.data(), 'wid': doc.id})));
+      workouts.sort((x, y) => x.scheduled.isBefore(y.scheduled) ? 1 : -1);
       return workouts;
     });
+  }
+
+  Future<void> addWorkout(Workout workout) async {
+    CollectionReference workoutRep = firestore.collection(workoutCollection);
+    return await workoutRep.add(workout.toMap());
+  }
+
+  Future<void> updateWorkout(Workout workout) async {
+    CollectionReference workoutRep = firestore.collection(workoutCollection);
+    return await workoutRep.doc(workout.wid).update(workout.toMap());
   }
 }

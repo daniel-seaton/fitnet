@@ -23,7 +23,9 @@ class DefaultFormatField extends StatelessWidget {
             builder: (_, editNotifier, __) => Consumer<WorkoutChangeNotifier>(
               builder: (_, workoutNotifier, __) => DropdownButtonFormField(
                   disabledHint: Text(
-                      workoutNotifier.workout.defaultFormat.displayValue,
+                      workoutNotifier.workout.defaultFormat != null
+                          ? workoutNotifier.workout.defaultFormat.displayValue
+                          : '',
                       style: Theme.of(context).textTheme.bodyText1),
                   value: workoutNotifier.workout.defaultFormat != null
                       ? workoutNotifier.workout.defaultFormat.value

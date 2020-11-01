@@ -3,6 +3,7 @@ import 'package:fitnet/models/workoutStep.dart';
 import 'package:flutter/material.dart';
 
 class Workout {
+  String wid;
   String uid;
   String name;
   DateTime start;
@@ -16,6 +17,7 @@ class Workout {
   }
 
   Workout.fromMap(Map<String, dynamic> map) {
+    wid = map['wid'];
     uid = map['uid'];
     name = map['name'];
     defaultFormat = Format.forType(map['defaultFormat']);

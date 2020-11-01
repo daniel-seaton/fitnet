@@ -1,16 +1,19 @@
 import 'package:fitnet/models/workout.dart';
+import 'package:fitnet/services/workoutService.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/editChangeNotifier.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../serviceInjector.dart';
 import 'formFields/defaultFormatField.dart';
 import 'formFields/nameField.dart';
 import 'formFields/scheduledDateField.dart';
 import 'formFields/stepListField.dart';
 
 class EditWorkoutScreen extends StatelessWidget {
+  final WorkoutService workoutService = injector<WorkoutService>();
   final Workout workout;
   final isEdit;
 
@@ -39,12 +42,19 @@ class EditWorkoutScreen extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
                 child: Center(
                   child: Consumer<EditChangeNotifier>(
-                    builder: (_, notifier, __) => ElevatedButton(
-                      onPressed: () {
-                        if (notifier.isEdit) notifier.setIsEdit(false);
-                        print('TODO save');
-                      },
-                      child: Text(notifier.isEdit ? 'Save' : 'Start Workout'),
+                    builder: (_, editNotifier, __) =>
+                        Consumer<WorkoutChangeNotifier>(
+                      builder: (_, workoutNotifier, __) => ElevatedButton(
+                        onPressed: () async {
+                          if (editNotifier.isEdit) {
+                            await workoutService
+                                .addOrUpdateWorkout(workoutNotifier.workout);
+                            editNotifier.setIsEdit(false);
+                          }
+                        },
+                        child: Text(
+                            editNotifier.isEdit ? 'Save' : 'Start Workout'),
+                      ),
                     ),
                   ),
                 ),
