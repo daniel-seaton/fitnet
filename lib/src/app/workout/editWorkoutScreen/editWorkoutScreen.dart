@@ -41,20 +41,18 @@ class EditWorkoutScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
                 child: Center(
-                  child: Consumer<EditChangeNotifier>(
-                    builder: (_, editNotifier, __) =>
-                        Consumer<WorkoutChangeNotifier>(
-                      builder: (_, workoutNotifier, __) => ElevatedButton(
-                        onPressed: () async {
-                          if (editNotifier.isEdit) {
-                            await workoutService
-                                .addOrUpdateWorkout(workoutNotifier.workout);
-                            editNotifier.setIsEdit(false);
-                          }
-                        },
-                        child: Text(
-                            editNotifier.isEdit ? 'Save' : 'Start Workout'),
-                      ),
+                  child: Consumer2<EditChangeNotifier, WorkoutChangeNotifier>(
+                    builder: (_, editNotifier, workoutNotifier, __) =>
+                        ElevatedButton(
+                      onPressed: () async {
+                        if (editNotifier.isEdit) {
+                          await workoutService
+                              .addOrUpdateWorkout(workoutNotifier.workout);
+                          editNotifier.setIsEdit(false);
+                        }
+                      },
+                      child:
+                          Text(editNotifier.isEdit ? 'Save' : 'Start Workout'),
                     ),
                   ),
                 ),

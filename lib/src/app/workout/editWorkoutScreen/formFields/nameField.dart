@@ -14,17 +14,15 @@ class NameField extends StatelessWidget {
           Container(
             width: 250,
             padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
-            child: Consumer<EditChangeNotifier>(
-              builder: (_, editNotifier, __) => Consumer<WorkoutChangeNotifier>(
-                builder: (_, workoutNotifier, __) => TextFormField(
-                    readOnly: !editNotifier.isEdit,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 24, color: Colors.white),
-                    initialValue: workoutNotifier.workout.name != null
-                        ? workoutNotifier.workout.name
-                        : 'Enter Name',
-                    onChanged: (value) => workoutNotifier.setName(value)),
-              ),
+            child: Consumer2<EditChangeNotifier, WorkoutChangeNotifier>(
+              builder: (_, editNotifier, workoutNotifier, __) => TextFormField(
+                  readOnly: !editNotifier.isEdit,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 24, color: Colors.white),
+                  initialValue: workoutNotifier.workout.name != null
+                      ? workoutNotifier.workout.name
+                      : 'Enter Name',
+                  onChanged: (value) => workoutNotifier.setName(value)),
             ),
           ),
           Consumer<EditChangeNotifier>(

@@ -19,27 +19,26 @@ class DefaultFormatField extends StatelessWidget {
         ),
         Container(
           width: MediaQuery.of(context).size.width / 1.5,
-          child: Consumer<EditChangeNotifier>(
-            builder: (_, editNotifier, __) => Consumer<WorkoutChangeNotifier>(
-              builder: (_, workoutNotifier, __) => DropdownButtonFormField(
-                  disabledHint: Text(
-                      workoutNotifier.workout.defaultFormat != null
-                          ? workoutNotifier.workout.defaultFormat.displayValue
-                          : '',
-                      style: Theme.of(context).textTheme.bodyText1),
-                  value: workoutNotifier.workout.defaultFormat != null
-                      ? workoutNotifier.workout.defaultFormat.value
-                      : null,
-                  items: FormatType.getTypes()
-                      .map((type) => DropdownMenuItem(
-                          child: Text(Format.forType(type).displayValue,
-                              style: Theme.of(context).textTheme.bodyText1),
-                          value: type))
-                      .toList(),
-                  onChanged: editNotifier.isEdit
-                      ? (value) => workoutNotifier.setDefaultFormat(value)
-                      : null),
-            ),
+          child: Consumer2<EditChangeNotifier, WorkoutChangeNotifier>(
+            builder: (_, editNotifier, workoutNotifier, __) =>
+                DropdownButtonFormField(
+                    disabledHint: Text(
+                        workoutNotifier.workout.defaultFormat != null
+                            ? workoutNotifier.workout.defaultFormat.displayValue
+                            : '',
+                        style: Theme.of(context).textTheme.bodyText1),
+                    value: workoutNotifier.workout.defaultFormat != null
+                        ? workoutNotifier.workout.defaultFormat.value
+                        : null,
+                    items: FormatType.getTypes()
+                        .map((type) => DropdownMenuItem(
+                            child: Text(Format.forType(type).displayValue,
+                                style: Theme.of(context).textTheme.bodyText1),
+                            value: type))
+                        .toList(),
+                    onChanged: editNotifier.isEdit
+                        ? (value) => workoutNotifier.setDefaultFormat(value)
+                        : null),
           ),
         ),
       ],

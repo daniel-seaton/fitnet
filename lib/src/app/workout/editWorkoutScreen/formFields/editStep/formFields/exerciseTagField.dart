@@ -50,11 +50,9 @@ class ExerciseTagField extends StatelessWidget {
                 isEdit
                     ? Padding(
                         padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        child: Consumer<WorkoutStepChangeNotifier>(
-                          builder: (_, notifier, __) => ElevatedButton(
-                              child: Text('Add'),
-                              onPressed: () => notifier.addTag()),
-                        ),
+                        child: ElevatedButton(
+                            child: Text('Add'),
+                            onPressed: () => notifier.addTag()),
                       )
                     : Container(width: 0, height: 0),
               ],
