@@ -86,7 +86,14 @@ class StepListField extends StatelessWidget {
 
   showStepModal(BuildContext context,
       {@required Function onSave, WorkoutStep step, isEdit = false}) async {
-    if (step == null) step = WorkoutStep.empty();
+    WorkoutChangeNotifier workoutChangeNotifier =
+        Provider.of<WorkoutChangeNotifier>(context, listen: false);
+    if (step == null) {
+      step = WorkoutStep.empty();
+      step.format = workoutChangeNotifier.workout.defaultFormat;
+      step.formatType = step.format.value;
+    }
+
     await showDialog(
         context: context,
         builder: (context) =>
