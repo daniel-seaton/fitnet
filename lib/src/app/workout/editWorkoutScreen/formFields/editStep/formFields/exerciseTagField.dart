@@ -35,6 +35,12 @@ class ExerciseTagField extends StatelessWidget {
                           readOnly: !isEdit,
                           initialValue: notifier.step.exercise.tags[index],
                           onChanged: (value) => notifier.setTag(value, index),
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (value) {
+                            if (value == null || value == '')
+                              return 'Tag cannot be empty';
+                            return null;
+                          },
                         ),
                       ),
                       isEdit

@@ -22,7 +22,13 @@ class NameField extends StatelessWidget {
                   initialValue: workoutNotifier.workout.name != null
                       ? workoutNotifier.workout.name
                       : 'Enter Name',
-                  onChanged: (value) => workoutNotifier.setName(value)),
+                  onChanged: (value) => workoutNotifier.setName(value),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value == null || value == '' || value == 'Enter Name')
+                      return '';
+                    return null;
+                  }),
             ),
           ),
           Consumer<EditChangeNotifier>(

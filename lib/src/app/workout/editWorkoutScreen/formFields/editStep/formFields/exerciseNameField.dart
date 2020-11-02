@@ -24,13 +24,20 @@ class ExerciseNameField extends StatelessWidget {
           width: MediaQuery.of(context).size.width / 1.8,
           child: Consumer<WorkoutStepChangeNotifier>(
             builder: (_, notifier, __) => TextFormField(
-                readOnly: !isEdit,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.bodyText1,
-                initialValue: notifier.step.exercise != null
-                    ? notifier.step.exercise.name
-                    : '',
-                onChanged: (value) => notifier.setStepName(value)),
+              readOnly: !isEdit,
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyText1,
+              initialValue: notifier.step.exercise != null
+                  ? notifier.step.exercise.name
+                  : '',
+              onChanged: (value) => notifier.setStepName(value),
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (value) {
+                if (value == null || value == '')
+                  return 'Please enter an exercise name';
+                return null;
+              },
+            ),
           ),
         ),
       ],

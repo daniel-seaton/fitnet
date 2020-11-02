@@ -16,6 +16,7 @@ class EditWorkoutScreen extends StatelessWidget {
   final WorkoutService workoutService = injector<WorkoutService>();
   final Workout workout;
   final isEdit;
+  final _formKey = GlobalKey<FormState>();
 
   EditWorkoutScreen({@required this.workout, @required this.isEdit});
 
@@ -23,15 +24,17 @@ class EditWorkoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     WorkoutChangeNotifier workoutChangeNotifier =
         WorkoutChangeNotifier(workout: workout);
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(value: workoutChangeNotifier),
-        ChangeNotifierProvider.value(value: EditChangeNotifier(isEdit: isEdit))
-      ],
-      builder: (context, width) => Scaffold(
-        appBar: AppBar(title: NameField()),
-        body: Form(
-          child: ListView(
+    return Form(
+      key: _formKey,
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(value: workoutChangeNotifier),
+          ChangeNotifierProvider.value(
+              value: EditChangeNotifier(isEdit: isEdit))
+        ],
+        builder: (context, width) => Scaffold(
+          appBar: AppBar(title: NameField()),
+          body: ListView(
             children: [
               DefaultFormatField(),
               ScheduledDateField(),
@@ -45,11 +48,13 @@ class EditWorkoutScreen extends StatelessWidget {
                     builder: (_, editNotifier, workoutNotifier, __) =>
                         ElevatedButton(
                       onPressed: () async {
-                        if (editNotifier.isEdit) {
+                        if (editNotifier.isEdit &&
+                            _formKey.currentState.validate() == true) {
                           await workoutService
                               .addOrUpdateWorkout(workoutNotifier.workout);
                           editNotifier.setIsEdit(false);
                         }
+                        // TODO add start workout logic here if isEdit is false, or maybe just add another button with its own on pressed?
                       },
                       child:
                           Text(editNotifier.isEdit ? 'Save' : 'Start Workout'),

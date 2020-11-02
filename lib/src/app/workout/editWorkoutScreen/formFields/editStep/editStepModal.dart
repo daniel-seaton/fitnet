@@ -13,6 +13,7 @@ class EditStepModal extends StatelessWidget {
   final WorkoutStep step;
   final isEdit;
   final Function onSave;
+  final _formKey = GlobalKey<FormState>();
 
   EditStepModal(
       {@required this.step, @required this.onSave, this.isEdit = false});
@@ -28,39 +29,47 @@ class EditStepModal extends StatelessWidget {
           child: Container(
             height: MediaQuery.of(context).size.height - 100,
             width: MediaQuery.of(context).size.width - 50,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  height: 50,
-                  width: MediaQuery.of(context).size.width - 50,
-                  color: Colors.blue,
-                  child: Text(
-                    isEdit ? 'Edit Step' : 'View Step',
-                    style: TextStyle(color: Colors.white, fontSize: 24),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    height: 50,
+                    width: MediaQuery.of(context).size.width - 50,
+                    color: Colors.blue,
+                    child: Text(
+                      isEdit ? 'Edit Step' : 'View Step',
+                      style: TextStyle(color: Colors.white, fontSize: 24),
+                    ),
                   ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: [
-                      ExerciseNameField(
-                        isEdit: isEdit,
-                      ),
-                      StepFormatField(isEdit: isEdit),
-                      ExerciseTagField(isEdit: isEdit),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (isEdit) onSave(notifier.step);
-                          Navigator.pop(context);
-                        },
-                        child: Text(isEdit ? 'Save' : 'Close'),
-                      ),
-                    ],
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: [
+                        ExerciseNameField(
+                          isEdit: isEdit,
+                        ),
+                        StepFormatField(isEdit: isEdit),
+                        ExerciseTagField(isEdit: isEdit),
+                        ElevatedButton(
+                          onPressed: () {
+                            bool isValid = _formKey.currentState.validate();
+                            if (isEdit && isValid) {
+                              onSave(notifier.step);
+                              Navigator.pop(context);
+                            } else if (!isEdit) {
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: Text(isEdit ? 'Save' : 'Close'),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

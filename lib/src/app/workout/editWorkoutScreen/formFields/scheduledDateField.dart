@@ -36,9 +36,17 @@ class ScheduledDateField extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 decoration: BoxDecoration(
                     border: Border(bottom: BorderSide(color: Colors.grey))),
-                child: Text(
-                    DateFormat.yMd().format(workoutNotifier.workout.scheduled),
-                    style: Theme.of(context).textTheme.bodyText1),
+                child: TextFormField(
+                    initialValue: DateFormat.yMd()
+                        .format(workoutNotifier.workout.scheduled),
+                    readOnly: true,
+                    style: Theme.of(context).textTheme.bodyText1,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) {
+                      if (value == null || value == '')
+                        return 'Please enter a workout name';
+                      return null;
+                    }),
               ),
             ),
           ),

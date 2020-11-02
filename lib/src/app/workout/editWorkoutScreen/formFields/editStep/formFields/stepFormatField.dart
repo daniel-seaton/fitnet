@@ -25,22 +25,27 @@ class StepFormatField extends StatelessWidget {
           width: MediaQuery.of(context).size.width / 1.8,
           child: Consumer<WorkoutStepChangeNotifier>(
             builder: (_, notifier, __) => DropdownButtonFormField(
-                disabledHint: Text(
-                    notifier.step.format != null
-                        ? notifier.step.format.displayValue
-                        : '',
-                    style: Theme.of(context).textTheme.bodyText1),
-                value: notifier.step.format != null
-                    ? notifier.step.format.value
-                    : null,
-                items: FormatType.getTypes()
-                    .map((type) => DropdownMenuItem(
-                        child: Text(Format.forType(type).displayValue,
-                            style: Theme.of(context).textTheme.bodyText1),
-                        value: type))
-                    .toList(),
-                onChanged:
-                    isEdit ? (value) => notifier.setFormat(value) : null),
+              disabledHint: Text(
+                  notifier.step.format != null
+                      ? notifier.step.format.displayValue
+                      : '',
+                  style: Theme.of(context).textTheme.bodyText1),
+              value: notifier.step.format != null
+                  ? notifier.step.format.value
+                  : null,
+              items: FormatType.getTypes()
+                  .map((type) => DropdownMenuItem(
+                      child: Text(Format.forType(type).displayValue,
+                          style: Theme.of(context).textTheme.bodyText1),
+                      value: type))
+                  .toList(),
+              onChanged: isEdit ? (value) => notifier.setFormat(value) : null,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (value) {
+                if (value == null) return 'Please select a format';
+                return null;
+              },
+            ),
           ),
         ),
       ],
