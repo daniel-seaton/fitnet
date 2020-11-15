@@ -3,10 +3,13 @@ import 'package:fitnet/src/app/workout/editWorkoutScreen/editChangeNotifier.dart
 import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 
 class DefaultFormatField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    WorkoutChangeNotifier workoutNotifier =
+        Provider.of<WorkoutChangeNotifier>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -19,32 +22,28 @@ class DefaultFormatField extends StatelessWidget {
         ),
         Container(
           width: MediaQuery.of(context).size.width / 1.5,
-          child: Consumer2<EditChangeNotifier, WorkoutChangeNotifier>(
-            builder: (_, editNotifier, workoutNotifier, __) =>
-                DropdownButtonFormField(
-                    disabledHint: Text(
-                        workoutNotifier.workout.defaultFormat != null
-                            ? workoutNotifier.workout.defaultFormat.displayValue
-                            : '',
-                        style: Theme.of(context).textTheme.bodyText1),
-                    value: workoutNotifier.workout.defaultFormat != null
-                        ? workoutNotifier.workout.defaultFormat.value
-                        : null,
-                    items: FormatType.getTypes()
-                        .map((type) => DropdownMenuItem(
-                            child: Text(Format.forType(type).displayValue,
-                                style: Theme.of(context).textTheme.bodyText1),
-                            value: type))
-                        .toList(),
-                    onChanged: editNotifier.isEdit
-                        ? (value) => workoutNotifier.setDefaultFormat(value)
-                        : null,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null)
-                        return 'Please select a default format';
-                      return null;
-                    }),
+          child: Selector2<EditChangeNotifier, WorkoutChangeNotifier,
+              Tuple2<bool, Format>>(
+            selector: (_, edit, workout) =>
+                Tuple2(edit.isEdit, workout.workout.defaultFormat),
+            builder: (_, tuple, __) => DropdownButtonFormField(
+                disabledHint: Text(tuple.item2?.displayValue ?? '',
+                    style: Theme.of(context).textTheme.bodyText1),
+                value: tuple.item2?.value,
+                items: FormatType.getTypes()
+                    .map((type) => DropdownMenuItem(
+                        child: Text(Format.forType(type).displayValue,
+                            style: Theme.of(context).textTheme.bodyText1),
+                        value: type))
+                    .toList(),
+                onChanged: tuple.item1
+                    ? (value) => workoutNotifier.setDefaultFormat(value)
+                    : null,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                validator: (value) {
+                  if (value == null) return 'Please select a default format';
+                  return null;
+                }),
           ),
         ),
       ],

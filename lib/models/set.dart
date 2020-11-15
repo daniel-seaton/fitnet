@@ -5,6 +5,8 @@ class Set {
   DateTime start;
   DateTime end;
 
+  Set({this.goal, this.actual, this.weight});
+
   Set.fromMap(Map<String, dynamic> map) {
     goal = map['goal'];
     actual = map['actual'];

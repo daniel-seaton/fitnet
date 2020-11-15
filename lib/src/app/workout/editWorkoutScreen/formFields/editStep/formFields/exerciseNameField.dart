@@ -10,6 +10,8 @@ class ExerciseNameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WorkoutStepChangeNotifier notifier =
+        Provider.of<WorkoutStepChangeNotifier>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -22,14 +24,15 @@ class ExerciseNameField extends StatelessWidget {
         Container(
           padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
           width: MediaQuery.of(context).size.width / 1.8,
-          child: Consumer<WorkoutStepChangeNotifier>(
-            builder: (_, notifier, __) => TextFormField(
+          child: Selector<WorkoutStepChangeNotifier, String>(
+            selector: (_, notifier) => notifier.step.exercise != null
+                ? notifier.step.exercise.name
+                : '',
+            builder: (_, exerciseName, __) => TextFormField(
               readOnly: !isEdit,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyText1,
-              initialValue: notifier.step.exercise != null
-                  ? notifier.step.exercise.name
-                  : '',
+              initialValue: exerciseName,
               onChanged: (value) => notifier.setStepName(value),
               autovalidateMode: AutovalidateMode.onUserInteraction,
               validator: (value) {

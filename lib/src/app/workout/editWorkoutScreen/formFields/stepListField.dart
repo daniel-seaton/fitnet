@@ -15,6 +15,8 @@ class StepListField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WorkoutChangeNotifier workoutNotifier =
+        Provider.of<WorkoutChangeNotifier>(context, listen: false);
     return Padding(
       padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
       child: Column(
@@ -29,9 +31,8 @@ class StepListField extends StatelessWidget {
                 border: Border.all(color: Colors.grey, width: 0.5)),
             height: MediaQuery.of(context).size.height / 2.1,
             width: MediaQuery.of(context).size.width - 40,
-            child: Consumer2<EditChangeNotifier, WorkoutChangeNotifier>(
-              builder: (_, editNotifier, workoutNotifier, __) =>
-                  ReorderableListView(
+            child: Consumer<EditChangeNotifier>(
+              builder: (_, editNotifier, __) => ReorderableListView(
                 onReorder: (x, y) {
                   if (!editNotifier.isEdit) return;
                   if (x != y) {
@@ -57,9 +58,8 @@ class StepListField extends StatelessWidget {
               ),
             ),
           ),
-          Consumer2<EditChangeNotifier, WorkoutChangeNotifier>(
-            builder: (_, editNotifier, workoutNotifier, __) => editNotifier
-                    .isEdit
+          Consumer<EditChangeNotifier>(
+            builder: (_, editNotifier, __) => editNotifier.isEdit
                 ? OutlineButton(
                     key: Key('addStepButton'),
                     color: Colors.grey,

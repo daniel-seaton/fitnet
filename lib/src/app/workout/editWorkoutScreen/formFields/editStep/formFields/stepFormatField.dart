@@ -11,6 +11,8 @@ class StepFormatField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WorkoutStepChangeNotifier notifier =
+        Provider.of<WorkoutStepChangeNotifier>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -23,16 +25,12 @@ class StepFormatField extends StatelessWidget {
         Container(
           padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
           width: MediaQuery.of(context).size.width / 1.8,
-          child: Consumer<WorkoutStepChangeNotifier>(
-            builder: (_, notifier, __) => DropdownButtonFormField(
-              disabledHint: Text(
-                  notifier.step.format != null
-                      ? notifier.step.format.displayValue
-                      : '',
+          child: Selector<WorkoutStepChangeNotifier, Format>(
+            selector: (_, notifier) => notifier.step.format,
+            builder: (_, format, __) => DropdownButtonFormField(
+              disabledHint: Text(format != null ? format.displayValue : '',
                   style: Theme.of(context).textTheme.bodyText1),
-              value: notifier.step.format != null
-                  ? notifier.step.format.value
-                  : null,
+              value: format != null ? format.value : null,
               items: FormatType.getTypes()
                   .map((type) => DropdownMenuItem(
                       child: Text(Format.forType(type).displayValue,

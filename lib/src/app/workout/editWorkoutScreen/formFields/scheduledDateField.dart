@@ -2,12 +2,15 @@ import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.d
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:tuple/tuple.dart';
 
 import '../editChangeNotifier.dart';
 
 class ScheduledDateField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    WorkoutChangeNotifier workoutNotifier =
+        Provider.of<WorkoutChangeNotifier>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -18,35 +21,33 @@ class ScheduledDateField extends StatelessWidget {
               textAlign: TextAlign.right,
               style: Theme.of(context).textTheme.bodyText1),
         ),
-        Consumer2<EditChangeNotifier, WorkoutChangeNotifier>(
-          builder: (_, editNotifier, workoutNotifier, __) => Container(
+        Selector2<EditChangeNotifier, WorkoutChangeNotifier,
+            Tuple2<bool, DateTime>>(
+          selector: (_, edit, workout) =>
+              Tuple2(edit.isEdit, workout.workout.scheduled),
+          builder: (_, tuple, __) => Container(
             width: MediaQuery.of(context).size.width / 1.5,
             child: InkWell(
               onTap: () async {
-                if (!editNotifier.isEdit) return;
+                if (!tuple.item1) return;
                 workoutNotifier.setScheduled(await showDatePicker(
                   context: context,
-                  initialDate: workoutNotifier.workout.scheduled,
+                  initialDate: tuple.item2,
                   firstDate: DateTime.now().add(Duration(days: -365)),
                   lastDate: DateTime.now().add(Duration(days: 365)),
                 ));
               },
-              child: Container(
-                height: 50,
-                alignment: Alignment.centerLeft,
-                decoration: BoxDecoration(
-                    border: Border(bottom: BorderSide(color: Colors.grey))),
-                child: TextFormField(
-                    initialValue: DateFormat.yMd()
-                        .format(workoutNotifier.workout.scheduled),
-                    readOnly: true,
+              child: IgnorePointer(
+                child: Container(
+                  height: 50,
+                  alignment: Alignment.centerLeft,
+                  decoration: BoxDecoration(
+                      border: Border(bottom: BorderSide(color: Colors.grey))),
+                  child: Text(
+                    DateFormat.yMd().format(tuple.item2),
                     style: Theme.of(context).textTheme.bodyText1,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value == null || value == '')
-                        return 'Please enter a workout name';
-                      return null;
-                    }),
+                  ),
+                ),
               ),
             ),
           ),

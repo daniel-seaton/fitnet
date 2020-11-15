@@ -48,13 +48,17 @@ class WorkoutStep {
 
 class SetBasedStep extends WorkoutStep {
   num minimumRest;
+  num targetReps;
+  num targetWeight;
   List<Set> sets = [];
 
-  SetBasedStep({this.minimumRest, Exercise exercise})
+  SetBasedStep({this.minimumRest, this.targetReps, exercise})
       : super(formatType: FormatType.SetBased, exercise: exercise);
 
   SetBasedStep.fromMap(Map<String, dynamic> map) : super.fromMap(map) {
-    minimumRest = map['minimumRest'];
+    minimumRest = map['minimumRest'] ?? 0;
+    targetReps = map['targetReps'] ?? 0;
+    targetWeight = map['targetWieght'] ?? 0;
     if (map['sets'] != null) {
       List<Set> mappedSets = [];
       map['sets'].forEach((s) => mappedSets.add(Set.fromMap(s)));
@@ -64,8 +68,10 @@ class SetBasedStep extends WorkoutStep {
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = super.toMap();
-    map['minimumRest'] = minimumRest;
+    map['minimumRest'] = minimumRest ?? 0;
     map['sets'] = sets.map((s) => s.toMap()).toList();
+    map['targetReps'] = targetReps ?? 0;
+    map['targetWeight'] = targetWeight ?? 0;
     return map;
   }
 }
