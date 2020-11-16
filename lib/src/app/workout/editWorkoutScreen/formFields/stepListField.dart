@@ -2,6 +2,7 @@ import 'package:fitnet/models/format.dart';
 import 'package:fitnet/models/workoutStep.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/editChangeNotifier.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/formFields/editStep/editStepModal.dart';
+import 'package:fitnet/src/app/workout/editWorkoutScreen/formFields/editStep/workStepChangeNotifier.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/formFields/stepListItem.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +66,7 @@ class StepListField extends StatelessWidget {
                     color: Colors.grey,
                     onPressed: () => showStepModal(
                       context,
+                      step: WorkoutStep.empty(),
                       isEdit: true,
                       onSave: (WorkoutStep step) =>
                           workoutNotifier.addStep(step),
@@ -88,15 +90,17 @@ class StepListField extends StatelessWidget {
       {@required Function onSave, WorkoutStep step, isEdit = false}) async {
     WorkoutChangeNotifier workoutChangeNotifier =
         Provider.of<WorkoutChangeNotifier>(context, listen: false);
-    if (step == null) {
-      step = WorkoutStep.empty();
-      step.format = workoutChangeNotifier.workout.defaultFormat;
-      step.formatType = step.format.value;
+    if (step.formatType == null) {
+      step.formatType = workoutChangeNotifier.workout.defaultFormat.value;
+      step = WorkoutStepFactory.getForType(
+          workoutChangeNotifier.workout.defaultFormat.value, step.toMap());
     }
 
     await showDialog(
         context: context,
-        builder: (context) =>
-            EditStepModal(step: step, isEdit: isEdit, onSave: onSave));
+        builder: (context) => EditStepModal(
+            notifier: WorkoutStepChangeNotifier(step: step),
+            isEdit: isEdit,
+            onSave: onSave));
   }
 }

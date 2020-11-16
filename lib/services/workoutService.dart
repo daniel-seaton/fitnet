@@ -11,7 +11,6 @@ class WorkoutService {
   }
 
   addOrUpdateWorkout(Workout workout) async {
-    print(workout.wid);
     if (workout.wid == null)
       await firestore.addWorkout(workout);
     else

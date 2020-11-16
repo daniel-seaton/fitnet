@@ -9,21 +9,23 @@ class Set {
 
   Set.fromMap(Map<String, dynamic> map) {
     goal = map['goal'];
-    actual = map['actual'];
-    weight = map['weight'];
-    if (map['start'])
+    if (map['actual'] != null) actual = map['actual'];
+    if (map['weight'] != null) weight = map['weight'];
+    if (map['start'] != null)
       start = DateTime.fromMillisecondsSinceEpoch(map['start'].seconds * 1000);
-    if (map['end'])
+    if (map['end'] != null)
       start = DateTime.fromMillisecondsSinceEpoch(map['end'].seconds * 1000);
   }
 
   Map<String, dynamic> toMap() {
-    return {
+    Map<String, dynamic> map = {
       'goal': goal,
-      'actual': actual,
-      'weight': weight,
-      'start': start,
-      'end': end
     };
+
+    if (weight != null) map['weight'] = weight;
+    if (actual != null) map['actual'] = actual;
+    if (start != null) map['start'] = start;
+    if (end != null) map['end'] = end;
+    return map;
   }
 }

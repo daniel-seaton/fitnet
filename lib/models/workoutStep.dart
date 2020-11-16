@@ -7,13 +7,10 @@ class WorkoutStepFactory {
     switch (formatType) {
       case FormatType.SetBased:
         return SetBasedStep.fromMap(map);
-        break;
       case FormatType.RepsForTime:
         return RepsForTimeStep.fromMap(map);
-        break;
       case FormatType.AMRAP:
         return AMRAPStep.fromMap(map);
-        break;
     }
   }
 }
@@ -85,8 +82,8 @@ class RepsForTimeStep extends WorkoutStep {
       : super(formatType: FormatType.SetBased, exercise: exercise);
 
   RepsForTimeStep.fromMap(Map<String, dynamic> map) : super.fromMap(map) {
-    targetTime = map['targetTime'];
-    targetReps = map['targetReps'];
+    targetTime = map['targetTime'] ?? 0;
+    targetReps = map['targetReps'] ?? 0;
     if (map['sets'] != null) {
       List<Set> mappedSets = [];
       map['sets'].forEach((s) => mappedSets.add(Set.fromMap(s)));
@@ -112,8 +109,8 @@ class AMRAPStep extends WorkoutStep {
       : super(formatType: FormatType.SetBased, exercise: exercise);
 
   AMRAPStep.fromMap(Map<String, dynamic> map) : super.fromMap(map) {
-    targetTime = map['targetTime'];
-    targetReps = map['targetReps'];
+    targetTime = map['targetTime'] ?? 0;
+    targetReps = map['targetReps'] ?? 0;
     if (map['actualReps'] != null) actualReps = map['actualReps'];
   }
 

@@ -1,3 +1,4 @@
+import 'package:fitnet/models/format.dart';
 import 'package:fitnet/models/workoutStep.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/editChangeNotifier.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class StepListItem extends StatelessWidget {
                 children: [
                   Text(step.exercise.name,
                       style: Theme.of(context).textTheme.bodyText1),
-                  Text(step.format.displayValue,
+                  Text(Format.forType(step.formatType).displayValue,
                       style: Theme.of(context).textTheme.bodyText2),
                 ],
               ),

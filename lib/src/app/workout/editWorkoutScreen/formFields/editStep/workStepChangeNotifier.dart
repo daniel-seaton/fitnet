@@ -1,4 +1,3 @@
-import 'package:fitnet/models/format.dart';
 import 'package:fitnet/models/workoutStep.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +7,7 @@ class WorkoutStepChangeNotifier extends ChangeNotifier {
 
   void setFormat(String value) {
     step.formatType = value;
-    step.format = Format.forType(value);
+    step = WorkoutStepFactory.getForType(value, step.toMap());
     notifyListeners();
   }
 

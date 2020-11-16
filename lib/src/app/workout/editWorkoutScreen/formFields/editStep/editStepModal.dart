@@ -1,5 +1,6 @@
 import 'package:fitnet/models/format.dart';
 import 'package:fitnet/models/workoutStep.dart';
+import 'package:fitnet/src/app/workout/editWorkoutScreen/formFields/editStep/formFields/formatFieldFactory.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/formFields/editStep/workStepChangeNotifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,20 +11,19 @@ import 'formFields/exerciseTagField.dart';
 import 'formFields/stepFormatField.dart';
 
 class EditStepModal extends StatelessWidget {
-  final WorkoutStep step;
   final isEdit;
   final Function onSave;
+  final WorkoutStepChangeNotifier notifier;
   final _formKey = GlobalKey<FormState>();
 
   EditStepModal(
-      {@required this.step, @required this.onSave, this.isEdit = false});
+      {@required this.notifier, @required this.onSave, this.isEdit = false});
 
   @override
   Widget build(BuildContext context) {
-    WorkoutStepChangeNotifier notifier = WorkoutStepChangeNotifier(step: step);
     return ChangeNotifierProvider.value(
       value: notifier,
-      builder: (_, __) => Dialog(
+      builder: (ctx, __) => Dialog(
         backgroundColor: Colors.white,
         child: SingleChildScrollView(
           child: Container(
@@ -46,26 +46,30 @@ class EditStepModal extends StatelessWidget {
                   ),
                   Container(
                     padding: EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        ExerciseNameField(
-                          isEdit: isEdit,
-                        ),
-                        StepFormatField(isEdit: isEdit),
-                        ExerciseTagField(isEdit: isEdit),
-                        ElevatedButton(
-                          onPressed: () {
-                            bool isValid = _formKey.currentState.validate();
-                            if (isEdit && isValid) {
-                              onSave(notifier.step);
-                              Navigator.pop(context);
-                            } else if (!isEdit) {
-                              Navigator.pop(context);
-                            }
-                          },
-                          child: Text(isEdit ? 'Save' : 'Close'),
-                        ),
-                      ],
+                    child: Selector<WorkoutStepChangeNotifier, String>(
+                      selector: (_, notifier) => notifier.step.formatType,
+                      builder: (_, formatType, __) => Column(
+                        children: [
+                          ExerciseNameField(
+                            isEdit: isEdit,
+                          ),
+                          StepFormatField(isEdit: isEdit),
+                          ...FormatFieldFactory.getFields(formatType, isEdit),
+                          ExerciseTagField(isEdit: isEdit),
+                          ElevatedButton(
+                            onPressed: () {
+                              bool isValid = _formKey.currentState.validate();
+                              if (isEdit && isValid) {
+                                onSave(notifier.step);
+                                Navigator.pop(context);
+                              } else if (!isEdit) {
+                                Navigator.pop(context);
+                              }
+                            },
+                            child: Text(isEdit ? 'Save' : 'Close'),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
