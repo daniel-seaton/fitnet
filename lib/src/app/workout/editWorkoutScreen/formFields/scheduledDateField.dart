@@ -4,13 +4,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
-import '../editChangeNotifier.dart';
-
 class ScheduledDateField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    WorkoutChangeNotifier workoutNotifier =
-        Provider.of<WorkoutChangeNotifier>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -21,22 +17,11 @@ class ScheduledDateField extends StatelessWidget {
               textAlign: TextAlign.right,
               style: Theme.of(context).textTheme.bodyText1),
         ),
-        Selector2<EditChangeNotifier, WorkoutChangeNotifier,
-            Tuple2<bool, DateTime>>(
-          selector: (_, edit, workout) =>
-              Tuple2(edit.isEdit, workout.workout.scheduled),
-          builder: (_, tuple, __) => Container(
+        Consumer<EditWorkoutChangeNotifier>(
+          builder: (_, notifier, __) => Container(
             width: MediaQuery.of(context).size.width / 1.5,
             child: InkWell(
-              onTap: () async {
-                if (!tuple.item1) return;
-                workoutNotifier.setScheduled(await showDatePicker(
-                  context: context,
-                  initialDate: tuple.item2,
-                  firstDate: DateTime.now().add(Duration(days: -365)),
-                  lastDate: DateTime.now().add(Duration(days: 365)),
-                ));
-              },
+              onTap: () => displayDatePickerModal(context, notifier),
               child: IgnorePointer(
                 child: Container(
                   height: 50,
@@ -44,7 +29,7 @@ class ScheduledDateField extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: Border(bottom: BorderSide(color: Colors.grey))),
                   child: Text(
-                    DateFormat.yMd().format(tuple.item2),
+                    DateFormat.yMd().format(notifier.workout.scheduled),
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
@@ -54,5 +39,17 @@ class ScheduledDateField extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void displayDatePickerModal(
+      BuildContext context, EditWorkoutChangeNotifier notifier) async {
+    if (!notifier.isEdit) return;
+    var newDate = await showDatePicker(
+      context: context,
+      initialDate: notifier.workout.scheduled,
+      firstDate: DateTime.now().add(Duration(days: -365)),
+      lastDate: DateTime.now().add(Duration(days: 365)),
+    );
+    notifier.setScheduled(newDate);
   }
 }

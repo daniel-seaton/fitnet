@@ -1,6 +1,6 @@
 import 'package:fitnet/models/format.dart';
 import 'package:fitnet/models/workoutStep.dart';
-import 'package:fitnet/src/app/workout/editWorkoutScreen/editChangeNotifier.dart';
+import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,10 +18,11 @@ class StepListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    EditChangeNotifier editNotifier = Provider.of<EditChangeNotifier>(context);
+    EditWorkoutChangeNotifier notifier =
+        Provider.of<EditWorkoutChangeNotifier>(context);
     return Dismissible(
       key: key,
-      direction: editNotifier.isEdit ? DismissDirection.horizontal : null,
+      direction: notifier.isEdit ? DismissDirection.horizontal : null,
       background: Container(
         alignment: Alignment.centerRight,
         padding: EdgeInsets.fromLTRB(0, 0, 25, 0),
@@ -29,10 +30,10 @@ class StepListItem extends StatelessWidget {
         child: Icon(Icons.delete, color: Colors.white),
       ),
       onDismissed: (dir) {
-        if (editNotifier.isEdit) onDismissed();
+        if (notifier.isEdit) onDismissed();
       },
       child: InkWell(
-        onTap: () => showStepModal(step, editNotifier.isEdit),
+        onTap: () => showStepModal(step, notifier.isEdit),
         child: Container(
           decoration: BoxDecoration(
             border: Border(
@@ -53,7 +54,7 @@ class StepListItem extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyText2),
                 ],
               ),
-              editNotifier.isEdit
+              notifier.isEdit
                   ? IconButton(icon: Icon(Icons.reorder), onPressed: null)
                   : Container(width: 0, height: 0)
             ],

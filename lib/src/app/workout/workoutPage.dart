@@ -25,15 +25,19 @@ class WorkoutPage extends StatelessWidget {
         builder: (_, workouts, __) => ListView.builder(
           padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
           itemCount: workouts.length + 1,
-          itemBuilder: (context, index) {
-            if (index < workouts.length) {
-              return WorkoutListItem(workout: workouts[index]);
-            } else {
-              return CreateWorkoutButton(userId: userId);
-            }
-          },
+          itemBuilder: (context, index) =>
+              buildListItem(context, index, workouts),
         ),
       ),
     );
+  }
+
+  Widget buildListItem(
+      BuildContext context, int index, List<Workout> workouts) {
+    if (index < workouts.length) {
+      return WorkoutListItem(workout: workouts[index]);
+    } else {
+      return CreateWorkoutButton(userId: userId);
+    }
   }
 }

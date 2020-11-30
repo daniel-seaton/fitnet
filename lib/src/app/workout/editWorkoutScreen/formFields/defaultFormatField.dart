@@ -1,15 +1,13 @@
 import 'package:fitnet/models/format.dart';
-import 'package:fitnet/src/app/workout/editWorkoutScreen/editChangeNotifier.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tuple/tuple.dart';
 
 class DefaultFormatField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    WorkoutChangeNotifier workoutNotifier =
-        Provider.of<WorkoutChangeNotifier>(context, listen: false);
+    EditWorkoutChangeNotifier workoutNotifier =
+        Provider.of<EditWorkoutChangeNotifier>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -22,21 +20,19 @@ class DefaultFormatField extends StatelessWidget {
         ),
         Container(
           width: MediaQuery.of(context).size.width / 1.5,
-          child: Selector2<EditChangeNotifier, WorkoutChangeNotifier,
-              Tuple2<bool, Format>>(
-            selector: (_, edit, workout) =>
-                Tuple2(edit.isEdit, workout.workout.defaultFormat),
-            builder: (_, tuple, __) => DropdownButtonFormField(
-                disabledHint: Text(tuple.item2?.displayValue ?? '',
+          child: Consumer<EditWorkoutChangeNotifier>(
+            builder: (_, notifier, __) => DropdownButtonFormField(
+                disabledHint: Text(
+                    notifier.workout?.defaultFormat?.displayValue ?? '',
                     style: Theme.of(context).textTheme.bodyText1),
-                value: tuple.item2?.value,
+                value: notifier.workout?.defaultFormat?.value,
                 items: FormatType.getTypes()
                     .map((type) => DropdownMenuItem(
                         child: Text(Format.forType(type).displayValue,
                             style: Theme.of(context).textTheme.bodyText1),
                         value: type))
                     .toList(),
-                onChanged: tuple.item1
+                onChanged: notifier.isEdit
                     ? (value) => workoutNotifier.setDefaultFormat(value)
                     : null,
                 autovalidateMode: AutovalidateMode.onUserInteraction,

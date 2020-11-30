@@ -1,6 +1,5 @@
 import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/services/workoutService.dart';
-import 'package:fitnet/src/app/workout/editWorkoutScreen/editChangeNotifier.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,16 +21,12 @@ class EditWorkoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WorkoutChangeNotifier workoutChangeNotifier =
-        WorkoutChangeNotifier(workout: workout);
+    EditWorkoutChangeNotifier workoutChangeNotifier =
+        EditWorkoutChangeNotifier(workout: workout, isEdit: isEdit);
     return Form(
       key: _formKey,
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider.value(value: workoutChangeNotifier),
-          ChangeNotifierProvider.value(
-              value: EditChangeNotifier(isEdit: isEdit))
-        ],
+      child: ChangeNotifierProvider.value(
+        value: workoutChangeNotifier,
         builder: (context, width) => Scaffold(
           appBar: AppBar(title: NameField()),
           body: ListView(
@@ -44,20 +39,12 @@ class EditWorkoutScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
                 child: Center(
-                  child: Consumer2<EditChangeNotifier, WorkoutChangeNotifier>(
-                    builder: (_, editNotifier, workoutNotifier, __) =>
-                        ElevatedButton(
-                      onPressed: () async {
-                        if (editNotifier.isEdit &&
-                            _formKey.currentState.validate() == true) {
-                          await workoutService
-                              .addOrUpdateWorkout(workoutNotifier.workout);
-                          editNotifier.setIsEdit(false);
-                        }
-                        // TODO add start workout logic here if isEdit is false, or maybe just add another button with its own on pressed?
-                      },
-                      child:
-                          Text(editNotifier.isEdit ? 'Save' : 'Start Workout'),
+                  child: Consumer<EditWorkoutChangeNotifier>(
+                    builder: (_, notifier, __) => ElevatedButton(
+                      onPressed: () => saveOrStartWorkout(notifier, context),
+                      child: Text(
+                        getButtonText(notifier.isEdit),
+                      ),
                     ),
                   ),
                 ),
@@ -67,5 +54,18 @@ class EditWorkoutScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String getButtonText(bool isEdit) => isEdit ? 'Save' : 'Start Workout';
+
+  void saveOrStartWorkout(
+      EditWorkoutChangeNotifier notifier, BuildContext context) async {
+    if (notifier.isEdit && _formKey.currentState.validate() == true) {
+      await workoutService.addOrUpdateWorkout(notifier.workout);
+      notifier.setIsEdit(false);
+    } else if (!notifier.isEdit) {
+      print('TODO');
+      // TODO add start workout logic here if isEdit is false, or maybe just add another button with its own on pressed?
+    }
   }
 }

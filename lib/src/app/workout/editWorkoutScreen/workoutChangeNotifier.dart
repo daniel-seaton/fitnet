@@ -3,9 +3,10 @@ import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/models/workoutStep.dart';
 import 'package:flutter/material.dart';
 
-class WorkoutChangeNotifier extends ChangeNotifier {
+class EditWorkoutChangeNotifier extends ChangeNotifier {
   final Workout workout;
-  WorkoutChangeNotifier({this.workout});
+  bool isEdit;
+  EditWorkoutChangeNotifier({this.workout, this.isEdit});
 
   void setDefaultFormat(String value) {
     workout.defaultFormat = Format.forType(value);
@@ -37,5 +38,10 @@ class WorkoutChangeNotifier extends ChangeNotifier {
     WorkoutStep step = workout.steps.removeAt(index);
     notifyListeners();
     return step;
+  }
+
+  void setIsEdit(bool value) {
+    isEdit = value;
+    notifyListeners();
   }
 }

@@ -19,6 +19,9 @@ class Fitnet extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          // TODO add styling for all text, icons, etc.
+          // Also should change this to be variable based on if the app is in light or dark mode
+          // Might be able to move the logos here too?
           textTheme: TextTheme(
             // Workout List Item Headline
             headline1: GoogleFonts.anton(fontSize: 30, color: Colors.black),
