@@ -29,9 +29,7 @@ class StepListItem extends StatelessWidget {
         color: Colors.red,
         child: Icon(Icons.delete, color: Colors.white),
       ),
-      onDismissed: (dir) {
-        if (notifier.isEdit) onDismissed();
-      },
+      onDismissed: (dir) => checkIsEdit(notifier),
       child: InkWell(
         onTap: () => showStepModal(step, notifier.isEdit),
         child: Container(
@@ -62,5 +60,9 @@ class StepListItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  checkIsEdit(EditWorkoutChangeNotifier notifier) {
+    if (notifier.isEdit) onDismissed();
   }
 }

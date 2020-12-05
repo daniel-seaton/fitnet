@@ -32,27 +32,19 @@ class StepListField extends StatelessWidget {
             height: MediaQuery.of(context).size.height / 2.1,
             width: MediaQuery.of(context).size.width - 40,
             child: ReorderableListView(
-              onReorder: (x, y) {
-                if (!notifier.isEdit) return;
-                if (x != y) {
-                  WorkoutStep step = notifier.removeStep(x);
-                  notifier.addStep(step, index: y > x ? y - 1 : y);
-                }
-              },
+              onReorder: (x, y) => onReorder(x, y, notifier),
               children: List.generate(
                 steps.length,
-                (index) {
-                  return StepListItem(
-                    key: Key(steps[index].exercise.name),
-                    step: steps[index],
-                    showStepModal: (step, isEdit) => showStepModal(context,
-                        step: step,
-                        isEdit: isEdit,
-                        onSave: (WorkoutStep step) =>
-                            notifier.addStep(step, index: index, isEdit: true)),
-                    onDismissed: () => notifier.removeStep(index),
-                  );
-                },
+                (index) => StepListItem(
+                  key: Key(steps[index].exercise.name),
+                  step: steps[index],
+                  showStepModal: (step, isEdit) => showStepModal(context,
+                      step: step,
+                      isEdit: isEdit,
+                      onSave: (WorkoutStep step) =>
+                          notifier.addStep(step, index: index, isEdit: true)),
+                  onDismissed: () => notifier.removeStep(index),
+                ),
               ),
             ),
           ),
@@ -81,6 +73,14 @@ class StepListField extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  onReorder(int x, int y, EditWorkoutChangeNotifier notifier) {
+    if (!notifier.isEdit) return;
+    if (x != y) {
+      WorkoutStep step = notifier.removeStep(x);
+      notifier.addStep(step, index: y > x ? y - 1 : y);
+    }
   }
 
   showStepModal(BuildContext context,
