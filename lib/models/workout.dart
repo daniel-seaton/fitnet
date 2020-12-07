@@ -16,6 +16,12 @@ class Workout {
     if (scheduled == null) scheduled = DateTime.now();
   }
 
+  Workout.mock() {
+    wid = '0000000';
+    uid = '1234567';
+    name = 'mock';
+  }
+
   Workout.fromMap(Map<String, dynamic> map) {
     wid = map['wid'];
     uid = map['uid'];

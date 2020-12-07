@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:firebase_storage_mocks/firebase_storage_mocks.dart';
 import 'package:fitnet/services/authService.dart';
 import 'package:fitnet/services/userService.dart';
+import 'package:fitnet/services/workoutService.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -19,5 +20,6 @@ setupTestServiceInjector() {
   injector.registerSingleton<FirebaseStorage>(MockFirebaseStorage());
   injector.registerSingleton<UserService>(MockUserService());
   injector.registerSingleton<AuthService>(MockAuthService());
+  injector.registerSingleton<WorkoutService>(MockWorkoutService());
   injector.registerSingleton<ImagePicker>(MockImagePicker());
 }
