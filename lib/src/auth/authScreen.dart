@@ -29,7 +29,7 @@ class AuthScreen extends StatelessWidget {
                 ),
               ),
               Container(
-                height: 375,
+                height: 400,
                 width: MediaQuery.of(context).size.width - 50,
                 decoration: BoxDecoration(
                     color: CustomColors.white,

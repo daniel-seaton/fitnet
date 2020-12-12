@@ -10,8 +10,6 @@ class ExerciseTagField extends StatelessWidget {
   ExerciseTagField({@required this.isEdit});
   @override
   Widget build(BuildContext context) {
-    WorkoutStepChangeNotifier notifier =
-        Provider.of<WorkoutStepChangeNotifier>(context, listen: false);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -23,13 +21,12 @@ class ExerciseTagField extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyText1),
         ),
         Container(
-          child: Selector<WorkoutStepChangeNotifier, List<String>>(
-            selector: (_, notifier) => notifier.step.exercise.tags,
-            builder: (_, tags, __) => Column(
+          child: Consumer<WorkoutStepChangeNotifier>(
+            builder: (_, notifier, __) => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ...List.generate(
-                  tags.length,
+                  notifier.step.exercise.tags.length,
                   (index) => Row(
                     children: [
                       Container(
@@ -37,7 +34,7 @@ class ExerciseTagField extends StatelessWidget {
                         width: MediaQuery.of(context).size.width / 2.25,
                         child: TextFormField(
                           readOnly: !isEdit,
-                          initialValue: tags[index],
+                          initialValue: notifier.step.exercise.tags[index],
                           onChanged: (value) => notifier.setTag(value, index),
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           validator: (value) {

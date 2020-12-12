@@ -59,7 +59,6 @@ Things that DO need to be component tested:
  * add user settings
  * add tests where TODOs are
  * add email verifications
- * hide passwords
 ### 2.0
  * Implement 'gyms' feature and other social aspects (paid by number of people in the gym?)
  * Allow users to publish workouts(paid feature?)
