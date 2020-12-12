@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'colors.dart';
+
 class TabScreen extends StatelessWidget {
   final List<Tab> upperTabs = [];
   final List<Tab> lowerTabs = [];
@@ -32,7 +34,7 @@ class TabScreen extends StatelessWidget {
           child: TabBarView(children: tabPages),
         ),
         bottomNavigationBar: Material(
-            color: Colors.blue,
+            color: CustomColors.blue,
             child: lowerTabs.length > 0
                 ? TabBar(tabs: lowerTabs)
                 : Container(

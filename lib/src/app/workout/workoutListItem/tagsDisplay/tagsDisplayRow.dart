@@ -13,8 +13,11 @@ class TagsDisplayRow extends StatelessWidget {
       return Container();
     }
     List<Widget> tagsToDisplay = getTagsToDisplay();
-    return Row(
-        crossAxisAlignment: CrossAxisAlignment.end, children: tagsToDisplay);
+    return Container(
+      padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
+      child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end, children: tagsToDisplay),
+    );
   }
 
   List<Widget> getTagsToDisplay() {

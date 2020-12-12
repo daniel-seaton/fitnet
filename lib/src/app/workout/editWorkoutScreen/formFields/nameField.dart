@@ -2,6 +2,8 @@ import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.d
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../colors.dart';
+
 class NameField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class NameField extends StatelessWidget {
               builder: (_, notifier, __) => TextFormField(
                   readOnly: !notifier.isEdit,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 24, color: Colors.white),
+                  style: TextStyle(fontSize: 24, color: CustomColors.white),
                   initialValue: notifier.workout.name ?? 'Enter Name',
                   onChanged: (value) => notifier.setName(value),
                   autovalidateMode: AutovalidateMode.onUserInteraction,

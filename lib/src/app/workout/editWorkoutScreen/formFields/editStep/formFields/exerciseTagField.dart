@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../../colors.dart';
 import '../workStepChangeNotifier.dart';
 
 class ExerciseTagField extends StatelessWidget {
@@ -50,7 +51,7 @@ class ExerciseTagField extends StatelessWidget {
                           ? IconButton(
                               padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                               onPressed: () => notifier.removeTag(index),
-                              icon: Icon(Icons.close, color: Colors.grey),
+                              icon: Icon(Icons.close, color: CustomColors.grey),
                             )
                           : Container(height: 0, width: 0)
                     ],

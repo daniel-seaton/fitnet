@@ -21,12 +21,11 @@ class EditWorkoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    EditWorkoutChangeNotifier workoutChangeNotifier =
-        EditWorkoutChangeNotifier(workout: workout, isEdit: isEdit);
     return Form(
       key: _formKey,
-      child: ChangeNotifierProvider.value(
-        value: workoutChangeNotifier,
+      child: ChangeNotifierProvider(
+        create: (_) =>
+            EditWorkoutChangeNotifier(workout: workout, isEdit: isEdit),
         builder: (context, width) => Scaffold(
           appBar: AppBar(title: NameField()),
           body: ListView(

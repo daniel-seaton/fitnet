@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../colors.dart';
+
 class TagDisplay extends StatelessWidget {
   final String tag;
 
@@ -14,11 +16,11 @@ class TagDisplay extends StatelessWidget {
           padding: EdgeInsets.all(5),
           child: Text(
             '$tag',
-            style: TextStyle(color: Colors.white, fontSize: 16),
+            style: TextStyle(color: CustomColors.white, fontSize: 16),
           ),
         ),
         decoration: BoxDecoration(
-          color: Colors.blue,
+          color: CustomColors.blue,
           borderRadius: BorderRadius.all(
             Radius.circular(12.0),
           ),

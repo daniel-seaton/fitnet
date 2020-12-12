@@ -11,6 +11,7 @@ class Workout {
   DateTime scheduled;
   List<WorkoutStep> steps = [];
   Format defaultFormat;
+  String linkId;
 
   Workout({@required this.uid, this.name, this.scheduled, this.defaultFormat}) {
     if (scheduled == null) scheduled = DateTime.now();
@@ -41,6 +42,7 @@ class Workout {
               step['formatType'] ?? defaultFormat, step)));
       steps = mappedSteps;
     }
+    if (map['linkId'] != null) linkId = linkId;
   }
 
   Map<String, dynamic> toMap() {
@@ -54,6 +56,7 @@ class Workout {
     if (scheduled != null) map['scheduled'] = scheduled;
     if (steps != null)
       map['steps'] = steps.map((step) => step.toMap()).toList();
+    if (linkId != null) map['linkId'] = linkId;
     return map;
   }
 }

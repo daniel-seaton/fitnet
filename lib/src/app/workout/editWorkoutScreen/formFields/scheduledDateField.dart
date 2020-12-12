@@ -4,6 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:tuple/tuple.dart';
 
+import '../../../../colors.dart';
+
 class ScheduledDateField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,8 @@ class ScheduledDateField extends StatelessWidget {
                   height: 50,
                   alignment: Alignment.centerLeft,
                   decoration: BoxDecoration(
-                      border: Border(bottom: BorderSide(color: Colors.grey))),
+                      border:
+                          Border(bottom: BorderSide(color: CustomColors.grey))),
                   child: Text(
                     DateFormat.yMd().format(notifier.workout.scheduled),
                     style: Theme.of(context).textTheme.bodyText1,

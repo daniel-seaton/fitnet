@@ -4,6 +4,8 @@ import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.d
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../colors.dart';
+
 class StepListItem extends StatelessWidget {
   final Key key;
   final WorkoutStep step;
@@ -26,8 +28,8 @@ class StepListItem extends StatelessWidget {
       background: Container(
         alignment: Alignment.centerRight,
         padding: EdgeInsets.fromLTRB(0, 0, 25, 0),
-        color: Colors.red,
-        child: Icon(Icons.delete, color: Colors.white),
+        color: CustomColors.red,
+        child: Icon(Icons.delete, color: CustomColors.white),
       ),
       onDismissed: (dir) => checkIsEdit(notifier),
       child: InkWell(
@@ -35,7 +37,7 @@ class StepListItem extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             border: Border(
-              bottom: BorderSide(color: Colors.grey, width: 0.5),
+              bottom: BorderSide(color: CustomColors.grey, width: 0.5),
             ),
           ),
           padding: EdgeInsets.all(10),

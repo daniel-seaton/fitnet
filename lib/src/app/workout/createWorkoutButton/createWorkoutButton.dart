@@ -2,6 +2,8 @@ import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/editWorkoutScreen.dart';
 import 'package:flutter/material.dart';
 
+import '../../../colors.dart';
+
 class CreateWorkoutButton extends StatelessWidget {
   final String userId;
 
@@ -9,16 +11,30 @@ class CreateWorkoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlineButton(
-      borderSide: BorderSide(color: Colors.grey, width: 1),
-      color: Colors.grey,
-      onPressed: () => showNewWorkoutScreen(context),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.add, color: Colors.grey),
-          Text('Create New Workout', style: TextStyle(color: Colors.grey))
-        ],
+    return Container(
+      padding: EdgeInsets.all(5),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(6)),
+          boxShadow: [
+            BoxShadow(
+                offset: Offset(0, 2),
+                blurRadius: 3,
+                color: CustomColors.darkGrey)
+          ],
+          color: CustomColors.white,
+        ),
+        child: FlatButton(
+          onPressed: () => showNewWorkoutScreen(context),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.add, color: CustomColors.grey),
+              Text('Create New Workout',
+                  style: TextStyle(color: CustomColors.grey, fontSize: 24))
+            ],
+          ),
+        ),
       ),
     );
   }

@@ -8,8 +8,8 @@ class WorkoutService {
   final String workoutCollection = 'workouts';
 
   Stream<List<Workout>> getWorkoutStreamForUser(String uid) {
-    CollectionReference workoutRep = firestore.collection(workoutCollection);
-    return workoutRep
+    CollectionReference workoutRef = firestore.collection(workoutCollection);
+    return workoutRef
         .where('uid', isEqualTo: uid)
         .snapshots()
         .map((QuerySnapshot query) {
@@ -22,10 +22,28 @@ class WorkoutService {
   }
 
   addOrUpdateWorkout(Workout workout) async {
-    CollectionReference workoutRep = firestore.collection(workoutCollection);
+    CollectionReference workoutRef = firestore.collection(workoutCollection);
     if (workout.wid == null)
-      await workoutRep.add(workout.toMap());
+      await workoutRef.add(workout.toMap());
     else
-      await workoutRep.doc(workout.wid).update(workout.toMap());
+      await workoutRef.doc(workout.wid).update(workout.toMap());
+  }
+
+  addNewInstance(Workout workout) async {
+    CollectionReference workoutRef = firestore.collection(workoutCollection);
+    if (workout.linkId == null) {
+      workout.linkId = workout.wid;
+      await workoutRef.doc(workout.wid).update(workout.toMap());
+    }
+    workout.wid = null;
+    workout.scheduled = DateTime.now();
+    workout.start = null;
+    workout.end = null;
+    await workoutRef.add(workout.toMap());
+  }
+
+  deleteWorkout(Workout workout) async {
+    CollectionReference workoutRef = firestore.collection(workoutCollection);
+    workoutRef.doc(workout.wid).delete();
   }
 }

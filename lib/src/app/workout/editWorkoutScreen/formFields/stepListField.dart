@@ -7,6 +7,8 @@ import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.d
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../colors.dart';
+
 class StepListField extends StatelessWidget {
   final List<WorkoutStep> steps;
   final Format defaultFormat;
@@ -28,7 +30,7 @@ class StepListField extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey, width: 0.5)),
+                border: Border.all(color: CustomColors.grey, width: 0.5)),
             height: MediaQuery.of(context).size.height / 2.1,
             width: MediaQuery.of(context).size.width - 40,
             child: ReorderableListView(
@@ -51,7 +53,7 @@ class StepListField extends StatelessWidget {
           notifier.isEdit
               ? OutlineButton(
                   key: Key('addStepButton'),
-                  color: Colors.grey,
+                  color: CustomColors.grey,
                   onPressed: () => showStepModal(
                     context,
                     step: WorkoutStep.empty(),
@@ -61,10 +63,10 @@ class StepListField extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.add, color: Colors.grey),
+                      Icon(Icons.add, color: CustomColors.grey),
                       Text(
                         'Add Step',
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(color: CustomColors.grey),
                       )
                     ],
                   ),

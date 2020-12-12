@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../colors.dart';
 import 'formFields/exerciseNameField.dart';
 import 'formFields/exerciseTagField.dart';
 import 'formFields/stepFormatField.dart';
@@ -24,7 +25,7 @@ class EditStepModal extends StatelessWidget {
     return ChangeNotifierProvider.value(
       value: notifier,
       builder: (ctx, __) => Dialog(
-        backgroundColor: Colors.white,
+        backgroundColor: CustomColors.white,
         child: SingleChildScrollView(
           child: Container(
             height: MediaQuery.of(context).size.height - 100,
@@ -38,10 +39,10 @@ class EditStepModal extends StatelessWidget {
                     padding: EdgeInsets.all(10),
                     height: 50,
                     width: MediaQuery.of(context).size.width - 50,
-                    color: Colors.blue,
+                    color: CustomColors.blue,
                     child: Text(
                       isEdit ? 'Edit Step' : 'View Step',
-                      style: TextStyle(color: Colors.white, fontSize: 24),
+                      style: TextStyle(color: CustomColors.white, fontSize: 24),
                     ),
                   ),
                   Container(

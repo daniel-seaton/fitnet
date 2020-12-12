@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../colors.dart';
 import 'photoPickerModal.dart';
 
 class ProfileImage extends StatelessWidget {
@@ -37,9 +38,9 @@ class ProfileImage extends StatelessWidget {
         offset: const Offset(50, -40),
         child: RawMaterialButton(
           shape: CircleBorder(),
-          fillColor: Colors.blue,
+          fillColor: CustomColors.blue,
           onPressed: () => showPhotoPickerModal(context, user),
-          child: Icon(Icons.add_a_photo_outlined, color: Colors.white),
+          child: Icon(Icons.add_a_photo_outlined, color: CustomColors.white),
         ),
       ),
     ]);
