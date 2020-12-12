@@ -1,3 +1,4 @@
+import '../colors.dart';
 import '../tabScreen.dart';
 import 'loginPage.dart';
 import 'signUpPage.dart';
@@ -12,7 +13,7 @@ class AuthScreen extends StatelessWidget {
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          color: Colors.blue,
+          color: CustomColors.blue,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -23,15 +24,15 @@ class AuthScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   image: DecorationImage(
-                    image: AssetImage('lib/assets/logo-white-2.png'),
+                    image: AssetImage('assets/images/logo-white-2.png'),
                   ),
                 ),
               ),
               Container(
-                height: 375,
+                height: 400,
                 width: MediaQuery.of(context).size.width - 50,
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: CustomColors.white,
                     borderRadius: BorderRadius.all(Radius.circular(6.0))),
                 child: Padding(
                   padding: EdgeInsets.all(15),
@@ -40,13 +41,13 @@ class AuthScreen extends StatelessWidget {
                       Tab(
                         child: Text(
                           'Log In',
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(color: CustomColors.black),
                         ),
                       ),
                       Tab(
                         child: Text(
                           'Sign Up',
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(color: CustomColors.black),
                         ),
                       ),
                     ],

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../colors.dart';
+
 class SelectorButton extends StatelessWidget {
   final bool left;
   final bool right;
@@ -21,9 +23,10 @@ class SelectorButton extends StatelessWidget {
       minWidth: 150,
       child: Text(
         label,
-        style: TextStyle(color: selected ? Colors.white : Colors.blue),
+        style:
+            TextStyle(color: selected ? CustomColors.white : CustomColors.blue),
       ),
-      color: selected ? Colors.blue : Colors.white,
+      color: selected ? CustomColors.blue : CustomColors.white,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             topLeft: left ? Radius.circular(6.0) : Radius.zero,
@@ -31,7 +34,9 @@ class SelectorButton extends StatelessWidget {
             bottomLeft: left ? Radius.circular(6.0) : Radius.zero,
             bottomRight: right ? Radius.circular(6.0) : Radius.zero,
           ),
-          side: selected ? BorderSide.none : BorderSide(color: Colors.blue)),
+          side: selected
+              ? BorderSide.none
+              : BorderSide(color: CustomColors.blue)),
     );
   }
 }

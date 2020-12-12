@@ -22,6 +22,7 @@ class SignUpPage extends StatelessWidget {
             decoration: InputDecoration(labelText: 'Email'),
             onChanged: (String value) => email = value),
         TextField(
+            obscureText: true,
             decoration: InputDecoration(labelText: 'Password'),
             onChanged: (String value) => password = value),
         TextField(

@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitnet/serviceinjector.dart';
 import 'package:fitnet/src/authRouter.dart';
+import 'package:fitnet/src/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,8 +18,21 @@ class Fitnet extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: CustomColors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
+          // TODO add styling for all text, icons, etc.
+          // Also should change this to be variable based on if the app is in light or dark mode
+          // Might be able to move the logos here too?
+          textTheme: TextTheme(
+            // Workout List Item Headline
+            headline1:
+                GoogleFonts.anton(fontSize: 30, color: CustomColors.white),
+            // Workout List Item Subtitle
+            subtitle1: TextStyle(fontSize: 18, color: CustomColors.grey),
+            // Edit Workout Text
+            bodyText1: TextStyle(fontSize: 16, color: CustomColors.black),
+            bodyText2: TextStyle(fontSize: 12, color: CustomColors.grey),
+          ),
         ),
         home: AuthRouter());
   }
