@@ -30,6 +30,7 @@ class StepListField extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
+                color: CustomColors.lightGrey,
                 border: Border.all(color: CustomColors.grey, width: 0.5)),
             height: MediaQuery.of(context).size.height / 2.1,
             width: MediaQuery.of(context).size.width - 40,

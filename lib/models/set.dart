@@ -28,4 +28,16 @@ class Set {
     if (end != null) map['end'] = end;
     return map;
   }
+
+  isComplete() {
+    return start != null && end != null;
+  }
+
+  isInProgress() {
+    return start != null && end == null;
+  }
+
+  goalMet() {
+    return actual >= goal;
+  }
 }

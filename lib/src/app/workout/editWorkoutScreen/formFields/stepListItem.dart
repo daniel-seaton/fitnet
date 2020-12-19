@@ -36,6 +36,7 @@ class StepListItem extends StatelessWidget {
         onTap: () => showStepModal(step, notifier.isEdit),
         child: Container(
           decoration: BoxDecoration(
+            color: CustomColors.white,
             border: Border(
               bottom: BorderSide(color: CustomColors.grey, width: 0.5),
             ),

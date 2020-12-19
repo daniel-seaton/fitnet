@@ -100,11 +100,9 @@ class WorkoutListItem extends StatelessWidget {
   }
 
   showEditWorkoutScreen(BuildContext context, {isEdit = false}) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                EditWorkoutScreen(workout: workout, isEdit: isEdit)));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>
+            EditWorkoutScreen(workout: workout, isEdit: isEdit)));
   }
 
   getDateDisplay() {

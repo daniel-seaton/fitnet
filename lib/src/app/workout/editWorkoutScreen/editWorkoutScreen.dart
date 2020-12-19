@@ -1,6 +1,7 @@
 import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/services/workoutService.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.dart';
+import 'package:fitnet/src/app/workout/startWorkoutScreen/startWorkoutScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -63,8 +64,10 @@ class EditWorkoutScreen extends StatelessWidget {
       await workoutService.addOrUpdateWorkout(notifier.workout);
       notifier.setIsEdit(false);
     } else if (!notifier.isEdit) {
-      print('TODO');
-      // TODO add start workout logic here if isEdit is false, or maybe just add another button with its own on pressed?
+      notifier.workout.start = DateTime.now();
+      await workoutService.addOrUpdateWorkout(workout);
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => StartWorkoutScreen(workout: notifier.workout)));
     }
   }
 }

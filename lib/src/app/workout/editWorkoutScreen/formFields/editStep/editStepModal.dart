@@ -62,9 +62,9 @@ class EditStepModal extends StatelessWidget {
                               bool isValid = _formKey.currentState.validate();
                               if (isEdit && isValid) {
                                 onSave(notifier.step);
-                                Navigator.pop(context);
+                                Navigator.of(context).pop();
                               } else if (!isEdit) {
-                                Navigator.pop(context);
+                                Navigator.of(context).pop();
                               }
                             },
                             child: Text(isEdit ? 'Save' : 'Close'),
