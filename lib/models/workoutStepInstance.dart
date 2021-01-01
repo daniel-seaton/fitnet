@@ -32,6 +32,8 @@ class WorkoutStepInstance {
   Format format;
   String formatType;
   String exerciseName;
+  DateTime start;
+  DateTime end;
 
   WorkoutStepInstance({this.formatType, Exercise exercise}) {
     format = Format.forType(this.formatType);
@@ -52,13 +54,20 @@ class WorkoutStepInstance {
     formatType = map['formatType'];
     format = Format.forType(this.formatType);
     exerciseName = map['exerciseName'];
+
+    if (map['start'] != null)
+      start = DateTime.fromMillisecondsSinceEpoch(map['start'].seconds * 1000);
+    if (map['end'] != null)
+      start = DateTime.fromMillisecondsSinceEpoch(map['start'].seconds * 1000);
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
       'formatType': formatType,
-      'exerciseName': exerciseName
+      'exerciseName': exerciseName,
     };
+    if (start != null) map['start'] = start;
+    if (end != null) map['end'] = end;
     return map;
   }
 }
@@ -123,12 +132,16 @@ class AMRAPStepInstance extends WorkoutStepInstance {
   AMRAPStepInstance({this.targetTime, this.targetReps, Exercise exercise})
       : super(formatType: FormatType.SetBased, exercise: exercise);
 
-  AMRAPStepInstance.fromStep(AMRAPStep step) : super.fromStep(step) {}
+  AMRAPStepInstance.fromStep(AMRAPStep step) : super.fromStep(step) {
+    targetTime = step.targetTime;
+    targetReps = step.targetReps;
+  }
 
   AMRAPStepInstance.fromMap(Map<String, dynamic> map) : super.fromMap(map) {
     targetTime = map['targetTime'] ?? 0;
     targetReps = map['targetReps'] ?? 0;
     actualReps = map['actualReps'] ?? 0;
+    print(map);
   }
 
   Map<String, dynamic> toMap() {

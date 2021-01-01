@@ -1,4 +1,5 @@
 import 'package:fitnet/models/workout.dart';
+import 'package:fitnet/models/workoutInstance.dart';
 import 'package:fitnet/services/workoutInstanceService.dart';
 import 'package:fitnet/services/workoutService.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.dart';
@@ -66,9 +67,9 @@ class EditWorkoutScreen extends StatelessWidget {
       await workoutService.addOrUpdateWorkout(notifier.workout);
       notifier.setIsEdit(false);
     } else if (!notifier.isEdit) {
-      await instanceService.addNewInstance(workout);
+      WorkoutInstance instance = await instanceService.addNewInstance(workout);
       Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => StartWorkoutScreen(workout: notifier.workout)));
+          builder: (context) => StartWorkoutScreen(instance: instance)));
     }
   }
 }

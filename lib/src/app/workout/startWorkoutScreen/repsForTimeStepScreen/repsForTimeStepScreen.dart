@@ -1,8 +1,9 @@
 import 'package:fitnet/models/workoutStep.dart';
+import 'package:fitnet/models/workoutStepInstance.dart';
 import 'package:flutter/material.dart';
 
 class RepsForTimeStepScreen extends StatelessWidget {
-  final RepsForTimeStep step;
+  final RepsForTimeStepInstance step;
 
   RepsForTimeStepScreen({@required this.step});
 

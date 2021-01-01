@@ -1,4 +1,5 @@
 import 'package:fitnet/models/workoutStep.dart';
+import 'package:fitnet/models/workoutStepInstance.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +9,7 @@ import 'currentSetDisplay/currentSetDisplay.dart';
 import 'setsDisplayRow/setsDisplayRow.dart';
 
 class SetBasedStepScreen extends StatelessWidget {
-  final SetBasedStep step;
+  final SetBasedStepInstance step;
   final Function nextStep;
 
   SetsChangeNotifier _notifier;

@@ -1,8 +1,8 @@
 import 'package:fitnet/models/format.dart';
-import 'package:fitnet/models/set.dart';
-import 'package:fitnet/models/workout.dart';
+import 'package:fitnet/models/workoutInstance.dart';
 import 'package:fitnet/models/workoutStep.dart';
-import 'package:fitnet/services/workoutService.dart';
+import 'package:fitnet/models/workoutStepInstance.dart';
+import 'package:fitnet/services/workoutInstanceService.dart';
 import 'package:fitnet/src/app/workout/startWorkoutScreen/repsForTimeStepScreen/repsForTimeStepScreen.dart';
 import 'package:fitnet/src/app/workout/startWorkoutScreen/setBasedStepScreen/setBasedStepScreen.dart';
 import 'package:fitnet/src/app/workout/startWorkoutScreen/stepsChangeNotifier.dart';
@@ -15,14 +15,15 @@ import '../../../colors.dart';
 import 'amrapStepScreen/amrapStepsScreen.dart';
 
 class StartWorkoutScreen extends StatelessWidget {
-  final Workout workout;
-  final WorkoutService workoutService = injector<WorkoutService>();
-  StartWorkoutScreen({@required this.workout});
+  final WorkoutInstance instance;
+  final WorkoutInstanceService instanceService =
+      injector<WorkoutInstanceService>();
+  StartWorkoutScreen({@required this.instance});
 
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => StepsChangeNotifier(steps: workout.steps),
+      create: (_) => StepsChangeNotifier(steps: instance.steps),
       child: Consumer<StepsChangeNotifier>(
         builder: (ctx, notifier, __) => Scaffold(
           appBar: AppBar(
@@ -30,7 +31,7 @@ class StartWorkoutScreen extends StatelessWidget {
               width: 250,
               padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
               child: Text(
-                notifier.currentStep.exercise.name,
+                notifier.currentStep.exerciseName,
                 textAlign: TextAlign.center,
                 style: TextStyle(color: CustomColors.white, fontSize: 36.0),
               ),
@@ -51,24 +52,25 @@ class StartWorkoutScreen extends StatelessWidget {
         Provider.of<StepsChangeNotifier>(context, listen: false);
     notifier.nextStep();
     if (notifier.currentIndex == notifier.steps.length) {
-      workout.end = DateTime.now();
-      workout.steps = notifier.steps;
-      await workoutService.addOrUpdateWorkout(workout);
+      instance.end = DateTime.now();
+      instance.steps = notifier.steps;
+      await instanceService.updateInstance(instance);
       Navigator.of(context).pop();
     }
   }
 
-  Widget getBodyForStep(WorkoutStep step, Function nextStep) {
+  Widget getBodyForStep(WorkoutStepInstance step, Function nextStep) {
     switch (step.format.value) {
       case FormatType.SetBased:
         return SetBasedStepScreen(
-          step: step as SetBasedStep,
+          step: step as SetBasedStepInstance,
           nextStep: nextStep,
         );
       case FormatType.RepsForTime:
-        return RepsForTimeStepScreen(step: step as RepsForTimeStep);
+        return RepsForTimeStepScreen(step: step as RepsForTimeStepInstance);
       case FormatType.AMRAP:
-        return AMRAPStepScreen(step: step as AMRAPStep, nextStep: nextStep);
+        return AMRAPStepScreen(
+            step: step as AMRAPStepInstance, nextStep: nextStep);
       default:
         return Container();
     }

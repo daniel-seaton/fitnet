@@ -1,5 +1,6 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:fitnet/models/workoutStep.dart';
+import 'package:fitnet/models/workoutStepInstance.dart';
 import 'package:fitnet/src/app/workout/startWorkoutScreen/amrapChangeNotifier.dart';
 import 'package:fitnet/src/colors.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:flutter_circular_slider/flutter_circular_slider.dart';
 import 'package:provider/provider.dart';
 
 class AMRAPStepScreen extends StatelessWidget {
-  final AMRAPStep step;
+  final AMRAPStepInstance step;
   final Function nextStep;
 
   AMRAPChangeNotifier _notifier;

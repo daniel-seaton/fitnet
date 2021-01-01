@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:fitnet/models/workoutStep.dart';
+import 'package:fitnet/models/workoutStepInstance.dart';
 import 'package:fitnet/utils/timeUtil.dart';
 import 'package:flutter/material.dart';
 
@@ -10,9 +10,10 @@ class AMRAPChangeNotifier extends ChangeNotifier {
   DateTime _startTime;
   DateTime _endTime;
 
-  AMRAPStep step;
+  AMRAPStepInstance step;
 
   AMRAPChangeNotifier({@required this.step}) {
+    print(step.toMap());
     step.actualReps = step.targetReps;
   }
 

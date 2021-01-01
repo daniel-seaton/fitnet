@@ -8,12 +8,19 @@ class WorkoutInstanceService {
   FirebaseFirestore firestore = injector<FirebaseFirestore>();
   final String workoutInstanceCollection = 'workoutInstances';
 
-  addNewInstance(Workout workout) async {
+  Future<WorkoutInstance> addNewInstance(Workout workout) async {
     CollectionReference instanceRef =
         firestore.collection(workoutInstanceCollection);
     WorkoutInstance instance = WorkoutInstance.fromWorkout(workout);
     instance.scheduled = DateTime.now();
     await instanceRef.add(instance.toMap());
+    return instance;
+  }
+
+  Future<void> updateInstance(WorkoutInstance instance) async {
+    CollectionReference instanceRef =
+        firestore.collection(workoutInstanceCollection);
+    await instanceRef.doc(instance.iid).update(instance.toMap());
   }
 
   Future<List<WorkoutInstance>> getInstancesByWid(String wid) async {

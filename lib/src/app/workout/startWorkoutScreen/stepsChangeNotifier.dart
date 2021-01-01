@@ -1,9 +1,10 @@
 import 'package:fitnet/models/workoutStep.dart';
+import 'package:fitnet/models/workoutStepInstance.dart';
 import 'package:flutter/cupertino.dart';
 
 class StepsChangeNotifier extends ChangeNotifier {
-  List<WorkoutStep> steps;
-  WorkoutStep currentStep;
+  List<WorkoutStepInstance> steps;
+  WorkoutStepInstance currentStep;
   num currentIndex;
 
   StepsChangeNotifier({@required this.steps, this.currentIndex = 0}) {

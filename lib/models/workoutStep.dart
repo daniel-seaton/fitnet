@@ -19,8 +19,6 @@ class WorkoutStep {
   Format format;
   String formatType;
   Exercise exercise;
-  DateTime start;
-  DateTime end;
 
   WorkoutStep({this.formatType, this.exercise}) {
     format = Format.forType(this.formatType);
@@ -34,10 +32,6 @@ class WorkoutStep {
     formatType = map['formatType'];
     format = Format.forType(this.formatType);
     exercise = Exercise.fromMap(map['exercise']);
-    if (map['start'] != null)
-      start = DateTime.fromMillisecondsSinceEpoch(map['start'].seconds * 1000);
-    if (map['end'] != null)
-      start = DateTime.fromMillisecondsSinceEpoch(map['start'].seconds * 1000);
   }
 
   Map<String, dynamic> toMap() {
@@ -45,8 +39,6 @@ class WorkoutStep {
       'formatType': formatType,
       'exercise': exercise.toMap()
     };
-    if (start != null) map['start'] = start;
-    if (end != null) map['end'] = end;
     return map;
   }
 }
