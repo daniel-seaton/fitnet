@@ -32,7 +32,7 @@ class ScheduledDateField extends StatelessWidget {
                       border:
                           Border(bottom: BorderSide(color: CustomColors.grey))),
                   child: Text(
-                    DateFormat.yMd().format(notifier.workout.scheduled),
+                    'TODO', //DateFormat.yMd().format(notifier.workout.scheduled),
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ),
@@ -46,13 +46,13 @@ class ScheduledDateField extends StatelessWidget {
 
   void displayDatePickerModal(
       BuildContext context, EditWorkoutChangeNotifier notifier) async {
-    if (!notifier.isEdit) return;
-    var newDate = await showDatePicker(
-      context: context,
-      initialDate: notifier.workout.scheduled,
-      firstDate: DateTime.now().add(Duration(days: -365)),
-      lastDate: DateTime.now().add(Duration(days: 365)),
-    );
-    notifier.setScheduled(newDate);
+    // if (!notifier.isEdit) return;
+    // var newDate = await showDatePicker(
+    //   context: context,
+    //   initialDate: notifier.workout.scheduled,
+    //   firstDate: DateTime.now().add(Duration(days: -365)),
+    //   lastDate: DateTime.now().add(Duration(days: 365)),
+    // );
+    // notifier.setScheduled(newDate);
   }
 }

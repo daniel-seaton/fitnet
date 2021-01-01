@@ -55,7 +55,7 @@ class SetBasedStep extends WorkoutStep {
   num minimumRest;
   num targetReps;
   num targetWeight;
-  List<Set> sets = [];
+  num targetSets;
 
   SetBasedStep({this.minimumRest, this.targetReps, exercise})
       : super(formatType: FormatType.SetBased, exercise: exercise);
@@ -64,19 +64,15 @@ class SetBasedStep extends WorkoutStep {
     minimumRest = map['minimumRest'] ?? 0;
     targetReps = map['targetReps'] ?? 0;
     targetWeight = map['targetWieght'] ?? 0;
-    if (map['sets'] != null) {
-      List<Set> mappedSets = [];
-      map['sets'].forEach((s) => mappedSets.add(Set.fromMap(s)));
-      sets = mappedSets;
-    }
+    targetSets = map['targetSets'] ?? 0;
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = super.toMap();
     map['minimumRest'] = minimumRest ?? 0;
-    map['sets'] = sets.map((s) => s.toMap()).toList();
     map['targetReps'] = targetReps ?? 0;
     map['targetWeight'] = targetWeight ?? 0;
+    map['targetSets'] = targetSets ?? 0;
     return map;
   }
 }
@@ -84,7 +80,6 @@ class SetBasedStep extends WorkoutStep {
 class RepsForTimeStep extends WorkoutStep {
   num targetTime;
   num targetReps;
-  List<Set> sets = [];
 
   RepsForTimeStep({this.targetTime, this.targetReps, Exercise exercise})
       : super(formatType: FormatType.SetBased, exercise: exercise);
@@ -92,18 +87,12 @@ class RepsForTimeStep extends WorkoutStep {
   RepsForTimeStep.fromMap(Map<String, dynamic> map) : super.fromMap(map) {
     targetTime = map['targetTime'] ?? 0;
     targetReps = map['targetReps'] ?? 0;
-    if (map['sets'] != null) {
-      List<Set> mappedSets = [];
-      map['sets'].forEach((s) => mappedSets.add(Set.fromMap(s)));
-      sets = mappedSets;
-    }
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = super.toMap();
     map['targetTime'] = targetTime;
-    map['minimumTime'] = targetReps;
-    map['sets'] = sets.map((s) => s.toMap()).toList();
+    map['targetReps'] = targetReps;
     return map;
   }
 }
@@ -111,7 +100,6 @@ class RepsForTimeStep extends WorkoutStep {
 class AMRAPStep extends WorkoutStep {
   num targetTime;
   num targetReps;
-  num actualReps = 0;
 
   AMRAPStep({this.targetTime, this.targetReps, Exercise exercise})
       : super(formatType: FormatType.SetBased, exercise: exercise);
@@ -119,14 +107,12 @@ class AMRAPStep extends WorkoutStep {
   AMRAPStep.fromMap(Map<String, dynamic> map) : super.fromMap(map) {
     targetTime = map['targetTime'] ?? 0;
     targetReps = map['targetReps'] ?? 0;
-    if (map['actualReps'] != null) actualReps = map['actualReps'];
   }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = super.toMap();
     map['targetTime'] = targetTime;
     map['targetReps'] = targetReps;
-    map['actualReps'] = actualReps;
     return map;
   }
 }

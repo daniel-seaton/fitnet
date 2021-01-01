@@ -18,11 +18,6 @@ class EditWorkoutChangeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setScheduled(DateTime value) {
-    workout.scheduled = value;
-    notifyListeners();
-  }
-
   void addStep(WorkoutStep step, {num index, bool isEdit = false}) {
     if (index == null) {
       workout.steps.add(step);

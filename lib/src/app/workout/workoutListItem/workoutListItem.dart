@@ -1,9 +1,11 @@
 import 'package:fitnet/models/workout.dart';
+import 'package:fitnet/services/workoutInstanceService.dart';
 import 'package:fitnet/services/workoutService.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/editWorkoutScreen.dart';
 import 'package:fitnet/src/app/workout/workoutListItem/tagsDisplay/tagsDisplayRow.dart';
 import 'package:fitnet/src/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../serviceInjector.dart';
 
@@ -75,28 +77,27 @@ class WorkoutListItem extends StatelessWidget {
   }
 
   showWorkoutMenu(BuildContext context, Offset position) async {
-    showMenu(
-      context: context,
-      position: RelativeRect.fromLTRB(position.dx, position.dy, 0, 0),
-      items: [
-        PopupMenuItem<String>(child: const Text('Edit'), value: 'Edit'),
-        PopupMenuItem<String>(
-            child: const Text('Duplicate'), value: 'Duplicate'),
-        PopupMenuItem<String>(child: const Text('Delete'), value: 'Delete'),
-      ],
-    ).then((value) {
-      switch (value) {
-        case 'Edit':
-          showEditWorkoutScreen(context, isEdit: true);
-          break;
-        case 'Duplicate':
-          workoutService.addNewInstance(workout);
-          break;
-        case 'Delete':
-          workoutService.deleteWorkout(workout);
-          break;
-      }
-    });
+    String value = await showMenu(
+        context: context,
+        position: RelativeRect.fromLTRB(position.dx, position.dy, 0, 0),
+        items: [
+          PopupMenuItem<String>(child: const Text('Edit'), value: 'Edit'),
+          PopupMenuItem<String>(
+              child: const Text('Duplicate'), value: 'Duplicate'),
+          PopupMenuItem<String>(child: const Text('Delete'), value: 'Delete'),
+        ]);
+    switch (value) {
+      case 'Edit':
+        showEditWorkoutScreen(context, isEdit: true);
+        break;
+      case 'Duplicate':
+        workout.wid = null;
+        workoutService.addOrUpdateWorkout(workout);
+        break;
+      case 'Delete':
+        workoutService.deleteWorkout(workout);
+        break;
+    }
   }
 
   showEditWorkoutScreen(BuildContext context, {isEdit = false}) {
@@ -107,15 +108,12 @@ class WorkoutListItem extends StatelessWidget {
 
   getDateDisplay() {
     String date = "";
-    if (workout.end != null) {
+    if (workout.updated != null) {
       date =
-          "| Completed: ${workout.end.month}/${workout.end.day}/${workout.end.year}";
-    } else if (workout.start != null) {
+          "| Last Updated: ${workout.updated.month}/${workout.updated.day}/${workout.updated.year}";
+    } else if (workout.created != null) {
       date =
-          "| Started: ${workout.start.month}/${workout.start.day}/${workout.start.year}";
-    } else if (workout.scheduled != null) {
-      date =
-          "| Scheduled: ${workout.scheduled.month}/${workout.scheduled.day}/${workout.scheduled.year}";
+          "| Created: ${workout.created.month}/${workout.created.day}/${workout.created.year}";
     }
     return date;
   }

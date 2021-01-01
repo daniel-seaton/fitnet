@@ -1,4 +1,5 @@
 import 'package:fitnet/models/workout.dart';
+import 'package:fitnet/services/workoutInstanceService.dart';
 import 'package:fitnet/services/workoutService.dart';
 import 'package:fitnet/src/app/workout/editWorkoutScreen/workoutChangeNotifier.dart';
 import 'package:fitnet/src/app/workout/startWorkoutScreen/startWorkoutScreen.dart';
@@ -9,11 +10,12 @@ import 'package:provider/provider.dart';
 import '../../../../serviceInjector.dart';
 import 'formFields/defaultFormatField.dart';
 import 'formFields/nameField.dart';
-import 'formFields/scheduledDateField.dart';
 import 'formFields/stepListField.dart';
 
 class EditWorkoutScreen extends StatelessWidget {
   final WorkoutService workoutService = injector<WorkoutService>();
+  final WorkoutInstanceService instanceService =
+      injector<WorkoutInstanceService>();
   final Workout workout;
   final isEdit;
   final _formKey = GlobalKey<FormState>();
@@ -32,7 +34,7 @@ class EditWorkoutScreen extends StatelessWidget {
           body: ListView(
             children: [
               DefaultFormatField(),
-              ScheduledDateField(),
+              //  ScheduledDateField(),
               StepListField(
                   steps: workout.steps != null ? workout.steps : [],
                   defaultFormat: workout.defaultFormat),
@@ -64,8 +66,7 @@ class EditWorkoutScreen extends StatelessWidget {
       await workoutService.addOrUpdateWorkout(notifier.workout);
       notifier.setIsEdit(false);
     } else if (!notifier.isEdit) {
-      notifier.workout.start = DateTime.now();
-      await workoutService.addOrUpdateWorkout(workout);
+      await instanceService.addNewInstance(workout);
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => StartWorkoutScreen(workout: notifier.workout)));
     }

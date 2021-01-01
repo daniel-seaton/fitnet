@@ -42,12 +42,5 @@ class TargetRepsField extends StatelessWidget {
 
   void updateReps(RepsForTimeStep step, num numReps) {
     step.targetReps = numReps;
-    if (step.sets.length > 0) {
-      updateSets(step, step.sets.length);
-    }
-  }
-
-  void updateSets(RepsForTimeStep step, num numSets) {
-    step.sets = List.generate(numSets, (_) => Set(goal: step.targetReps));
   }
 }
