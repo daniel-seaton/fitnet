@@ -45,8 +45,5 @@ class TargetWeightField extends StatelessWidget {
 
   void updateWeight(SetBasedStep step, num weight) {
     step.targetWeight = weight;
-    if (step.sets.length > 0)
-      step.sets = List.generate(step.sets.length,
-          (_) => Set(goal: step.targetReps, weight: step.targetWeight));
   }
 }

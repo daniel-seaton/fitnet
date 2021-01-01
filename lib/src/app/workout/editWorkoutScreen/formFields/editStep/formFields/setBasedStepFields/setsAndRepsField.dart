@@ -31,7 +31,7 @@ class SetsAndRepsField extends StatelessWidget {
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyText1,
               keyboardType: TextInputType.number,
-              initialValue: step.sets.length.toString(),
+              initialValue: step.targetSets.toString(),
               onChanged: (value) => updateSets(step, num.parse(value)),
             ),
           ),
@@ -63,13 +63,9 @@ class SetsAndRepsField extends StatelessWidget {
 
   void updateReps(SetBasedStep step, num numReps) {
     step.targetReps = numReps;
-    if (step.sets.length > 0) {
-      updateSets(step, step.sets.length);
-    }
   }
 
   void updateSets(SetBasedStep step, num numSets) {
-    step.sets = List.generate(
-        numSets, (_) => Set(goal: step.targetReps, weight: step.targetWeight));
+    step.targetSets = numSets;
   }
 }
