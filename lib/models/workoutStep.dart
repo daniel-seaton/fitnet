@@ -31,7 +31,9 @@ class WorkoutStep {
   WorkoutStep.fromMap(Map<String, dynamic> map) {
     formatType = map['formatType'];
     format = Format.forType(this.formatType);
-    exercise = Exercise.fromMap(map['exercise']);
+    exercise = map['exercise'] != null
+        ? Exercise.fromMap(map['exercise'])
+        : Exercise.fromMap({'name': map['exerciseName'], 'tags': []});
   }
 
   Map<String, dynamic> toMap() {
@@ -55,7 +57,7 @@ class SetBasedStep extends WorkoutStep {
   SetBasedStep.fromMap(Map<String, dynamic> map) : super.fromMap(map) {
     minimumRest = map['minimumRest'] ?? 0;
     targetReps = map['targetReps'] ?? 0;
-    targetWeight = map['targetWieght'] ?? 0;
+    targetWeight = map['targetWeight'] ?? 0;
     targetSets = map['targetSets'] ?? 0;
   }
 

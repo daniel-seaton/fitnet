@@ -14,7 +14,7 @@ class Set {
     if (map['start'] != null)
       start = DateTime.fromMillisecondsSinceEpoch(map['start'].seconds * 1000);
     if (map['end'] != null)
-      start = DateTime.fromMillisecondsSinceEpoch(map['end'].seconds * 1000);
+      end = DateTime.fromMillisecondsSinceEpoch(map['end'].seconds * 1000);
   }
 
   Map<String, dynamic> toMap() {

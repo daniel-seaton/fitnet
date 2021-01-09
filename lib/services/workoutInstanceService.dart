@@ -12,8 +12,9 @@ class WorkoutInstanceService {
     CollectionReference instanceRef =
         firestore.collection(workoutInstanceCollection);
     WorkoutInstance instance = WorkoutInstance.fromWorkout(workout);
-    instance.scheduled = DateTime.now();
-    await instanceRef.add(instance.toMap());
+    instance.start = DateTime.now();
+    DocumentReference doc = await instanceRef.add(instance.toMap());
+    instance.iid = doc.id;
     return instance;
   }
 
@@ -30,13 +31,14 @@ class WorkoutInstanceService {
     List<WorkoutInstance> workouts = [];
     query.docs.forEach((doc) =>
         workouts.add(WorkoutInstance.fromMap({...doc.data(), 'iid': doc.id})));
+    workouts.sort((a, b) => a.start.isBefore(b.start) ? 1 : -1);
     return workouts;
   }
 
   Future<void> deleteInstancesByWid(String wid) async {
     CollectionReference instanceRef =
         firestore.collection(workoutInstanceCollection);
-    instanceRef.where('wid', isEqualTo: wid).get().then((snapshot) {
+    await instanceRef.where('wid', isEqualTo: wid).get().then((snapshot) {
       var batch = firestore.batch();
       snapshot.docs.forEach((doc) {
         // For each doc, add a delete operation to the batch

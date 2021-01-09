@@ -12,8 +12,9 @@ class SetsChangeNotifier extends ChangeNotifier {
   Timer _timer;
   Duration _timeElapsed = Duration.zero;
 
-  SetsChangeNotifier({@required this.sets, this.currentIndex = 0}) {
-    currentSet = sets[currentIndex];
+  SetsChangeNotifier({@required this.sets}) {
+    currentSet = sets.firstWhere((s) => s.end == null);
+    currentIndex = sets.indexOf(currentSet);
     currentSet.actual = currentSet.goal;
   }
 

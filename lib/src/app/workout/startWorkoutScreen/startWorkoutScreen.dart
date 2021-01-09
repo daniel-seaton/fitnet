@@ -27,6 +27,13 @@ class StartWorkoutScreen extends StatelessWidget {
       child: Consumer<StepsChangeNotifier>(
         builder: (ctx, notifier, __) => Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back,
+                color: CustomColors.white,
+              ),
+              onPressed: () => updateAndExit(ctx, complete: false),
+            ),
             title: Container(
               width: 250,
               padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
@@ -47,15 +54,21 @@ class StartWorkoutScreen extends StatelessWidget {
     );
   }
 
+  void updateAndExit(BuildContext context, {bool complete = false}) async {
+    StepsChangeNotifier notifier =
+        Provider.of<StepsChangeNotifier>(context, listen: false);
+    if (complete) instance.end = DateTime.now();
+    instance.steps = notifier.steps;
+    await instanceService.updateInstance(instance);
+    Navigator.of(context).pop();
+  }
+
   void nextStep(BuildContext context) async {
     StepsChangeNotifier notifier =
         Provider.of<StepsChangeNotifier>(context, listen: false);
     notifier.nextStep();
     if (notifier.currentIndex == notifier.steps.length) {
-      instance.end = DateTime.now();
-      instance.steps = notifier.steps;
-      await instanceService.updateInstance(instance);
-      Navigator.of(context).pop();
+      updateAndExit(context, complete: true);
     }
   }
 

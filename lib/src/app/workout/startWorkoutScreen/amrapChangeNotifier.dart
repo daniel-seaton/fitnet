@@ -13,7 +13,6 @@ class AMRAPChangeNotifier extends ChangeNotifier {
   AMRAPStepInstance step;
 
   AMRAPChangeNotifier({@required this.step}) {
-    print(step.toMap());
     step.actualReps = step.targetReps;
   }
 

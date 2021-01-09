@@ -67,7 +67,11 @@ class EditWorkoutScreen extends StatelessWidget {
       await workoutService.addOrUpdateWorkout(notifier.workout);
       notifier.setIsEdit(false);
     } else if (!notifier.isEdit) {
-      WorkoutInstance instance = await instanceService.addNewInstance(workout);
+      List<WorkoutInstance> instances =
+          await instanceService.getInstancesByWid(workout.wid);
+      WorkoutInstance instance = instances.length > 0 ? instances[0] : null;
+      if (instance == null || instance.end != null)
+        instance = await instanceService.addNewInstance(workout);
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => StartWorkoutScreen(instance: instance)));
     }

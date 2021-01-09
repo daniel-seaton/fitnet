@@ -7,8 +7,9 @@ class StepsChangeNotifier extends ChangeNotifier {
   WorkoutStepInstance currentStep;
   num currentIndex;
 
-  StepsChangeNotifier({@required this.steps, this.currentIndex = 0}) {
-    currentStep = steps[currentIndex];
+  StepsChangeNotifier({@required this.steps}) {
+    currentStep = steps.firstWhere((step) => step.end == null);
+    currentIndex = steps.indexOf(currentStep);
     currentStep.start = DateTime.now();
   }
 

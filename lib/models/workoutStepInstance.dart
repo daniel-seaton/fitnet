@@ -7,11 +7,11 @@ class WorkoutStepInstanceFactory {
   static WorkoutStepInstance getForStep(String formatType, WorkoutStep step) {
     switch (formatType) {
       case FormatType.SetBased:
-        return SetBasedStepInstance.fromStep(step);
+        return SetBasedStepInstance.fromStep(step as SetBasedStep);
       case FormatType.RepsForTime:
-        return RepsForTimeStepInstance.fromStep(step);
+        return RepsForTimeStepInstance.fromStep(step as RepsForTimeStep);
       case FormatType.AMRAP:
-        return AMRAPStepInstance.fromStep(step);
+        return AMRAPStepInstance.fromStep(step as AMRAPStep);
     }
   }
 
@@ -58,7 +58,7 @@ class WorkoutStepInstance {
     if (map['start'] != null)
       start = DateTime.fromMillisecondsSinceEpoch(map['start'].seconds * 1000);
     if (map['end'] != null)
-      start = DateTime.fromMillisecondsSinceEpoch(map['start'].seconds * 1000);
+      end = DateTime.fromMillisecondsSinceEpoch(map['end'].seconds * 1000);
   }
 
   Map<String, dynamic> toMap() {
@@ -141,7 +141,6 @@ class AMRAPStepInstance extends WorkoutStepInstance {
     targetTime = map['targetTime'] ?? 0;
     targetReps = map['targetReps'] ?? 0;
     actualReps = map['actualReps'] ?? 0;
-    print(map);
   }
 
   Map<String, dynamic> toMap() {

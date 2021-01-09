@@ -1,4 +1,3 @@
-import 'package:fitnet/models/workoutStep.dart';
 import 'package:fitnet/models/workoutStepInstance.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
