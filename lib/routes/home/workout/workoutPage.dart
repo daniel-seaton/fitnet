@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../../serviceInjector.dart';
-import '../../../models/customColors.dart';
+import '../../../utils/customColors.dart';
 import 'createWorkoutButton/createWorkoutButton.dart';
 import 'filterChangeNotifier.dart';
 

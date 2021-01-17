@@ -45,4 +45,14 @@ class WorkoutInstance {
       map['steps'] = steps.map((step) => step.toMap()).toList();
     return map;
   }
+
+  isCompleted() {
+    return this.end != null;
+  }
+
+  double percentComplete() {
+    var percentage = 0.0;
+    steps.forEach((step) => percentage += step.percentComplete());
+    return (percentage / steps.length * 10).round() / 10;
+  }
 }

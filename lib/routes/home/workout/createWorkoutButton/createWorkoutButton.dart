@@ -2,7 +2,7 @@ import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/routes/editWorkout/editWorkoutScreen.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../models/customColors.dart';
+import '../../../../utils/customColors.dart';
 
 class CreateWorkoutButton extends StatelessWidget {
   final String userId;

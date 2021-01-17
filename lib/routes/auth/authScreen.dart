@@ -1,4 +1,4 @@
-import '../../models/customColors.dart';
+import '../../utils/customColors.dart';
 import '../../shared/tabScreen.dart';
 import 'loginPage.dart';
 import 'signUpPage.dart';

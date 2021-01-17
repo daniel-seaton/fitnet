@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../models/customColors.dart';
+import '../utils/customColors.dart';
 
 class TabScreen extends StatelessWidget {
   final List<Tab> upperTabs = [];

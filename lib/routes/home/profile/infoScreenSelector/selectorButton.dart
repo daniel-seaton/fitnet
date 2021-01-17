@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../models/customColors.dart';
+import '../../../../utils/customColors.dart';
 
 class SelectorButton extends StatelessWidget {
   final bool left;

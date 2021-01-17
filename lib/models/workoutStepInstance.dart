@@ -28,7 +28,7 @@ class WorkoutStepInstanceFactory {
   }
 }
 
-class WorkoutStepInstance {
+abstract class WorkoutStepInstance {
   Format format;
   String formatType;
   String exerciseName;
@@ -70,6 +70,10 @@ class WorkoutStepInstance {
     if (end != null) map['end'] = end;
     return map;
   }
+
+  double percentComplete() {
+    return end != null ? 100 : 0;
+  }
 }
 
 class SetBasedStepInstance extends WorkoutStepInstance {
@@ -99,6 +103,11 @@ class SetBasedStepInstance extends WorkoutStepInstance {
     map['minimumRest'] = minimumRest ?? 0;
     map['sets'] = sets.map((s) => s.toMap()).toList();
     return map;
+  }
+
+  @override
+  double percentComplete() {
+    return (sets.where((s) => s.end != null).length / sets.length * 100);
   }
 }
 

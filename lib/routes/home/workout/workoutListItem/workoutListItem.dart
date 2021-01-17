@@ -1,9 +1,9 @@
 import 'package:fitnet/models/workout.dart';
-import 'package:fitnet/routes/home/workout/workoutListItem/tagsDisplay/tagsDisplayRow.dart';
 import 'package:fitnet/routes/editWorkout/editWorkoutScreen.dart';
+import 'package:fitnet/routes/home/workout/workoutListItem/tagsDisplay/tagsDisplayRow.dart';
 import 'package:fitnet/routes/viewWorkout/viewWorkoutScreen.dart';
 import 'package:fitnet/services/workoutService.dart';
-import 'package:fitnet/models/customColors.dart';
+import 'package:fitnet/utils/customColors.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../serviceInjector.dart';
@@ -92,6 +92,9 @@ class WorkoutListItem extends StatelessWidget {
       case 'Duplicate':
         workout.wid = null;
         workoutService.addOrUpdateWorkout(workout);
+        break;
+      case 'History':
+        print('TODO');
         break;
       case 'Delete':
         workoutService.deleteWorkout(workout);

@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../../models/customColors.dart';
+import '../../../../../../utils/customColors.dart';
 import 'photoPickerModal.dart';
 
 class ProfileImage extends StatelessWidget {

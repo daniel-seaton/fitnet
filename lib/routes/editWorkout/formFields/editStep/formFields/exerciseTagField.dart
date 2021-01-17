@@ -1,4 +1,4 @@
-import 'package:fitnet/models/customColors.dart';
+import 'package:fitnet/utils/customColors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../workStepChangeNotifier.dart';

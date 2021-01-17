@@ -1,26 +1,28 @@
-import 'package:fitnet/models/customColors.dart';
+import 'package:fitnet/utils/customColors.dart';
 import 'package:fitnet/models/format.dart';
 import 'package:fitnet/models/workoutStep.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../workoutChangeNotifier.dart';
 
-class StepListItem extends StatelessWidget {
+class WorkoutStepListItem extends StatelessWidget {
   final Key key;
   final WorkoutStep step;
   final Function showStepModal;
   final Function onDismissed;
+  final bool isEdit;
 
-  StepListItem(
+  WorkoutStepListItem(
       {@required this.key,
       @required this.step,
+      @required this.isEdit,
       @required this.showStepModal,
-      @required this.onDismissed});
+      this.onDismissed}) {
+    if (this.isEdit && this.onDismissed == null) {
+      throw new Exception('onDismissed must be defined if isEdit is true');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    EditWorkoutChangeNotifier notifier =
-        Provider.of<EditWorkoutChangeNotifier>(context);
     return Dismissible(
       key: key,
       direction: DismissDirection.horizontal,
@@ -30,7 +32,7 @@ class StepListItem extends StatelessWidget {
         color: CustomColors.red,
         child: Icon(Icons.delete, color: CustomColors.white),
       ),
-      onDismissed: (dir) => onDismissed(),
+      onDismissed: (dir) => isEdit ? onDismissed() : null,
       child: InkWell(
         onTap: () => showStepModal(step),
         child: Container(
@@ -54,7 +56,12 @@ class StepListItem extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyText2),
                 ],
               ),
-              Icon(Icons.reorder, color: CustomColors.grey)
+              isEdit
+                  ? Icon(
+                      Icons.reorder,
+                      color: CustomColors.lightGrey,
+                    )
+                  : Container(width: 0, height: 0)
             ],
           ),
         ),

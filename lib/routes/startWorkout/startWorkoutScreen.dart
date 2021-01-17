@@ -1,4 +1,4 @@
-import 'package:fitnet/models/customColors.dart';
+import 'package:fitnet/utils/customColors.dart';
 import 'package:fitnet/models/format.dart';
 import 'package:fitnet/models/workoutInstance.dart';
 import 'package:fitnet/models/workoutStepInstance.dart';
