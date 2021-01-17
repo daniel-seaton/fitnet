@@ -33,9 +33,7 @@ class DefaultFormatField extends StatelessWidget {
                             style: Theme.of(context).textTheme.bodyText1),
                         value: type))
                     .toList(),
-                onChanged: notifier.isEdit
-                    ? (value) => workoutNotifier.setDefaultFormat(value)
-                    : null,
+                onChanged: (value) => workoutNotifier.setDefaultFormat(value),
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 validator: (value) {
                   if (value == null) return 'Please select a default format';

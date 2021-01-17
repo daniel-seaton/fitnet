@@ -1,7 +1,7 @@
 import 'package:fitnet/models/customColors.dart';
 import 'package:fitnet/models/format.dart';
 import 'package:fitnet/models/workoutStep.dart';
-import 'package:fitnet/routes/viewWorkout/edit/formFields/stepListItem.dart';
+import 'package:fitnet/routes/editWorkout/formFields/stepListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../workoutChangeNotifier.dart';
@@ -50,35 +50,32 @@ class StepListField extends StatelessWidget {
               ),
             ),
           ),
-          notifier.isEdit
-              ? OutlineButton(
-                  key: Key('addStepButton'),
-                  color: CustomColors.grey,
-                  onPressed: () => showStepModal(
-                    context,
-                    step: WorkoutStep.empty(),
-                    isEdit: true,
-                    onSave: (WorkoutStep step) => notifier.addStep(step),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.add, color: CustomColors.grey),
-                      Text(
-                        'Add Step',
-                        style: TextStyle(color: CustomColors.grey),
-                      )
-                    ],
-                  ),
+          OutlineButton(
+            key: Key('addStepButton'),
+            color: CustomColors.grey,
+            onPressed: () => showStepModal(
+              context,
+              step: WorkoutStep.empty(),
+              isEdit: true,
+              onSave: (WorkoutStep step) => notifier.addStep(step),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.add, color: CustomColors.grey),
+                Text(
+                  'Add Step',
+                  style: TextStyle(color: CustomColors.grey),
                 )
-              : Container(key: Key('emptyContainer'), height: 0),
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 
   onReorder(int x, int y, EditWorkoutChangeNotifier notifier) {
-    if (!notifier.isEdit) return;
     if (x != y) {
       WorkoutStep step = notifier.removeStep(x);
       notifier.addStep(step, index: y > x ? y - 1 : y);

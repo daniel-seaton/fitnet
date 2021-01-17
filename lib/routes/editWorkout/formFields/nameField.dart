@@ -1,4 +1,5 @@
 import 'package:fitnet/models/customColors.dart';
+import 'package:fitnet/routes/editWorkout/editWorkoutScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../workoutChangeNotifier.dart';
@@ -17,7 +18,6 @@ class NameField extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
             child: Consumer<EditWorkoutChangeNotifier>(
               builder: (_, notifier, __) => TextFormField(
-                  readOnly: !notifier.isEdit,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 24, color: CustomColors.white),
                   initialValue: notifier.workout.name ?? 'Enter Name',
@@ -26,12 +26,6 @@ class NameField extends StatelessWidget {
                   validator: validate),
             ),
           ),
-          !notifier.isEdit
-              ? IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () => notifier.setIsEdit(true),
-                )
-              : Container(height: 0, width: 0),
         ],
       ),
     );

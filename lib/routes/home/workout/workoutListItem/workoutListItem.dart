@@ -1,6 +1,7 @@
 import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/routes/home/workout/workoutListItem/tagsDisplay/tagsDisplayRow.dart';
-import 'package:fitnet/routes/viewWorkout/edit/editWorkoutScreen.dart';
+import 'package:fitnet/routes/editWorkout/editWorkoutScreen.dart';
+import 'package:fitnet/routes/viewWorkout/viewWorkoutScreen.dart';
 import 'package:fitnet/services/workoutService.dart';
 import 'package:fitnet/models/customColors.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class WorkoutListItem extends StatelessWidget {
           children: [
             FlatButton(
               padding: EdgeInsets.all(0),
-              onPressed: () => showEditWorkoutScreen(context),
+              onPressed: () => showViewWorkoutScreen(context),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +87,7 @@ class WorkoutListItem extends StatelessWidget {
         ]);
     switch (value) {
       case 'Edit':
-        showEditWorkoutScreen(context, isEdit: true);
+        showEditWorkoutScreen(context);
         break;
       case 'Duplicate':
         workout.wid = null;
@@ -98,10 +99,14 @@ class WorkoutListItem extends StatelessWidget {
     }
   }
 
-  showEditWorkoutScreen(BuildContext context, {isEdit = false}) {
+  showEditWorkoutScreen(BuildContext context) {
     Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) =>
-            EditWorkoutScreen(workout: workout, isEdit: isEdit)));
+        builder: (context) => EditWorkoutScreen(workout: workout)));
+  }
+
+  showViewWorkoutScreen(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => ViewWorkoutScreen(workout: workout)));
   }
 
   getDateDisplay() {

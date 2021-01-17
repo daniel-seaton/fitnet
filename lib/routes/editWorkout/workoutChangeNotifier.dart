@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 
 class EditWorkoutChangeNotifier extends ChangeNotifier {
   final Workout workout;
-  bool isEdit;
-  EditWorkoutChangeNotifier({this.workout, this.isEdit});
+  EditWorkoutChangeNotifier({this.workout});
 
   void setDefaultFormat(String value) {
     workout.defaultFormat = Format.forType(value);
@@ -33,10 +32,5 @@ class EditWorkoutChangeNotifier extends ChangeNotifier {
     WorkoutStep step = workout.steps.removeAt(index);
     notifyListeners();
     return step;
-  }
-
-  void setIsEdit(bool value) {
-    isEdit = value;
-    notifyListeners();
   }
 }

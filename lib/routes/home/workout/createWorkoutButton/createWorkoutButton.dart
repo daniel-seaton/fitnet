@@ -1,5 +1,5 @@
 import 'package:fitnet/models/workout.dart';
-import 'package:fitnet/routes/viewWorkout/edit/editWorkoutScreen.dart';
+import 'package:fitnet/routes/editWorkout/editWorkoutScreen.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../models/customColors.dart';
@@ -40,10 +40,12 @@ class CreateWorkoutButton extends StatelessWidget {
   }
 
   showNewWorkoutScreen(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(
+    Navigator.of(context).push(
+      MaterialPageRoute(
         builder: (context) => EditWorkoutScreen(
-              workout: Workout(uid: userId),
-              isEdit: true,
-            )));
+          workout: Workout(uid: userId),
+        ),
+      ),
+    );
   }
 }

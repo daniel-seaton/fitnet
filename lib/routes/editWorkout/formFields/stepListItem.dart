@@ -23,16 +23,16 @@ class StepListItem extends StatelessWidget {
         Provider.of<EditWorkoutChangeNotifier>(context);
     return Dismissible(
       key: key,
-      direction: notifier.isEdit ? DismissDirection.horizontal : null,
+      direction: DismissDirection.horizontal,
       background: Container(
         alignment: Alignment.centerRight,
         padding: EdgeInsets.fromLTRB(0, 0, 25, 0),
         color: CustomColors.red,
         child: Icon(Icons.delete, color: CustomColors.white),
       ),
-      onDismissed: (dir) => checkIsEdit(notifier),
+      onDismissed: (dir) => onDismissed(),
       child: InkWell(
-        onTap: () => showStepModal(step, notifier.isEdit),
+        onTap: () => showStepModal(step),
         child: Container(
           decoration: BoxDecoration(
             color: CustomColors.white,
@@ -54,17 +54,11 @@ class StepListItem extends StatelessWidget {
                       style: Theme.of(context).textTheme.bodyText2),
                 ],
               ),
-              notifier.isEdit
-                  ? IconButton(icon: Icon(Icons.reorder), onPressed: null)
-                  : Container(width: 0, height: 0)
+              Icon(Icons.reorder, color: CustomColors.grey)
             ],
           ),
         ),
       ),
     );
-  }
-
-  checkIsEdit(EditWorkoutChangeNotifier notifier) {
-    if (notifier.isEdit) onDismissed();
   }
 }

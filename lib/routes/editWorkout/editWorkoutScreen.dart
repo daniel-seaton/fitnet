@@ -1,14 +1,14 @@
 import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/models/workoutInstance.dart';
 import 'package:fitnet/routes/startWorkout/startWorkoutScreen.dart';
-import 'package:fitnet/routes/viewWorkout/edit/workoutChangeNotifier.dart';
+import 'package:fitnet/routes/editWorkout/workoutChangeNotifier.dart';
+import 'package:fitnet/routes/viewWorkout/viewWorkoutScreen.dart';
 import 'package:fitnet/services/workoutInstanceService.dart';
 import 'package:fitnet/services/workoutService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../../serviceInjector.dart';
+import '../../serviceInjector.dart';
 import 'formFields/defaultFormatField.dart';
 import 'formFields/nameField.dart';
 import 'formFields/stepListField.dart';
@@ -18,18 +18,16 @@ class EditWorkoutScreen extends StatelessWidget {
   final WorkoutInstanceService instanceService =
       injector<WorkoutInstanceService>();
   final Workout workout;
-  final isEdit;
   final _formKey = GlobalKey<FormState>();
 
-  EditWorkoutScreen({@required this.workout, @required this.isEdit});
+  EditWorkoutScreen({@required this.workout});
 
   @override
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
       child: ChangeNotifierProvider(
-        create: (_) =>
-            EditWorkoutChangeNotifier(workout: workout, isEdit: isEdit),
+        create: (_) => EditWorkoutChangeNotifier(workout: workout),
         builder: (context, width) => Scaffold(
           appBar: AppBar(title: NameField()),
           body: ListView(
@@ -43,9 +41,9 @@ class EditWorkoutScreen extends StatelessWidget {
                 child: Center(
                   child: Consumer<EditWorkoutChangeNotifier>(
                     builder: (_, notifier, __) => ElevatedButton(
-                      onPressed: () => saveOrStartWorkout(notifier, context),
+                      onPressed: () => saveWorkout(notifier, context),
                       child: Text(
-                        getButtonText(notifier.isEdit),
+                        'Save',
                       ),
                     ),
                   ),
@@ -58,21 +56,12 @@ class EditWorkoutScreen extends StatelessWidget {
     );
   }
 
-  String getButtonText(bool isEdit) => isEdit ? 'Save' : 'Start Workout';
-
-  void saveOrStartWorkout(
+  void saveWorkout(
       EditWorkoutChangeNotifier notifier, BuildContext context) async {
-    if (notifier.isEdit && _formKey.currentState.validate() == true) {
+    if (_formKey.currentState.validate() == true) {
       await workoutService.addOrUpdateWorkout(notifier.workout);
-      notifier.setIsEdit(false);
-    } else if (!notifier.isEdit) {
-      List<WorkoutInstance> instances =
-          await instanceService.getInstancesByWid(workout.wid);
-      WorkoutInstance instance = instances.length > 0 ? instances[0] : null;
-      if (instance == null || instance.end != null)
-        instance = await instanceService.addNewInstance(workout);
-      Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => StartWorkoutScreen(instance: instance)));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => ViewWorkoutScreen(workout: notifier.workout)));
     }
   }
 }
