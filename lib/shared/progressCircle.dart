@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:fitnet/utils/customColors.dart';
 import 'package:flutter/material.dart';
 
 class ProgressCircle extends StatelessWidget {
@@ -19,9 +20,13 @@ class ProgressCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: size,
+    return Container(
       height: size,
+      width: size,
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+            color: CustomColors.darkGrey, blurRadius: 4, offset: Offset(1, 3))
+      ], color: CustomColors.white, shape: BoxShape.circle),
       child: CustomPaint(
         painter: ProgressCirclePainter(
             completionPercentage: completionPercentage,

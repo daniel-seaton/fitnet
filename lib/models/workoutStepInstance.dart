@@ -107,7 +107,9 @@ class SetBasedStepInstance extends WorkoutStepInstance {
 
   @override
   double percentComplete() {
-    return (sets.where((s) => s.end != null).length / sets.length * 100);
+    var percent = 0.0;
+    sets.forEach((s) => percent += s.percentComplete());
+    return (percent / sets.length * 10).round() / 10;
   }
 }
 

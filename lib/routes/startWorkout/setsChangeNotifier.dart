@@ -19,7 +19,7 @@ class SetsChangeNotifier extends ChangeNotifier {
   }
 
   void finishCurrentSet() {
-    _timer.cancel();
+    if (_timer != null && _timer.isActive) _timer.cancel();
     currentSet.end = DateTime.now();
     currentIndex++;
     _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
@@ -35,7 +35,7 @@ class SetsChangeNotifier extends ChangeNotifier {
   }
 
   void startNextSet() {
-    if (_timer != null) {
+    if (_timer != null && _timer.isActive) {
       _timer.cancel();
     }
     currentSet.start = DateTime.now();

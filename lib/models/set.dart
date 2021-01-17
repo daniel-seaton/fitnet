@@ -40,4 +40,11 @@ class Set {
   goalMet() {
     return actual >= goal;
   }
+
+  double percentComplete() {
+    if (end == null) {
+      return 0;
+    }
+    return ((actual / goal) * 1000).round() / 10;
+  }
 }
