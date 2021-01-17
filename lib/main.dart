@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitnet/serviceinjector.dart';
-import 'package:fitnet/src/authRouter.dart';
-import 'package:fitnet/src/colors.dart';
+import 'package:fitnet/routes/authRouter.dart';
+import 'package:fitnet/models/customColors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
