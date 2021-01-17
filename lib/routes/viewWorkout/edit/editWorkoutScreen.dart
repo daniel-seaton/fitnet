@@ -35,7 +35,6 @@ class EditWorkoutScreen extends StatelessWidget {
           body: ListView(
             children: [
               DefaultFormatField(),
-              //  ScheduledDateField(),
               StepListField(
                   steps: workout.steps != null ? workout.steps : [],
                   defaultFormat: workout.defaultFormat),

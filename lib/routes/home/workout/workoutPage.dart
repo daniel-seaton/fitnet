@@ -1,8 +1,7 @@
 import 'package:fitnet/models/workout.dart';
+import 'package:fitnet/routes/home/workout/workoutListItem/workoutListItem.dart';
+import 'package:fitnet/routes/home/workout/workoutSearchBar/workoutSearchBar.dart';
 import 'package:fitnet/services/workoutService.dart';
-import 'package:fitnet/routes/app/workout/filterChangeNotifier.dart';
-import 'package:fitnet/routes/app/workout/workoutListItem/workoutListItem.dart';
-import 'package:fitnet/routes/app/workout/workoutSearchBar/workoutSearchBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../../serviceInjector.dart';
 import '../../../models/customColors.dart';
 import 'createWorkoutButton/createWorkoutButton.dart';
+import 'filterChangeNotifier.dart';
 
 class WorkoutPage extends StatelessWidget {
   final WorkoutService workoutService = injector<WorkoutService>();
