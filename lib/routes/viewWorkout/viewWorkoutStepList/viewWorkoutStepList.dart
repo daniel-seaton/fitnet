@@ -1,4 +1,6 @@
 import 'package:fitnet/models/workoutStep.dart';
+import 'package:fitnet/routes/editWorkout/formFields/editStep/editStepModal.dart';
+import 'package:fitnet/routes/editWorkout/formFields/editStep/workStepChangeNotifier.dart';
 import 'package:fitnet/shared/workoutStepListItem.dart';
 import 'package:fitnet/utils/customColors.dart';
 import 'package:flutter/material.dart';
@@ -26,14 +28,29 @@ class ViewWorkoutStepList extends StatelessWidget {
             child: ListView.builder(
               itemCount: steps.length,
               itemBuilder: (ctx, index) => WorkoutStepListItem(
-                  key: Key(steps[index].exercise.name),
-                  step: steps[index],
-                  isEdit: false,
-                  showStepModal: null),
+                key: Key(steps[index].exercise.name),
+                step: steps[index],
+                isEdit: false,
+                showStepModal: (step, isEdit) =>
+                    showStepModal(context, step: step),
+              ),
             ),
           ),
         ),
       ],
     );
+  }
+
+  showStepModal(
+    BuildContext context, {
+    WorkoutStep step,
+  }) async {
+    await showDialog(
+        context: context,
+        builder: (context) => EditStepModal(
+              notifier: WorkoutStepChangeNotifier(step: step),
+              isEdit: false,
+              onSave: () {},
+            ));
   }
 }

@@ -29,7 +29,7 @@ class EditWorkoutScreen extends StatelessWidget {
       child: ChangeNotifierProvider(
         create: (_) => EditWorkoutChangeNotifier(workout: workout),
         builder: (context, width) => Scaffold(
-          appBar: AppBar(title: NameField()),
+          appBar: AppBar(centerTitle: true, title: NameField()),
           body: ListView(
             children: [
               DefaultFormatField(),

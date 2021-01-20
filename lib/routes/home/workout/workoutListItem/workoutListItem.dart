@@ -2,6 +2,7 @@ import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/routes/editWorkout/editWorkoutScreen.dart';
 import 'package:fitnet/routes/home/workout/workoutListItem/tagsDisplay/tagsDisplayRow.dart';
 import 'package:fitnet/routes/viewWorkout/viewWorkoutScreen.dart';
+import 'package:fitnet/routes/workoutHistory/workoutHistoryScreen.dart';
 import 'package:fitnet/services/workoutService.dart';
 import 'package:fitnet/utils/customColors.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +64,7 @@ class WorkoutListItem extends StatelessWidget {
                     padding: EdgeInsets.all(5),
                     child: Text(
                         '${workout.defaultFormat.displayValue} ${getDateDisplay()}',
-                        style: Theme.of(context).textTheme.subtitle1),
+                        style: Theme.of(context).textTheme.subtitle2),
                   ),
                   TagsDisplayRow(steps: this.workout.steps),
                 ],
@@ -83,6 +84,7 @@ class WorkoutListItem extends StatelessWidget {
           PopupMenuItem<String>(child: const Text('Edit'), value: 'Edit'),
           PopupMenuItem<String>(
               child: const Text('Duplicate'), value: 'Duplicate'),
+          PopupMenuItem<String>(child: const Text('History'), value: 'History'),
           PopupMenuItem<String>(child: const Text('Delete'), value: 'Delete'),
         ]);
     switch (value) {
@@ -94,7 +96,8 @@ class WorkoutListItem extends StatelessWidget {
         workoutService.addOrUpdateWorkout(workout);
         break;
       case 'History':
-        print('TODO');
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => WorkoutHistoryScreen(workout: workout)));
         break;
       case 'Delete':
         workoutService.deleteWorkout(workout);

@@ -47,7 +47,7 @@ abstract class WorkoutStepInstance {
   WorkoutStepInstance.fromStep(WorkoutStep step) {
     this.format = step.format;
     this.formatType = step.formatType;
-    this.exerciseName = step.exercise.name;
+    this.exerciseName = step.getDisplayName();
   }
 
   WorkoutStepInstance.fromMap(Map<String, dynamic> map) {
@@ -73,6 +73,14 @@ abstract class WorkoutStepInstance {
 
   double percentComplete() {
     return end != null ? 100 : 0;
+  }
+
+  bool isCompleted() {
+    return end != null;
+  }
+
+  bool isStarted() {
+    return start != null;
   }
 }
 

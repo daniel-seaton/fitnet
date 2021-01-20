@@ -14,16 +14,15 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Container(
-            height: 50,
-            width: 100,
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                image: AssetImage('assets/images/logo-white-2.png'),
-              ),
+        centerTitle: true,
+        title: Container(
+          height: 50,
+          width: 100,
+          decoration: BoxDecoration(
+            shape: BoxShape.rectangle,
+            image: DecorationImage(
+              fit: BoxFit.fill,
+              image: AssetImage('assets/images/logo-white-2.png'),
             ),
           ),
         ),

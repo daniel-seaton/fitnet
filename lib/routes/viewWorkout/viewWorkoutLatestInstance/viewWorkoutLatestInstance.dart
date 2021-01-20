@@ -1,10 +1,9 @@
 import 'package:fitnet/models/workoutInstance.dart';
+import 'package:fitnet/shared/completedInstanceRow/completedInstanceRow.dart';
+import 'package:fitnet/shared/inProgressInstanceRow/inProgressInstanceRow.dart';
 import 'package:fitnet/utils/customColors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import 'completedInstanceRow/completedInstanceRow.dart';
-import 'inProgressInstanceRow/inProgressInstanceRow.dart';
 
 class ViewWorkoutLatestInstance extends StatelessWidget {
   @override
@@ -35,8 +34,14 @@ class ViewWorkoutLatestInstance extends StatelessWidget {
             child: Selector<List<WorkoutInstance>, WorkoutInstance>(
                 selector: (_, instances) => instances[0],
                 builder: (_, latestInstance, __) => latestInstance.isCompleted()
-                    ? CompletedInstanceRow(instance: latestInstance)
-                    : InProgressInstanceRow(instance: latestInstance)),
+                    ? CompletedInstanceRow(
+                        instance: latestInstance,
+                        circleSize: 75,
+                      )
+                    : InProgressInstanceRow(
+                        instance: latestInstance,
+                        circleSize: 75,
+                      )),
           ),
         ),
       ],

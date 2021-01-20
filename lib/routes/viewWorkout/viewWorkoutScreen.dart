@@ -1,18 +1,11 @@
+import 'package:fitnet/routes/editWorkout/editWorkoutScreen.dart';
 import 'package:fitnet/routes/viewWorkout/viewWorkoutLatestInstance/viewWorkoutLatestInstance.dart';
 import 'package:fitnet/routes/viewWorkout/viewWorkoutStartButton/viewWorkoutStartButton.dart';
 import 'package:fitnet/routes/viewWorkout/viewWorkoutStepList/viewWorkoutStepList.dart';
-import 'package:fitnet/routes/viewWorkout/viewWorkoutTitle/viewWorkoutTitle.dart';
-import 'package:fitnet/utils/customColors.dart';
 import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/models/workoutInstance.dart';
-import 'package:fitnet/models/workoutStep.dart';
-import 'package:fitnet/routes/editWorkout/editWorkoutScreen.dart';
-import 'package:fitnet/routes/startWorkout/startWorkoutScreen.dart';
-import 'package:fitnet/shared/progressCircle.dart';
-import 'package:fitnet/shared/timeElapsedNotifier.dart';
 import 'package:fitnet/services/workoutInstanceService.dart';
-import 'package:fitnet/shared/workoutStepListItem.dart';
-import 'package:fitnet/utils/timeUtil.dart';
+import 'package:fitnet/utils/customColors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +26,20 @@ class ViewWorkoutScreen extends StatelessWidget {
       create: (_) => instanceService.getInstancesStreamByWid(workout.wid),
       builder: (ctx, _) => Scaffold(
         appBar: AppBar(
-          title: ViewWorkoutTitle(workout: workout),
+          centerTitle: true,
+          title: Text(
+            workout.name,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 24,
+              color: CustomColors.white,
+            ),
+          ),
+          actions: [
+            IconButton(
+                icon: Icon(Icons.edit, color: CustomColors.white),
+                onPressed: () => editWorkout(context))
+          ],
         ),
         body: Column(
           children: [
@@ -58,5 +64,10 @@ class ViewWorkoutScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void editWorkout(BuildContext context) {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => EditWorkoutScreen(workout: workout)));
   }
 }

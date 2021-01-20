@@ -33,14 +33,11 @@ class StartWorkoutScreen extends StatelessWidget {
               ),
               onPressed: () => updateAndExit(ctx, complete: false),
             ),
-            title: Container(
-              width: 250,
-              padding: EdgeInsets.fromLTRB(30, 0, 0, 0),
-              child: Text(
-                notifier.currentStep.exerciseName,
-                textAlign: TextAlign.center,
-                style: TextStyle(color: CustomColors.white, fontSize: 36.0),
-              ),
+            centerTitle: true,
+            title: Text(
+              notifier.currentStep.exerciseName,
+              textAlign: TextAlign.center,
+              style: TextStyle(color: CustomColors.white, fontSize: 36.0),
             ),
           ),
           body: Container(

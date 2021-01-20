@@ -43,6 +43,10 @@ class WorkoutStep {
     };
     return map;
   }
+
+  String getDisplayName() {
+    return exercise.name;
+  }
 }
 
 class SetBasedStep extends WorkoutStep {
@@ -68,6 +72,11 @@ class SetBasedStep extends WorkoutStep {
     map['targetWeight'] = targetWeight ?? 0;
     map['targetSets'] = targetSets ?? 0;
     return map;
+  }
+
+  @override
+  String getDisplayName() {
+    return '${targetSets}x${targetReps} ${exercise.name}';
   }
 }
 
@@ -108,5 +117,10 @@ class AMRAPStep extends WorkoutStep {
     map['targetTime'] = targetTime;
     map['targetReps'] = targetReps;
     return map;
+  }
+
+  @override
+  String getDisplayName() {
+    return 'As Many ${exercise.name} As Possible';
   }
 }

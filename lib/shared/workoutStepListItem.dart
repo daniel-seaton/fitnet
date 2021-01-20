@@ -34,7 +34,7 @@ class WorkoutStepListItem extends StatelessWidget {
       ),
       onDismissed: (dir) => isEdit ? onDismissed() : null,
       child: InkWell(
-        onTap: () => showStepModal(step),
+        onTap: () => showStepModal(step, isEdit),
         child: Container(
           decoration: BoxDecoration(
             color: CustomColors.white,

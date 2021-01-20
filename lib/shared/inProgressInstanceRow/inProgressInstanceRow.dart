@@ -6,15 +6,16 @@ import 'package:fitnet/utils/customColors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../serviceInjector.dart';
+import '../../serviceInjector.dart';
 import 'confirmCompletedWorkoutModal/confirmCompletedWorkoutModal.dart';
 
 class InProgressInstanceRow extends StatelessWidget {
   final WorkoutInstanceService instanceService =
       injector<WorkoutInstanceService>();
   final WorkoutInstance instance;
+  final double circleSize;
 
-  InProgressInstanceRow({@required this.instance});
+  InProgressInstanceRow({@required this.instance, @required this.circleSize});
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +28,10 @@ class InProgressInstanceRow extends StatelessWidget {
               CustomColors.getColorForCompletion(instance.percentComplete()),
           incompleteColor: CustomColors.lightGrey,
           strokeWidth: 5,
-          size: 100,
+          size: circleSize,
           child: Text(
             '${instance.percentComplete()}%',
-            style: Theme.of(context).textTheme.subtitle2,
+            style: Theme.of(context).textTheme.subtitle1,
           ),
         ),
         ChangeNotifierProvider<TimeElapsedNotifier>.value(
@@ -38,7 +39,7 @@ class InProgressInstanceRow extends StatelessWidget {
           builder: (ctx, _) => Consumer<TimeElapsedNotifier>(
             builder: (_, notifier, __) => Text(
               'In Progress\nTime Elapsed: ${notifier.getTimeElapsed()}',
-              style: Theme.of(context).textTheme.subtitle2,
+              style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
         ),

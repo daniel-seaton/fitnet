@@ -7,19 +7,14 @@ class NameField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     EditWorkoutChangeNotifier notifier =
-        Provider.of<EditWorkoutChangeNotifier>(context, listen: false);
-    return Container(
-      width: 265,
-      child: Consumer<EditWorkoutChangeNotifier>(
-        builder: (_, notifier, __) => TextFormField(
-            textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 24, color: CustomColors.white),
-            initialValue: notifier.workout.name ?? 'Enter Name',
-            onChanged: (value) => notifier.setName(value),
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: validate),
-      ),
-    );
+        Provider.of<EditWorkoutChangeNotifier>(context);
+    return TextFormField(
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: 24, color: CustomColors.white),
+        initialValue: notifier.workout.name ?? 'Enter Name',
+        onChanged: (value) => notifier.setName(value),
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: validate);
   }
 
   String validate(String value) {

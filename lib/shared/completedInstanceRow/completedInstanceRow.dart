@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 
 class CompletedInstanceRow extends StatelessWidget {
   final WorkoutInstance instance;
+  final double circleSize;
 
-  CompletedInstanceRow({@required this.instance});
+  CompletedInstanceRow({@required this.instance, @required this.circleSize});
 
   @override
   Widget build(BuildContext context) {
@@ -18,20 +19,16 @@ class CompletedInstanceRow extends StatelessWidget {
             CustomColors.getColorForCompletion(instance.percentComplete()),
         incompleteColor: CustomColors.lightGrey,
         strokeWidth: 5,
-        size: 100,
+        size: this.circleSize,
         child: Text(
           '${instance.percentComplete()}%',
-          style: Theme.of(context).textTheme.subtitle2,
+          style: Theme.of(context).textTheme.subtitle1,
         ),
       ),
       Text(
         'Completed: ${TimeUtil.getTimeBeforeNowString(instance.end)}\nTime Elapsed: ${TimeUtil.getElapsedTimeString(instance.end.difference(instance.start))}',
-        style: Theme.of(context).textTheme.subtitle2,
+        style: Theme.of(context).textTheme.subtitle1,
       ),
-      IconButton(
-        icon: Icon(Icons.more_horiz, color: CustomColors.grey, size: 36),
-        onPressed: () => {print('TODO')},
-      )
     ]);
   }
 }
