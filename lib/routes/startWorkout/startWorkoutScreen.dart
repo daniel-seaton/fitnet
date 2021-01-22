@@ -4,7 +4,7 @@ import 'package:fitnet/models/workoutInstance.dart';
 import 'package:fitnet/models/workoutStepInstance.dart';
 import 'package:fitnet/routes/startWorkout/repsForTimeStepScreen/repsForTimeStepScreen.dart';
 import 'package:fitnet/routes/startWorkout/setBasedStepScreen/setBasedStepScreen.dart';
-import 'package:fitnet/routes/startWorkout/stepsChangeNotifier.dart';
+import 'package:fitnet/shared/notifiers/stepsChangeNotifier.dart';
 import 'package:fitnet/services/workoutInstanceService.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

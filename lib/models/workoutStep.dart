@@ -118,9 +118,4 @@ class AMRAPStep extends WorkoutStep {
     map['targetReps'] = targetReps;
     return map;
   }
-
-  @override
-  String getDisplayName() {
-    return 'As Many ${exercise.name} As Possible';
-  }
 }

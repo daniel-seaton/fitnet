@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../setsChangeNotifier.dart';
+import '../../../shared/notifiers/setsChangeNotifier.dart';
 import 'currentSetDisplay/currentSetDisplay.dart';
 import 'setsDisplayRow/setsDisplayRow.dart';
 

@@ -2,7 +2,7 @@ import 'package:fitnet/models/format.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../workoutChangeNotifier.dart';
+import '../../../shared/notifiers/workoutChangeNotifier.dart';
 
 class DefaultFormatField extends StatelessWidget {
   @override

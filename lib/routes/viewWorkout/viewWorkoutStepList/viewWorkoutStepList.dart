@@ -1,7 +1,7 @@
 import 'package:fitnet/models/workoutStep.dart';
 import 'package:fitnet/routes/editWorkout/formFields/editStep/editStepModal.dart';
-import 'package:fitnet/routes/editWorkout/formFields/editStep/workStepChangeNotifier.dart';
-import 'package:fitnet/shared/workoutStepListItem.dart';
+import 'package:fitnet/shared/notifiers/workStepChangeNotifier.dart';
+import 'package:fitnet/shared/workoutStepListItem/workoutStepListItem.dart';
 import 'package:fitnet/utils/customColors.dart';
 import 'package:flutter/material.dart';
 

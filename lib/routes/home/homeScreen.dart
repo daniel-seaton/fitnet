@@ -3,7 +3,7 @@ import 'package:fitnet/routes/home/workout/workoutPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../shared/tabScreen.dart';
+import '../../shared/tabScreen/tabScreen.dart';
 
 class HomeScreen extends StatelessWidget {
   final String userId;

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_circular_slider/flutter_circular_slider.dart';
 import 'package:provider/provider.dart';
 
-import '../amrapChangeNotifier.dart';
+import '../../../shared/notifiers/amrapChangeNotifier.dart';
 
 class AMRAPStepScreen extends StatelessWidget {
   final AMRAPStepInstance step;

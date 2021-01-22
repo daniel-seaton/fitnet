@@ -1,5 +1,5 @@
 import 'package:fitnet/utils/customColors.dart';
-import 'package:fitnet/routes/editWorkout/workoutChangeNotifier.dart';
+import 'package:fitnet/shared/notifiers/workoutChangeNotifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

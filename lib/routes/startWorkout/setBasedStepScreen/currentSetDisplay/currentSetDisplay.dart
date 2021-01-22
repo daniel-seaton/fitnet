@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_circular_slider/flutter_circular_slider.dart';
 import 'package:provider/provider.dart';
 
-import '../../setsChangeNotifier.dart';
+import '../../../../shared/notifiers/setsChangeNotifier.dart';
 
 class CurrentSetDisplay extends StatelessWidget {
   CurrentSetDisplay();

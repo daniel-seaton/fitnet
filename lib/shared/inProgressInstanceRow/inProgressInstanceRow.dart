@@ -1,7 +1,7 @@
 import 'package:fitnet/models/workoutInstance.dart';
 import 'package:fitnet/services/workoutInstanceService.dart';
-import 'package:fitnet/shared/progressCircle.dart';
-import 'package:fitnet/shared/timeElapsedNotifier.dart';
+import 'package:fitnet/shared/progressCircle/progressCircle.dart';
+import 'package:fitnet/shared/notifiers/timeElapsedNotifier.dart';
 import 'package:fitnet/utils/customColors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

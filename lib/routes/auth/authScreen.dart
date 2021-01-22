@@ -1,5 +1,5 @@
 import '../../utils/customColors.dart';
-import '../../shared/tabScreen.dart';
+import '../../shared/tabScreen/tabScreen.dart';
 import 'loginPage.dart';
 import 'signUpPage.dart';
 import 'package:flutter/cupertino.dart';

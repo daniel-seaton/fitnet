@@ -1,5 +1,5 @@
 import 'package:fitnet/models/workoutInstance.dart';
-import 'package:fitnet/shared/progressCircle.dart';
+import 'package:fitnet/shared/progressCircle/progressCircle.dart';
 import 'package:fitnet/utils/customColors.dart';
 import 'package:fitnet/utils/timeUtil.dart';
 import 'package:flutter/material.dart';

@@ -1,11 +1,11 @@
-import 'package:fitnet/shared/progressCircle.dart';
+import 'package:fitnet/shared/progressCircle/progressCircle.dart';
 import 'package:fitnet/utils/customColors.dart';
 import 'package:fitnet/utils/timeUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:fitnet/models/set.dart';
 import 'package:provider/provider.dart';
 
-import '../../setsChangeNotifier.dart';
+import '../../../../shared/notifiers/setsChangeNotifier.dart';
 
 class SetsDisplayRow extends StatelessWidget {
   SetsDisplayRow();

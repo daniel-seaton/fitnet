@@ -1,7 +1,7 @@
 import 'package:fitnet/utils/customColors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../workStepChangeNotifier.dart';
+import '../../../../../shared/notifiers/workStepChangeNotifier.dart';
 
 class ExerciseTagField extends StatelessWidget {
   final bool isEdit;

@@ -1,5 +1,5 @@
 import 'package:fitnet/models/workout.dart';
-import 'package:fitnet/routes/editWorkout/workoutChangeNotifier.dart';
+import 'package:fitnet/shared/notifiers/workoutChangeNotifier.dart';
 import 'package:fitnet/services/workoutInstanceService.dart';
 import 'package:fitnet/services/workoutService.dart';
 import 'package:flutter/cupertino.dart';

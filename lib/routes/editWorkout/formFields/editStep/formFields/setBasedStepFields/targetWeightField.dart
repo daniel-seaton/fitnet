@@ -3,7 +3,7 @@ import 'package:fitnet/models/set.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../workStepChangeNotifier.dart';
+import '../../../../../../shared/notifiers/workStepChangeNotifier.dart';
 
 class TargetWeightField extends StatelessWidget {
   final bool isEdit;

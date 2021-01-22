@@ -1,12 +1,12 @@
 import 'package:fitnet/utils/customColors.dart';
 import 'package:fitnet/models/format.dart';
 import 'package:fitnet/models/workoutStep.dart';
-import 'package:fitnet/shared/workoutStepListItem.dart';
+import 'package:fitnet/shared/workoutStepListItem/workoutStepListItem.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../workoutChangeNotifier.dart';
+import '../../../shared/notifiers/workoutChangeNotifier.dart';
 import 'editStep/editStepModal.dart';
-import 'editStep/workStepChangeNotifier.dart';
+import '../../../shared/notifiers/workStepChangeNotifier.dart';
 
 class StepListField extends StatelessWidget {
   final List<WorkoutStep> steps;
