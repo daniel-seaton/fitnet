@@ -43,17 +43,18 @@ class WorkoutStepListItem extends StatelessWidget {
             ),
           ),
           padding: EdgeInsets.all(10),
-          height: 60,
+          height: 80,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(step.exercise.name,
-                      style: Theme.of(context).textTheme.bodyText1),
+                  Text(step.getDisplayName(),
+                      style: Theme.of(context).textTheme.subtitle1),
                   Text(Format.forType(step.formatType).displayValue,
-                      style: Theme.of(context).textTheme.bodyText2),
+                      style: Theme.of(context).textTheme.subtitle2),
                 ],
               ),
               isEdit

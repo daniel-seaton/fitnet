@@ -4,6 +4,7 @@ import 'package:fitnet/routes/viewWorkout/viewWorkoutStartButton/viewWorkoutStar
 import 'package:fitnet/routes/viewWorkout/viewWorkoutStepList/viewWorkoutStepList.dart';
 import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/models/workoutInstance.dart';
+import 'package:fitnet/routes/workoutHistory/workoutHistoryScreen.dart';
 import 'package:fitnet/services/workoutInstanceService.dart';
 import 'package:fitnet/utils/customColors.dart';
 import 'package:flutter/cupertino.dart';
@@ -41,33 +42,43 @@ class ViewWorkoutScreen extends StatelessWidget {
                 onPressed: () => editWorkout(context))
           ],
         ),
-        body: Column(
-          children: [
-            Expanded(flex: 6, child: ViewWorkoutStepList(steps: workout.steps)),
-            Selector<List<WorkoutInstance>, bool>(
-              selector: (_, instances) => instances.length > 0,
-              child: Expanded(flex: 3, child: ViewWorkoutLatestInstance()),
-              builder: (_, displayLatestInstance, child) =>
-                  displayLatestInstance
-                      ? child
-                      : Container(
-                          width: 0.0,
-                          height: 0.0,
-                        ),
-            ),
-            Expanded(
-                flex: 1,
-                child: ViewWorkoutStartButton(
-                  workout: workout,
-                ))
-          ],
+        body: Selector<List<WorkoutInstance>, bool>(
+          selector: (_, instances) => instances.length > 0,
+          builder: (_, displayLatestInstance, __) => Column(
+            children: [
+              Expanded(
+                  flex: displayLatestInstance ? 6 : 9,
+                  child: ViewWorkoutStepList(steps: workout.steps)),
+              displayLatestInstance
+                  ? Expanded(
+                      flex: 3,
+                      child: ViewWorkoutLatestInstance(
+                        viewWorkoutHistory: () => viewWorkoutHistory(context),
+                      ),
+                    )
+                  : Container(
+                      width: 0.0,
+                      height: 0.0,
+                    ),
+              Expanded(
+                  flex: 1,
+                  child: ViewWorkoutStartButton(
+                    workout: workout,
+                  ))
+            ],
+          ),
         ),
       ),
     );
   }
 
+  void viewWorkoutHistory(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => WorkoutHistoryScreen(workout: workout)));
+  }
+
   void editWorkout(BuildContext context) {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
+    Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => EditWorkoutScreen(workout: workout)));
   }
 }
