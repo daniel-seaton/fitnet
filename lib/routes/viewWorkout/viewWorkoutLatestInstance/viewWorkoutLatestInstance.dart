@@ -23,8 +23,6 @@ class ViewWorkoutLatestInstance extends StatelessWidget {
               Selector<List<WorkoutInstance>, WorkoutInstance>(
                 selector: (_, instances) => instances[0],
                 builder: (_, latestInstance, __) => Text(
-                    // TODO add view history button to take to history screen
-                    // TODO maybe make it so you can view step stuff from this screen? maybe
                     latestInstance.isCompleted()
                         ? 'Last Workout:'
                         : 'In Progress Workout:',
@@ -59,6 +57,7 @@ class ViewWorkoutLatestInstance extends StatelessWidget {
                     : InProgressInstanceRow(
                         instance: latestInstance,
                         circleSize: 75,
+                        displayCancelButton: true,
                       )),
           ),
         ),

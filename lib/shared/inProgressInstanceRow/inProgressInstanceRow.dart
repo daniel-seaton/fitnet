@@ -14,38 +14,55 @@ class InProgressInstanceRow extends StatelessWidget {
       injector<WorkoutInstanceService>();
   final WorkoutInstance instance;
   final double circleSize;
+  final bool displayCancelButton;
 
-  InProgressInstanceRow({@required this.instance, @required this.circleSize});
+  InProgressInstanceRow(
+      {@required this.instance,
+      @required this.circleSize,
+      this.displayCancelButton = false});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        ProgressCircle(
-          completionPercentage: instance.percentComplete(),
-          completeColor:
-              CustomColors.getColorForCompletion(instance.percentComplete()),
-          incompleteColor: CustomColors.lightGrey,
-          strokeWidth: 5,
-          size: circleSize,
-          child: Text(
-            '${instance.percentComplete()}%',
-            style: Theme.of(context).textTheme.subtitle1,
-          ),
-        ),
-        ChangeNotifierProvider<TimeElapsedNotifier>.value(
-          value: TimeElapsedNotifier(instance.start),
-          builder: (ctx, _) => Consumer<TimeElapsedNotifier>(
-            builder: (_, notifier, __) => Text(
-              'In Progress\nTime Elapsed: ${notifier.getTimeElapsed()}',
+        Expanded(
+          flex: 2,
+          child: ProgressCircle(
+            completionPercentage: instance.percentComplete(),
+            completeColor:
+                CustomColors.getColorForCompletion(instance.percentComplete()),
+            incompleteColor: CustomColors.lightGrey,
+            strokeWidth: 5,
+            size: circleSize,
+            child: Text(
+              '${instance.percentComplete()}%',
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
         ),
-        IconButton(
-          icon: Icon(Icons.highlight_off, color: CustomColors.red, size: 36),
-          onPressed: () => confirmCompleteWorkout(context),
+        Expanded(
+          flex: 4,
+          child: ChangeNotifierProvider<TimeElapsedNotifier>.value(
+            value: TimeElapsedNotifier(instance.start),
+            builder: (ctx, _) => Consumer<TimeElapsedNotifier>(
+              builder: (_, notifier, __) => Text(
+                'In Progress\nTime Elapsed: ${notifier.getTimeElapsed()}',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            ),
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: displayCancelButton
+              ? IconButton(
+                  icon: Icon(Icons.highlight_off,
+                      color: CustomColors.red, size: 36),
+                  onPressed: () => confirmCompleteWorkout(context),
+                )
+              : Container(height: 0.0, width: 0.0),
         )
       ],
     );
@@ -56,6 +73,9 @@ class InProgressInstanceRow extends StatelessWidget {
         context: context, builder: (context) => ConfirmCompleteWorkoutModal());
     if (completeWorkout) {
       instance.end = DateTime.now();
+      instance.steps
+          .firstWhere((step) => step.isStarted() && !step.isCompleted())
+          .end = instance.end;
       await instanceService.updateInstance(instance);
     }
   }

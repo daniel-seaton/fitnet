@@ -169,4 +169,12 @@ class AMRAPStepInstance extends WorkoutStepInstance {
     if (actualReps > 0) map['actualReps'] = actualReps;
     return map;
   }
+
+  @override
+  double percentComplete() {
+    if (end == null) {
+      return 0;
+    }
+    return actualReps / targetReps * 100;
+  }
 }

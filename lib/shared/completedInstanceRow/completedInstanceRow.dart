@@ -13,22 +13,30 @@ class CompletedInstanceRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-      ProgressCircle(
-        completionPercentage: instance.percentComplete(),
-        completeColor:
-            CustomColors.getColorForCompletion(instance.percentComplete()),
-        incompleteColor: CustomColors.lightGrey,
-        strokeWidth: 5,
-        size: this.circleSize,
+      Expanded(
+        flex: 2,
+        child: ProgressCircle(
+          completionPercentage: instance.percentComplete(),
+          completeColor:
+              CustomColors.getColorForCompletion(instance.percentComplete()),
+          incompleteColor: CustomColors.lightGrey,
+          strokeWidth: 5,
+          size: this.circleSize,
+          child: Text(
+            '${instance.percentComplete()}%',
+            style: Theme.of(context).textTheme.subtitle1,
+          ),
+        ),
+      ),
+      Expanded(
+        flex: 4,
         child: Text(
-          '${instance.percentComplete()}%',
+          'Completed: ${TimeUtil.getTimeBeforeNowString(instance.end)}\nTime Elapsed: ${TimeUtil.getElapsedTimeString(instance.end.difference(instance.start))}',
+          textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.subtitle1,
         ),
       ),
-      Text(
-        'Completed: ${TimeUtil.getTimeBeforeNowString(instance.end)}\nTime Elapsed: ${TimeUtil.getElapsedTimeString(instance.end.difference(instance.start))}',
-        style: Theme.of(context).textTheme.subtitle1,
-      ),
+      Expanded(flex: 1, child: Container(height: 0.0, width: 0.0))
     ]);
   }
 }
