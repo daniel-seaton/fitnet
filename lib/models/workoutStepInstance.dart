@@ -28,7 +28,7 @@ class WorkoutStepInstanceFactory {
   }
 }
 
-class WorkoutStepInstance {
+abstract class WorkoutStepInstance {
   Format format;
   String formatType;
   String exerciseName;
@@ -47,7 +47,7 @@ class WorkoutStepInstance {
   WorkoutStepInstance.fromStep(WorkoutStep step) {
     this.format = step.format;
     this.formatType = step.formatType;
-    this.exerciseName = step.exercise.name;
+    this.exerciseName = step.getDisplayName();
   }
 
   WorkoutStepInstance.fromMap(Map<String, dynamic> map) {
@@ -69,6 +69,18 @@ class WorkoutStepInstance {
     if (start != null) map['start'] = start;
     if (end != null) map['end'] = end;
     return map;
+  }
+
+  double percentComplete() {
+    return end != null ? 100 : 0;
+  }
+
+  bool isCompleted() {
+    return end != null;
+  }
+
+  bool isStarted() {
+    return start != null;
   }
 }
 
@@ -99,6 +111,13 @@ class SetBasedStepInstance extends WorkoutStepInstance {
     map['minimumRest'] = minimumRest ?? 0;
     map['sets'] = sets.map((s) => s.toMap()).toList();
     return map;
+  }
+
+  @override
+  double percentComplete() {
+    var percent = 0.0;
+    sets.forEach((s) => percent += s.percentComplete());
+    return (percent / sets.length * 10).round() / 10;
   }
 }
 
@@ -149,5 +168,13 @@ class AMRAPStepInstance extends WorkoutStepInstance {
     map['targetReps'] = targetReps;
     if (actualReps > 0) map['actualReps'] = actualReps;
     return map;
+  }
+
+  @override
+  double percentComplete() {
+    if (end == null) {
+      return 0;
+    }
+    return actualReps / targetReps * 100;
   }
 }

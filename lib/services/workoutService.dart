@@ -25,7 +25,7 @@ class WorkoutService {
     });
   }
 
-  addOrUpdateWorkout(Workout workout) async {
+  Future<void> addOrUpdateWorkout(Workout workout) async {
     CollectionReference workoutRef = firestore.collection(workoutCollection);
     if (workout.wid == null)
       await workoutRef.add(workout.toMap());

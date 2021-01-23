@@ -35,6 +35,21 @@ class WorkoutInstanceService {
     return workouts;
   }
 
+  Stream<List<WorkoutInstance>> getInstancesStreamByWid(String wid) {
+    CollectionReference instanceRef =
+        firestore.collection(workoutInstanceCollection);
+    return instanceRef
+        .where('wid', isEqualTo: wid)
+        .snapshots()
+        .map((QuerySnapshot query) {
+      List<WorkoutInstance> workouts = [];
+      query.docs.forEach((doc) => workouts
+          .add(WorkoutInstance.fromMap({...doc.data(), 'iid': doc.id})));
+      workouts.sort((a, b) => a.start.isBefore(b.start) ? 1 : -1);
+      return workouts;
+    });
+  }
+
   Future<void> deleteInstancesByWid(String wid) async {
     CollectionReference instanceRef =
         firestore.collection(workoutInstanceCollection);

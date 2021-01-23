@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitnet/serviceinjector.dart';
-import 'package:fitnet/src/authRouter.dart';
-import 'package:fitnet/src/colors.dart';
+import 'package:fitnet/routes/authRouter.dart';
+import 'package:fitnet/utils/customColors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -27,11 +27,16 @@ class Fitnet extends StatelessWidget {
             // Workout List Item Headline
             headline1:
                 GoogleFonts.anton(fontSize: 30, color: CustomColors.white),
+
+            headline2: TextStyle(fontSize: 24, color: CustomColors.black),
+            headline3: TextStyle(fontSize: 24, color: CustomColors.grey),
             // Workout List Item Subtitle
-            subtitle1: TextStyle(fontSize: 18, color: CustomColors.grey),
+            subtitle1: TextStyle(fontSize: 18, color: CustomColors.black),
+            subtitle2: TextStyle(fontSize: 18, color: CustomColors.grey),
+
             // Edit Workout Text
             bodyText1: TextStyle(fontSize: 16, color: CustomColors.black),
-            bodyText2: TextStyle(fontSize: 12, color: CustomColors.grey),
+            bodyText2: TextStyle(fontSize: 16, color: CustomColors.grey),
           ),
         ),
         home: AuthRouter());
