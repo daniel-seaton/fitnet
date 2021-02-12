@@ -44,7 +44,8 @@ class StartWorkoutScreen extends StatelessWidget {
               height: MediaQuery.of(ctx).size.height,
               width: MediaQuery.of(ctx).size.width,
               color: CustomColors.lightGrey,
-              child: getBodyForStep(notifier.currentStep, () => nextStep(ctx))),
+              child: notifier.currentStep
+                  .getStartStepScreen(next: () => nextStep(ctx))),
         ),
       ),
     );
@@ -65,23 +66,6 @@ class StartWorkoutScreen extends StatelessWidget {
     notifier.nextStep();
     if (notifier.currentIndex == notifier.steps.length) {
       updateAndExit(context, complete: true);
-    }
-  }
-
-  Widget getBodyForStep(WorkoutStepInstance step, Function nextStep) {
-    switch (step.format.value) {
-      case FormatType.SetBased:
-        return SetBasedStepScreen(
-          step: step as SetBasedStepInstance,
-          nextStep: nextStep,
-        );
-      case FormatType.RepsForTime:
-        return RepsForTimeStepScreen(step: step as RepsForTimeStepInstance);
-      case FormatType.AMRAP:
-        return AMRAPStepScreen(
-            step: step as AMRAPStepInstance, nextStep: nextStep);
-      default:
-        return Container();
     }
   }
 }

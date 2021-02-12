@@ -33,7 +33,7 @@ class WorkoutHistoryStepRow extends StatelessWidget {
                 stepInstance.exerciseName,
                 style: Theme.of(context).textTheme.subtitle1,
               ),
-              getStepMetaDisplay()
+              this.stepInstance.getHistoryMetaDisplay()
             ],
           ),
           Spacer(
@@ -54,22 +54,6 @@ class WorkoutHistoryStepRow extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  Widget getStepMetaDisplay() {
-    switch (stepInstance.format.value) {
-      case FormatType.SetBased:
-        return SetBasedStepMetaDisplay(stepInstance: stepInstance);
-      case FormatType.AMRAP:
-        return AMRAPStepMetaDisplay(stepInstance: stepInstance);
-      case FormatType.RepsForTime:
-        return RepsForTimeMetaDisplay(stepInstance: stepInstance);
-      default:
-        return Container(
-          width: 0.0,
-          height: 0.0,
-        );
-    }
   }
 
   Widget getStepIcon() {
