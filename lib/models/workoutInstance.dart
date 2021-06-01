@@ -14,7 +14,7 @@ class WorkoutInstance {
     uid = workout.uid;
     steps = workout.steps
         .map((step) =>
-            WorkoutStepInstanceFactory.getForStep(step.formatType, step))
+            WorkoutStepInstance.forStep(step.formatType, step))
         .toList();
   }
 
@@ -29,7 +29,7 @@ class WorkoutInstance {
     if (map['steps'] != null) {
       List<WorkoutStepInstance> mappedSteps = [];
       map['steps'].forEach((step) => mappedSteps
-          .add(WorkoutStepInstanceFactory.getForMap(step['formatType'], step)));
+          .add(WorkoutStepInstance.forMap(step['formatType'], step)));
       steps = mappedSteps;
     }
   }

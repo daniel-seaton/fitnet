@@ -8,9 +8,45 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:934792592663:android:0b4b67501cd7acebfa0b52",
+        "android_client_info": {
+          "package_name": "com.fit.net"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "934792592663-tvarkv0ih4ug7n6dgqtd8vs6r3sh3581.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIpDunrylwsEisnAMG84EMKsc6vq0AVbo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "934792592663-tvarkv0ih4ug7n6dgqtd8vs6r3sh3581.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "934792592663-096j1t5ocfamjkc65odrfmfe8v6c50cn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fit.net"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:934792592663:android:bdeac5a0a54c491dfa0b52",
         "android_client_info": {
-          "package_name": "com.fitnet.app"
+          "package_name": "com.fit.net"
         }
       },
       "oauth_client": [
@@ -18,7 +54,7 @@
           "client_id": "934792592663-4rq9g34f214aac1u7s3o54kh7tk2b2ov.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.fitnet.app",
+            "package_name": "com.fit.net",
             "certificate_hash": "2b020d0102f397f1ffc2d36030e11563e3e8de1b"
           }
         },
@@ -38,6 +74,13 @@
             {
               "client_id": "934792592663-tvarkv0ih4ug7n6dgqtd8vs6r3sh3581.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "934792592663-096j1t5ocfamjkc65odrfmfe8v6c50cn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.fit.net"
+              }
             }
           ]
         }

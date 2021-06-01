@@ -13,6 +13,8 @@ class AuthService {
   Future<AppUser> login(String email, String password) async {
     AppUser user;
     try {
+      print(email);
+      print(password);
       UserCredential userCredentials = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
       user = await userService.getUser(userCredentials.user.uid);

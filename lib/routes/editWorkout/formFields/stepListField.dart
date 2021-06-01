@@ -89,7 +89,7 @@ class StepListField extends StatelessWidget {
         Provider.of<EditWorkoutChangeNotifier>(context, listen: false);
     if (step.formatType == null) {
       step.formatType = workoutChangeNotifier.workout.defaultFormat.value;
-      step = WorkoutStepFactory.getForType(
+      step = WorkoutStep.forType(
           workoutChangeNotifier.workout.defaultFormat.value, step.toMap());
     }
 

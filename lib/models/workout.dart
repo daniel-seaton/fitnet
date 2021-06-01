@@ -32,7 +32,7 @@ class Workout {
     if (map['steps'] != null) {
       List<WorkoutStep> mappedSteps = [];
       map['steps'].forEach((step) => mappedSteps.add(
-          WorkoutStepFactory.getForType(
+          WorkoutStep.forType(
               step['formatType'] ?? defaultFormat, step)));
       steps = mappedSteps;
     }

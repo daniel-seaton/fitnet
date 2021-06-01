@@ -1,19 +1,5 @@
 import 'package:fitnet/models/exercise.dart';
 import 'package:fitnet/models/format.dart';
-import 'package:fitnet/models/set.dart';
-
-class WorkoutStepFactory {
-  static WorkoutStep getForType(String formatType, Map<String, dynamic> map) {
-    switch (formatType) {
-      case FormatType.SetBased:
-        return SetBasedStep.fromMap(map);
-      case FormatType.RepsForTime:
-        return RepsForTimeStep.fromMap(map);
-      case FormatType.AMRAP:
-        return AMRAPStep.fromMap(map);
-    }
-  }
-}
 
 class WorkoutStep {
   Format format;
@@ -34,6 +20,17 @@ class WorkoutStep {
     exercise = map['exercise'] != null
         ? Exercise.fromMap(map['exercise'])
         : Exercise.fromMap({'name': map['exerciseName'], 'tags': []});
+  }
+
+  static WorkoutStep forType(String formatType, Map<String, dynamic> map) {
+    switch (formatType) {
+      case FormatType.SetBased:
+        return SetBasedStep.fromMap(map);
+      case FormatType.RepsForTime:
+        return RepsForTimeStep.fromMap(map);
+      case FormatType.AMRAP:
+        return AMRAPStep.fromMap(map);
+    }
   }
 
   Map<String, dynamic> toMap() {

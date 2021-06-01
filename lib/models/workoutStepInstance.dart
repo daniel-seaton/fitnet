@@ -10,31 +10,6 @@ import 'package:fitnet/routes/workoutHistory/workoutHistoryStepList/workoutHisto
 import 'package:fitnet/routes/workoutHistory/workoutHistoryStepList/workoutHistoryListItem/workoutHistoryStepRow/setBasedStepMetaDisplay/setBasedStepMetaDisplay.dart';
 import 'package:flutter/material.dart';
 
-class WorkoutStepInstanceFactory {
-  static WorkoutStepInstance getForStep(String formatType, WorkoutStep step) {
-    switch (formatType) {
-      case FormatType.SetBased:
-        return SetBasedStepInstance.fromStep(step as SetBasedStep);
-      case FormatType.RepsForTime:
-        return RepsForTimeStepInstance.fromStep(step as RepsForTimeStep);
-      case FormatType.AMRAP:
-        return AMRAPStepInstance.fromStep(step as AMRAPStep);
-    }
-  }
-
-  static WorkoutStepInstance getForMap(
-      String formatType, Map<String, dynamic> map) {
-    switch (formatType) {
-      case FormatType.SetBased:
-        return SetBasedStepInstance.fromMap(map);
-      case FormatType.RepsForTime:
-        return RepsForTimeStepInstance.fromMap(map);
-      case FormatType.AMRAP:
-        return AMRAPStepInstance.fromMap(map);
-    }
-  }
-}
-
 abstract class WorkoutStepInstance {
   Format format;
   String formatType;
@@ -76,6 +51,29 @@ abstract class WorkoutStepInstance {
     if (start != null) map['start'] = start;
     if (end != null) map['end'] = end;
     return map;
+  }
+
+  static WorkoutStepInstance forStep(String formatType, WorkoutStep step) {
+    switch (formatType) {
+      case FormatType.SetBased:
+        return SetBasedStepInstance.fromStep(step as SetBasedStep);
+      case FormatType.RepsForTime:
+        return RepsForTimeStepInstance.fromStep(step as RepsForTimeStep);
+      case FormatType.AMRAP:
+        return AMRAPStepInstance.fromStep(step as AMRAPStep);
+    }
+  }
+
+  static WorkoutStepInstance forMap(
+      String formatType, Map<String, dynamic> map) {
+    switch (formatType) {
+      case FormatType.SetBased:
+        return SetBasedStepInstance.fromMap(map);
+      case FormatType.RepsForTime:
+        return RepsForTimeStepInstance.fromMap(map);
+      case FormatType.AMRAP:
+        return AMRAPStepInstance.fromMap(map);
+    }
   }
 
   double percentComplete() {

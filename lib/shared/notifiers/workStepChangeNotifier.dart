@@ -7,7 +7,7 @@ class WorkoutStepChangeNotifier extends ChangeNotifier {
 
   void setFormat(String value) {
     step.formatType = value;
-    step = WorkoutStepFactory.getForType(value, step.toMap());
+    step = WorkoutStep.forType(value, step.toMap());
     notifyListeners();
   }
 
