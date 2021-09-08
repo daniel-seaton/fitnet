@@ -1,3 +1,4 @@
+import 'package:fitnet/models/appUser.dart';
 import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/routes/home/workout/workoutListItem/workoutListItem.dart';
 import 'package:fitnet/routes/home/workout/workoutSearchBar/workoutSearchBar.dart';
@@ -8,25 +9,31 @@ import 'package:provider/provider.dart';
 
 import '../../../serviceInjector.dart';
 import '../../../utils/customColors.dart';
+import '../../authChangeNotifier.dart';
 import 'createWorkoutButton/createWorkoutButton.dart';
-import 'filterChangeNotifier.dart';
+import 'workoutPageChangeNotifier.dart';
 
 class WorkoutPage extends StatelessWidget {
   final WorkoutService workoutService = injector<WorkoutService>();
-  final String userId;
 
-  WorkoutPage({@required this.userId});
+  WorkoutPage();
 
   @override
   Widget build(BuildContext context) {
+    AuthChangeNotifier authNotifier = Provider.of<AuthChangeNotifier>(context, listen: false);
+
     return MultiProvider(
       providers: [
-        StreamProvider<List<Workout>>.value(
+        FutureProvider<List<Workout>>.value(
           initialData: [],
-          value: workoutService.getWorkoutStreamForUser(userId),
+          value: authNotifier.user?.uid != null ? workoutService.getWorkoutForUser(authNotifier.user.uid) : Future.value([]), 
         ),
-        ChangeNotifierProvider<FilterChangeNotifier>(
-          create: (_) => FilterChangeNotifier(),
+        ChangeNotifierProxyProvider<List<Workout>, WorkoutPageChangeNotifier>(
+          create: (_) => WorkoutPageChangeNotifier(),
+          update: (_, workouts, notifier) {
+            notifier.setWorkouts(workouts);
+            return notifier;
+          }
         )
       ],
       builder: (_, __) => Container(
@@ -40,9 +47,9 @@ class WorkoutPage extends StatelessWidget {
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height - 190,
-              child: Consumer2<List<Workout>, FilterChangeNotifier>(
-                  builder: (_, workouts, notifier, __) =>
-                      buildFilteredList(workouts, notifier.filter)),
+              child: Consumer<WorkoutPageChangeNotifier>(
+                  builder: (_, notifier, __) =>
+                      buildFilteredList(notifier.workouts, notifier.filter)),
             ),
           ],
         ),
@@ -62,6 +69,6 @@ class WorkoutPage extends StatelessWidget {
         itemCount: filteredWorkouts.length + 1,
         itemBuilder: (context, index) => index < filteredWorkouts.length
             ? WorkoutListItem(workout: filteredWorkouts[index])
-            : CreateWorkoutButton(userId: userId));
+            : CreateWorkoutButton());
   }
 }

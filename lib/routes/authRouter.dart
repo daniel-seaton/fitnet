@@ -3,7 +3,7 @@ import 'package:fitnet/routes/authChangeNotifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 
-//import 'home/homeScreen.dart';
+import 'home/homeScreen.dart';
 
 class AuthRouter extends StatelessWidget {
 
@@ -16,5 +16,5 @@ class AuthRouter extends StatelessWidget {
   }
 
   Widget getScreenForAuthStatus(AuthChangeNotifier notifier) =>
-    !notifier.isConfirmed ? AuthScreen() : Container();
+    !notifier.isConfirmed ? AuthScreen() : HomeScreen();
 }

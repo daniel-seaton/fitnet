@@ -19,15 +19,9 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ProxyProvider<AuthChangeNotifier, AppUser>(
-          create: (ctx) => Provider.of<AuthChangeNotifier>(ctx, listen: false).user, 
-          update: (_, notifier, __) => notifier.user
-        ),
-        ChangeNotifierProvider.value(value: widgetProvider)
-      ],
-      child: Consumer<AppUser>(
+    return  ChangeNotifierProvider.value(
+      value: widgetProvider,
+      builder: (_, __) => Consumer<AppUser>(
         builder: (_, user, __) => user == null
             ? Center(child: Text('Loading...'))
             : Column(

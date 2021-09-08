@@ -1,4 +1,4 @@
-import 'package:fitnet/models/AppUser.dart';
+import 'package:fitnet/models/appUser.dart';
 import 'package:flutter/material.dart';
 
 class AuthChangeNotifier extends ChangeNotifier {

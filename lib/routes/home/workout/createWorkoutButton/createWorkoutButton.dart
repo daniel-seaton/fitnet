@@ -1,13 +1,15 @@
+import 'package:fitnet/models/appUser.dart';
 import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/routes/editWorkout/editWorkoutScreen.dart';
+import 'package:fitnet/routes/home/workout/workoutPageChangeNotifier.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../utils/customColors.dart';
 
 class CreateWorkoutButton extends StatelessWidget {
-  final String userId;
 
-  CreateWorkoutButton({@required this.userId});
+  CreateWorkoutButton();
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +41,15 @@ class CreateWorkoutButton extends StatelessWidget {
     );
   }
 
-  showNewWorkoutScreen(BuildContext context) {
-    Navigator.of(context).push(
+  showNewWorkoutScreen(BuildContext context) async {
+    AppUser user = Provider.of<AppUser>(context, listen: false);
+    Workout workout = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => EditWorkoutScreen(
-          workout: Workout(uid: userId),
+          workout: Workout(uid: user.uid),
         ),
       ),
     );
+    Provider.of<WorkoutPageChangeNotifier>(context, listen: false).addWorkout(workout);
   }
 }

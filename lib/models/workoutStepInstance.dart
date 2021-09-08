@@ -2,12 +2,12 @@ import 'package:fitnet/models/exercise.dart';
 import 'package:fitnet/models/format.dart';
 import 'package:fitnet/models/set.dart';
 import 'package:fitnet/models/workoutStep.dart';
-import 'package:fitnet/routes/startWorkout/amrapStepScreen/amrapStepsScreen.dart';
-import 'package:fitnet/routes/startWorkout/repsForTimeStepScreen/repsForTimeStepScreen.dart';
-import 'package:fitnet/routes/startWorkout/setBasedStepScreen/setBasedStepScreen.dart';
-import 'package:fitnet/routes/workoutHistory/workoutHistoryStepList/workoutHistoryListItem/workoutHistoryStepRow/AMRAPStepMetaDisplay/AMRAPStepMetaDisplay.dart';
-import 'package:fitnet/routes/workoutHistory/workoutHistoryStepList/workoutHistoryListItem/workoutHistoryStepRow/repsForTimeMetaDisplay/repsForTimeMetaDisplay.dart';
-import 'package:fitnet/routes/workoutHistory/workoutHistoryStepList/workoutHistoryListItem/workoutHistoryStepRow/setBasedStepMetaDisplay/setBasedStepMetaDisplay.dart';
+//import 'package:fitnet/routes/startWorkout/amrapStepScreen/amrapStepsScreen.dart';
+//import 'package:fitnet/routes/startWorkout/repsForTimeStepScreen/repsForTimeStepScreen.dart';
+//import 'package:fitnet/routes/startWorkout/setBasedStepScreen/setBasedStepScreen.dart';
+//import 'package:fitnet/routes/workoutHistory/workoutHistoryStepList/workoutHistoryListItem/workoutHistoryStepRow/AMRAPStepMetaDisplay/AMRAPStepMetaDisplay.dart';
+//import 'package:fitnet/routes/workoutHistory/workoutHistoryStepList/workoutHistoryListItem/workoutHistoryStepRow/repsForTimeMetaDisplay/repsForTimeMetaDisplay.dart';
+//import 'package:fitnet/routes/workoutHistory/workoutHistoryStepList/workoutHistoryListItem/workoutHistoryStepRow/setBasedStepMetaDisplay/setBasedStepMetaDisplay.dart';
 import 'package:flutter/material.dart';
 
 abstract class WorkoutStepInstance {
@@ -130,12 +130,14 @@ class SetBasedStepInstance extends WorkoutStepInstance {
 
   @override
   Widget getStartStepScreen({@required Function next}) {
-    return SetBasedStepScreen(step: this, nextStep: next);
+    return Container();
+    //return SetBasedStepScreen(step: this, nextStep: next);
   }
 
   @override
   Widget getHistoryMetaDisplay() {
-    return SetBasedStepMetaDisplay(stepInstance: this);
+    return Container();
+    //return SetBasedStepMetaDisplay(stepInstance: this);
   }
 }
 
@@ -162,12 +164,14 @@ class RepsForTimeStepInstance extends WorkoutStepInstance {
 
   @override
   Widget getStartStepScreen({Function next}) {
-    return RepsForTimeStepScreen(step: this);
+    return Container();
+    //return RepsForTimeStepScreen(step: this);
   }
 
   @override
   Widget getHistoryMetaDisplay() {
-    return RepsForTimeMetaDisplay(stepInstance: this);
+    return Container();
+    //return RepsForTimeMetaDisplay(stepInstance: this);
   }
 }
 
@@ -208,11 +212,13 @@ class AMRAPStepInstance extends WorkoutStepInstance {
 
   @override
   Widget getStartStepScreen({@required Function next}) {
-    return AMRAPStepScreen(step: this, nextStep: next);
+    return Container();
+    //return AMRAPStepScreen(step: this, nextStep: next);
   }
 
   @override
   Widget getHistoryMetaDisplay() {
-    return AMRAPStepMetaDisplay(stepInstance: this);
+    return Container();
+    //return AMRAPStepMetaDisplay(stepInstance: this);
   }
 }
