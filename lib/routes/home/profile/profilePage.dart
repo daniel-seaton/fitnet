@@ -7,21 +7,24 @@ import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
 import '../../../serviceInjector.dart';
+import '../../authChangeNotifier.dart';
 import 'infoScreenSelector/infoScreenSelector.dart';
 
 class ProfilePage extends StatelessWidget {
   final AuthService authService = injector<AuthService>();
   final UserService userService = injector<UserService>();
   final InfoWidgetProvider widgetProvider = InfoWidgetProvider();
-  final String userId;
 
-  ProfilePage({@required this.userId});
+  ProfilePage();
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        StreamProvider.value(value: userService.getUserStream(userId)),
+        ProxyProvider<AuthChangeNotifier, AppUser>(
+          create: (ctx) => Provider.of<AuthChangeNotifier>(ctx, listen: false).user, 
+          update: (_, notifier, __) => notifier.user
+        ),
         ChangeNotifierProvider.value(value: widgetProvider)
       ],
       child: Consumer<AppUser>(

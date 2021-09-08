@@ -1,14 +1,11 @@
 import 'package:fitnet/routes/home/profile/profilePage.dart';
-import 'package:fitnet/routes/home/workout/workoutPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../shared/tabScreen/tabScreen.dart';
 
 class HomeScreen extends StatelessWidget {
-  final String userId;
-
-  HomeScreen({@required this.userId});
+  HomeScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +43,9 @@ class HomeScreen extends StatelessWidget {
               ),
             ],
             tabPages: [
-              WorkoutPage(userId: userId),
-              ProfilePage(userId: userId)
+              Container(),
+              //WorkoutPage(userId: userId),
+              ProfilePage()
             ],
           ),
         ),

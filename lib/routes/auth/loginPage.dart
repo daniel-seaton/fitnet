@@ -1,5 +1,6 @@
 import 'package:fitnet/routes/auth/loginPageNotifier.dart';
 import 'package:fitnet/services/authService.dart';
+import 'package:fitnet/routes/authChangeNotifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +22,8 @@ class LoginPage extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
-                  decoration: InputDecoration(labelText: 'Email'),
-                  onChanged: notifier?.setEmail,
+                  decoration: InputDecoration(labelText: 'Username'),
+                  onChanged: notifier?.setUsername,
                 ),
                 TextField(
                   obscureText: true,
@@ -31,7 +32,11 @@ class LoginPage extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    authService.login(notifier?.email, notifier?.password);
+                    authService.login(notifier.username, notifier.password).then((user) {
+                      AuthChangeNotifier authNotifier = Provider.of<AuthChangeNotifier>(context, listen: false);
+                      authNotifier.setUser(user);
+                      authNotifier.setIsConfirmed(true);
+                    });
                   },
                   child: Text('Log In'),
                 ),

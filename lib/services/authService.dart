@@ -1,66 +1,66 @@
 import 'dart:async';
 
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:fitnet/models/appUser.dart';
 import 'package:fitnet/services/userService.dart';
+import 'package:amplify_flutter/amplify.dart';
+import 'package:uuid/uuid.dart';
 
 import '../serviceinjector.dart';
 
 class AuthService {
-  final FirebaseAuth firebaseAuth = injector<FirebaseAuth>();
   final UserService userService = injector<UserService>();
+  final Uuid uuid = injector<Uuid>();
 
-  Future<AppUser> login(String email, String password) async {
+  Future<AppUser> login(String username, String password) async {
     AppUser user;
     try {
-      print(email);
-      print(password);
-      UserCredential userCredentials = await firebaseAuth
-          .signInWithEmailAndPassword(email: email, password: password);
-      user = await userService.getUser(userCredentials.user.uid);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+      await signOut();
+      SignInResult res = await Amplify.Auth.signIn(username: username, password: password);
+      if (res.isSignedIn) {
+        List<AuthUserAttribute> attrs = await Amplify.Auth.fetchUserAttributes();
+        String uid = attrs.firstWhere((attr) => attr.userAttributeKey == 'custom:uid').value;
+        user = await userService.getUser(uid);
       }
     } catch (e) {
-      print(e);
+      print('Unable to login: $e');
     }
     return user;
   }
 
   Future<AppUser> signUp(
-      String email, String password, String firstName, String lastName,
+      String username, String email, String password, String firstName, String lastName,
       [String city, String state, int weight, int height]) async {
     AppUser user;
     try {
-      UserCredential userCredentials = await firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
-      user = await userService.createNew(userCredentials.user.uid, firstName,
-          lastName, city, state, weight, height);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
+      String uid = uuid.v4();
+      SignUpResult res = await Amplify.Auth.signUp(username: username, password: password, options: CognitoSignUpOptions(userAttributes: {
+        'email': email,
+        'custom:uid': uid,
+      }));
+
+      user = await userService.createNew(uid, firstName,
+        lastName, city, state, weight, height);
     } catch (e) {
       print(e);
     }
     return user;
   }
 
-  Future<void> signOut() async {
-    await firebaseAuth.signOut();
+    Future<bool> confirmSignUp(String username, String code) async {
+    try {
+      SignUpResult confirmRes = await Amplify.Auth.confirmSignUp(username: username, confirmationCode: code);
+      return confirmRes.isSignUpComplete;
+    } catch (e) {
+      print(e);
+    }
+    return false;
   }
 
-  Stream<AppUser> getLoggedInUser() {
-    return firebaseAuth.authStateChanges().asyncMap((User user) {
-      if (user != null) {
-        return userService.getUser(user.uid);
-      }
-      return null;
-    });
+
+
+  Future<void> signOut() async {
+    await Amplify.Auth.signOut();
   }
 }
