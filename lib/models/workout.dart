@@ -25,9 +25,9 @@ class Workout {
     name = map['name'];
     defaultFormat = Format.forType(map['defaultFormat']);
     created =
-        DateTime.fromMillisecondsSinceEpoch(map['created'] * 1000);
+        DateTime.fromMillisecondsSinceEpoch(map['created']);
     updated =
-        DateTime.fromMillisecondsSinceEpoch(map['updated'] * 1000);
+        DateTime.fromMillisecondsSinceEpoch(map['updated']);
 
     if (map['steps'] != null) {
       List<WorkoutStep> mappedSteps = [];

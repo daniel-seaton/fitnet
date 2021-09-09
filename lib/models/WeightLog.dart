@@ -9,6 +9,6 @@ class WeightLog {
   WeightLog.fromMap(Map<String, dynamic> map) {
     this.weight = map['weight'];
     this.dateLogged =
-        DateTime.fromMillisecondsSinceEpoch(map['dateLogged'].seconds * 1000);
+        DateTime.fromMillisecondsSinceEpoch(map['dateLogged']);
   }
 }

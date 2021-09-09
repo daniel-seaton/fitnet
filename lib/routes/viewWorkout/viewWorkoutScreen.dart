@@ -1,5 +1,6 @@
 import 'package:fitnet/routes/editWorkout/editWorkoutScreen.dart';
 import 'package:fitnet/routes/viewWorkout/viewWorkoutLatestInstance/viewWorkoutLatestInstance.dart';
+import 'package:fitnet/shared/notifiers/workoutInstancesChangeNotifier.dart';
 import 'package:fitnet/routes/viewWorkout/viewWorkoutStartButton/viewWorkoutStartButton.dart';
 import 'package:fitnet/routes/viewWorkout/viewWorkoutStepList/viewWorkoutStepList.dart';
 import 'package:fitnet/models/workout.dart';
@@ -22,10 +23,21 @@ class ViewWorkoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<List<WorkoutInstance>>(
-      initialData: [],
-      create: (_) => instanceService.getInstancesStreamByWid(workout.wid),
-      builder: (ctx, _) => Scaffold(
+    return MultiProvider(
+      providers: [
+        FutureProvider<List<WorkoutInstance>>.value(
+          initialData: [],
+          value: instanceService.getInstancesForWorkout(workout.wid),
+        ),
+        ChangeNotifierProxyProvider<List<WorkoutInstance>, WorkoutInstancesChangeNotifier>(
+          create: (_) => WorkoutInstancesChangeNotifier(),
+          update: (_, instances, notifier) {
+            notifier.setInstances(instances);
+            return notifier;
+          }
+        )
+      ],
+      builder: (_, __) => Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: Text(
@@ -42,8 +54,8 @@ class ViewWorkoutScreen extends StatelessWidget {
                 onPressed: () => editWorkout(context))
           ],
         ),
-        body: Selector<List<WorkoutInstance>, bool>(
-          selector: (_, instances) => instances.length > 0,
+        body: Selector<WorkoutInstancesChangeNotifier, bool>(
+          selector: (_, notifier) => notifier.instances.length > 0,
           builder: (_, displayLatestInstance, __) => Column(
             children: [
               Expanded(

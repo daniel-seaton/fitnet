@@ -2,12 +2,12 @@ import 'package:fitnet/models/exercise.dart';
 import 'package:fitnet/models/format.dart';
 import 'package:fitnet/models/set.dart';
 import 'package:fitnet/models/workoutStep.dart';
-//import 'package:fitnet/routes/startWorkout/amrapStepScreen/amrapStepsScreen.dart';
-//import 'package:fitnet/routes/startWorkout/repsForTimeStepScreen/repsForTimeStepScreen.dart';
-//import 'package:fitnet/routes/startWorkout/setBasedStepScreen/setBasedStepScreen.dart';
-//import 'package:fitnet/routes/workoutHistory/workoutHistoryStepList/workoutHistoryListItem/workoutHistoryStepRow/AMRAPStepMetaDisplay/AMRAPStepMetaDisplay.dart';
-//import 'package:fitnet/routes/workoutHistory/workoutHistoryStepList/workoutHistoryListItem/workoutHistoryStepRow/repsForTimeMetaDisplay/repsForTimeMetaDisplay.dart';
-//import 'package:fitnet/routes/workoutHistory/workoutHistoryStepList/workoutHistoryListItem/workoutHistoryStepRow/setBasedStepMetaDisplay/setBasedStepMetaDisplay.dart';
+import 'package:fitnet/routes/startWorkout/amrapStepScreen/amrapStepsScreen.dart';
+import 'package:fitnet/routes/startWorkout/repsForTimeStepScreen/repsForTimeStepScreen.dart';
+import 'package:fitnet/routes/startWorkout/setBasedStepScreen/setBasedStepScreen.dart';
+import 'package:fitnet/routes/workoutHistory/workoutHistoryStepList/workoutHistoryListItem/workoutHistoryStepRow/AMRAPStepMetaDisplay/AMRAPStepMetaDisplay.dart';
+import 'package:fitnet/routes/workoutHistory/workoutHistoryStepList/workoutHistoryListItem/workoutHistoryStepRow/repsForTimeMetaDisplay/repsForTimeMetaDisplay.dart';
+import 'package:fitnet/routes/workoutHistory/workoutHistoryStepList/workoutHistoryListItem/workoutHistoryStepRow/setBasedStepMetaDisplay/setBasedStepMetaDisplay.dart';
 import 'package:flutter/material.dart';
 
 abstract class WorkoutStepInstance {
@@ -38,9 +38,9 @@ abstract class WorkoutStepInstance {
     exerciseName = map['exerciseName'];
 
     if (map['start'] != null)
-      start = DateTime.fromMillisecondsSinceEpoch(map['start'].seconds * 1000);
+      start = DateTime.fromMillisecondsSinceEpoch(map['start']);
     if (map['end'] != null)
-      end = DateTime.fromMillisecondsSinceEpoch(map['end'].seconds * 1000);
+      end = DateTime.fromMillisecondsSinceEpoch(map['end']);
   }
 
   Map<String, dynamic> toMap() {
@@ -48,8 +48,8 @@ abstract class WorkoutStepInstance {
       'formatType': formatType,
       'exerciseName': exerciseName,
     };
-    if (start != null) map['start'] = start;
-    if (end != null) map['end'] = end;
+    if (start != null) map['start'] = start.millisecondsSinceEpoch;
+    if (end != null) map['end'] = end.millisecondsSinceEpoch;
     return map;
   }
 
@@ -130,14 +130,12 @@ class SetBasedStepInstance extends WorkoutStepInstance {
 
   @override
   Widget getStartStepScreen({@required Function next}) {
-    return Container();
-    //return SetBasedStepScreen(step: this, nextStep: next);
+    return SetBasedStepScreen(step: this, nextStep: next);
   }
 
   @override
   Widget getHistoryMetaDisplay() {
-    return Container();
-    //return SetBasedStepMetaDisplay(stepInstance: this);
+    return SetBasedStepMetaDisplay(stepInstance: this);
   }
 }
 
@@ -164,14 +162,12 @@ class RepsForTimeStepInstance extends WorkoutStepInstance {
 
   @override
   Widget getStartStepScreen({Function next}) {
-    return Container();
-    //return RepsForTimeStepScreen(step: this);
+    return RepsForTimeStepScreen(step: this);
   }
 
   @override
   Widget getHistoryMetaDisplay() {
-    return Container();
-    //return RepsForTimeMetaDisplay(stepInstance: this);
+    return RepsForTimeMetaDisplay(stepInstance: this);
   }
 }
 
@@ -212,13 +208,11 @@ class AMRAPStepInstance extends WorkoutStepInstance {
 
   @override
   Widget getStartStepScreen({@required Function next}) {
-    return Container();
-    //return AMRAPStepScreen(step: this, nextStep: next);
+    return AMRAPStepScreen(step: this, nextStep: next);
   }
 
   @override
   Widget getHistoryMetaDisplay() {
-    return Container();
-    //return AMRAPStepMetaDisplay(stepInstance: this);
+    return AMRAPStepMetaDisplay(stepInstance: this);
   }
 }

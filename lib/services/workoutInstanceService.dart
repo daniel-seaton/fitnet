@@ -1,66 +1,63 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
+
 import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/models/workoutInstance.dart';
+import 'package:http/http.dart';
 
 import '../serviceInjector.dart';
 
 class WorkoutInstanceService {
-  FirebaseFirestore firestore = injector<FirebaseFirestore>();
-  final String workoutInstanceCollection = 'workoutInstances';
+  final String authority = '0nbeytk3f4.execute-api.us-east-1.amazonaws.com';
+  final String basePath = 'dev/workoutInstance';
+  final Map<String, String> headers = {'Content-type': 'application/json','Accept': 'application/json'};
 
-  Future<WorkoutInstance> addNewInstance(Workout workout) async {
-    CollectionReference instanceRef =
-        firestore.collection(workoutInstanceCollection);
-    WorkoutInstance instance = WorkoutInstance.fromWorkout(workout);
-    instance.start = DateTime.now();
-    DocumentReference doc = await instanceRef.add(instance.toMap());
-    instance.iid = doc.id;
+  Future<WorkoutInstance> addNewInstance(WorkoutInstance instance) async {
+    Uri url = Uri.https(authority, '$basePath');
+    Response res = await post(url, body: jsonEncode(instance.toMap()), headers: headers);
+    if(res.statusCode < 200 || res.statusCode > 299) {
+      throw 'Unable to add instance: statusCode ${res.statusCode}: ${res.body}';
+    }
+    return WorkoutInstance.fromMap(jsonDecode(res.body));
+  }
+
+  Future<WorkoutInstance> updateInstance(WorkoutInstance instance) async {
+    Uri url = Uri.https(authority, '$basePath/${instance.iid}');
+    Response res = await put(url, body: jsonEncode(instance.toMap()), headers: headers);
+    if(res.statusCode < 200 || res.statusCode > 299) {
+      throw 'Unable to update instance ${instance.wid}: statusCode ${res.statusCode}: ${res.body}';
+    }
     return instance;
   }
 
-  Future<void> updateInstance(WorkoutInstance instance) async {
-    CollectionReference instanceRef =
-        firestore.collection(workoutInstanceCollection);
-    await instanceRef.doc(instance.iid).update(instance.toMap());
-  }
-
-  Future<List<WorkoutInstance>> getInstancesByWid(String wid) async {
-    CollectionReference instanceRef =
-        firestore.collection(workoutInstanceCollection);
-    QuerySnapshot query = await instanceRef.where('wid', isEqualTo: wid).get();
-    List<WorkoutInstance> workouts = [];
-    query.docs.forEach((doc) =>
-        workouts.add(WorkoutInstance.fromMap({...doc.data(), 'iid': doc.id})));
-    workouts.sort((a, b) => a.start.isBefore(b.start) ? 1 : -1);
-    return workouts;
-  }
-
-  Stream<List<WorkoutInstance>> getInstancesStreamByWid(String wid) {
-    CollectionReference instanceRef =
-        firestore.collection(workoutInstanceCollection);
-    return instanceRef
-        .where('wid', isEqualTo: wid)
-        .snapshots()
-        .map((QuerySnapshot query) {
-      List<WorkoutInstance> workouts = [];
-      query.docs.forEach((doc) => workouts
-          .add(WorkoutInstance.fromMap({...doc.data(), 'iid': doc.id})));
-      workouts.sort((a, b) => a.start.isBefore(b.start) ? 1 : -1);
-      return workouts;
-    });
-  }
-
-  Future<void> deleteInstancesByWid(String wid) async {
-    CollectionReference instanceRef =
-        firestore.collection(workoutInstanceCollection);
-    await instanceRef.where('wid', isEqualTo: wid).get().then((snapshot) {
-      var batch = firestore.batch();
-      snapshot.docs.forEach((doc) {
-        // For each doc, add a delete operation to the batch
-        batch.delete(doc.reference);
+  Future<List<WorkoutInstance>> getInstancesForWorkout(String wid) async {
+    try {
+      Uri url = Uri.https(authority, '$basePath/workout/$wid');
+      Response res = await get(url, headers: headers);
+      if(res.statusCode < 200 || res.statusCode > 299) {
+        throw 'returned status code ${res.statusCode}: ${res.body}';
+      }
+      List<WorkoutInstance> instances = [];
+      jsonDecode(res.body).forEach((map) { 
+        instances.add(WorkoutInstance.fromMap(map));
       });
-      // Commit the batch
-      return batch.commit();
-    });
+      return instances;
+    } catch (e) {
+      print('Unable to get workouts for user $wid: $e');
+    }
+    return [];
   }
+
+  // Future<void> deleteInstancesByWid(String wid) async {
+  //   CollectionReference instanceRef =
+  //       firestore.collection(workoutInstanceCollection);
+  //   await instanceRef.where('wid', isEqualTo: wid).get().then((snapshot) {
+  //     var batch = firestore.batch();
+  //     snapshot.docs.forEach((doc) {
+  //       // For each doc, add a delete operation to the batch
+  //       batch.delete(doc.reference);
+  //     });
+  //     // Commit the batch
+  //     return batch.commit();
+  //   });
+  // }
 }

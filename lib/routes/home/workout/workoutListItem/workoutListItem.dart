@@ -1,10 +1,9 @@
 import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/routes/editWorkout/editWorkoutScreen.dart';
 import 'package:fitnet/routes/home/workout/workoutPageChangeNotifier.dart';
-//import 'package:fitnet/routes/editWorkout/editWorkoutScreen.dart';
 import 'package:fitnet/routes/home/workout/workoutListItem/tagsDisplay/tagsDisplayRow.dart';
-//import 'package:fitnet/routes/viewWorkout/viewWorkoutScreen.dart';
-//import 'package:fitnet/routes/workoutHistory/workoutHistoryScreen.dart';
+import 'package:fitnet/routes/viewWorkout/viewWorkoutScreen.dart';
+import 'package:fitnet/routes/workoutHistory/workoutHistoryScreen.dart';
 import 'package:fitnet/services/workoutService.dart';
 import 'package:fitnet/utils/customColors.dart';
 import 'package:flutter/material.dart';
@@ -100,8 +99,8 @@ class WorkoutListItem extends StatelessWidget {
         Provider.of<WorkoutPageChangeNotifier>(context, listen: false).addWorkout(dup);
         break;
       case 'History':
-        // Navigator.of(context).push(MaterialPageRoute(
-        //     builder: (context) => WorkoutHistoryScreen(workout: workout)));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => WorkoutHistoryScreen(workout: workout)));
         break;
       case 'Delete':
         await workoutService.deleteWorkout(workout);
@@ -123,8 +122,8 @@ class WorkoutListItem extends StatelessWidget {
   }
 
   showViewWorkoutScreen(BuildContext context) {
-    // Navigator.of(context).push(MaterialPageRoute(
-    //     builder: (context) => ViewWorkoutScreen(workout: workout)));
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => ViewWorkoutScreen(workout: workout)));
   }
 
   getDateDisplay() {

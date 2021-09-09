@@ -16,6 +16,7 @@ class WorkoutInstance {
         .map((step) =>
             WorkoutStepInstance.forStep(step.formatType, step))
         .toList();
+    start = DateTime.now();
   }
 
   WorkoutInstance.fromMap(Map<String, dynamic> map) {
@@ -23,9 +24,9 @@ class WorkoutInstance {
     wid = map['wid'];
     uid = map['uid'];
     if (map['start'] != null)
-      start = DateTime.fromMillisecondsSinceEpoch(map['start'].seconds * 1000);
+      start = DateTime.fromMillisecondsSinceEpoch(map['start']);
     if (map['end'] != null)
-      end = DateTime.fromMillisecondsSinceEpoch(map['end'].seconds * 1000);
+      end = DateTime.fromMillisecondsSinceEpoch(map['end']);
     if (map['steps'] != null) {
       List<WorkoutStepInstance> mappedSteps = [];
       map['steps'].forEach((step) => mappedSteps
@@ -39,8 +40,8 @@ class WorkoutInstance {
       'wid': wid,
       'uid': uid,
     };
-    if (start != null) map['start'] = start;
-    if (end != null) map['end'] = end;
+    if (start != null) map['start'] = start.millisecondsSinceEpoch;
+    if (end != null) map['end'] = end.millisecondsSinceEpoch;
     if (steps != null)
       map['steps'] = steps.map((step) => step.toMap()).toList();
     return map;

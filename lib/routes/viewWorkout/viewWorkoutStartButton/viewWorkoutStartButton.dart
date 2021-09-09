@@ -42,7 +42,7 @@ class ViewWorkoutStartButton extends StatelessWidget {
       BuildContext context, List<WorkoutInstance> instances) async {
     WorkoutInstance instance = instances.length > 0 ? instances[0] : null;
     if (instance == null || instance.isCompleted())
-      instance = await instanceService.addNewInstance(workout);
+      instance = await instanceService.addNewInstance(WorkoutInstance.fromWorkout(workout));
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => StartWorkoutScreen(instance: instance)));
   }
