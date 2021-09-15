@@ -1,58 +1,34 @@
-import 'dart:async';
 
 import 'package:fitnet/models/workoutStepInstance.dart';
-import 'package:fitnet/utils/timeUtil.dart';
-import 'package:flutter/material.dart';
+import 'package:fitnet/shared/notifiers/parentInstanceChangeNotifier.dart';
+import 'package:fitnet/shared/mixins/timerControlMixin.dart';
+import 'package:flutter/cupertino.dart';
 
-class AMRAPChangeNotifier extends ChangeNotifier {
-  Duration _timeElapsed = Duration.zero;
-  Timer _timer;
-  DateTime _startTime;
-  DateTime _endTime;
+import 'instanceChangeNotifier.dart';
 
-  AMRAPStepInstance step;
+class AMRAPChangeNotifer extends ParentInstanceChangeNotifier<AMRAPStepInstance> with TimerControlMixin{
 
-  AMRAPChangeNotifier({@required this.step}) {
-    step.actualReps = step.targetReps;
+  AMRAPChangeNotifer({@required InstanceChangeNotifier parent, DateTime startTime}): super(parent) {
+    if(startTime != null) start(startTime);
   }
 
-  setReps(int value) {
-    step.actualReps = value;
-    notifyListeners();
+  setReps(num value){
+    currentStep.actualReps = value;
+    update(currentStep);
   }
 
-  startTimer() {
-    _startTime = DateTime.now();
-    _timer = _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-      _timeElapsed = DateTime.now().difference(_startTime);
-      notifyListeners();
-    });
-    notifyListeners();
+  startStep() {
+    currentStep.begin();
+    start(currentStep.start);
+    update(currentStep);
   }
 
-  endTimer() {
-    _timer.cancel();
-    _endTime = DateTime.now();
-    _timer = _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-      _timeElapsed = DateTime.now().difference(_endTime);
-      notifyListeners();
-    });
-    notifyListeners();
-  }
-
-  started() {
-    return _startTime != null;
-  }
-
-  completed() {
-    return _endTime != null;
-  }
-
-  int getTimeElapsedSeconds() {
-    return _timeElapsed.inSeconds % 60;
-  }
-
-  String getTimeElapsed() {
-    return TimeUtil.getElapsedTimeString(_timeElapsed);
+  completeStep() {
+    var step = currentStep;
+    print(step.toMap());
+    var index = currentStepIndex;
+    step.complete();
+    end(step.end);
+    update(step, index);
   }
 }

@@ -1,4 +1,7 @@
+import 'package:fitnet/models/workoutStepInstance.dart';
+import 'package:fitnet/shared/notifiers/instanceChangeNotifier.dart';
 import 'package:fitnet/utils/customColors.dart';
+import 'package:fitnet/utils/timeUtil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_circular_slider/flutter_circular_slider.dart';
 import 'package:provider/provider.dart';
@@ -10,18 +13,20 @@ class CurrentSetDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    InstanceChangeNotifier instance = Provider.of<InstanceChangeNotifier>(context, listen: false);
     return Consumer<SetsChangeNotifier>(
-      builder: (_, notifier, __) => SingleCircularSlider(
-        notifier.currentSet.goal,
-        notifier.currentSet.actual % notifier.currentSet.goal,
+      builder: (_, notifier, __) => notifier.sets.length == 0 
+      ? Container()
+      : SingleCircularSlider(
+        notifier.currentSet?.goal ?? 1,
+        notifier.currentSet != null ? notifier.currentSet.actual % notifier.currentSet.goal : 1,
         height: 400,
         width: 400,
         shouldCountLaps: true,
         baseColor: CustomColors.lightGrey,
         selectionColor: CustomColors.blue,
-        onSelectionChange: (_, value, laps) => notifier.currentSet
-                .isInProgress()
-            ? notifier.setCurrentActual(value + notifier.currentSet.goal * laps)
+        onSelectionChange: (_, value, laps) => notifier.currentSet.isInProgress()
+            ? notifier.updateActual(value + notifier.currentSet.goal*laps)
             : null,
         child: Container(
           decoration: BoxDecoration(
@@ -52,8 +57,7 @@ class CurrentSetDisplay extends StatelessWidget {
                       bottomLeft: Radius.circular(24.0),
                     ),
                   ),
-                  onPressed: () => notifier
-                      .setCurrentWeight(notifier.currentSet.weight - 2.5),
+                  onPressed: () => notifier.updateWeight(-.25),
                   child: Text('-',
                       style:
                           TextStyle(fontSize: 30, color: CustomColors.white))),
@@ -74,8 +78,7 @@ class CurrentSetDisplay extends StatelessWidget {
                       bottomRight: Radius.circular(24.0),
                     ),
                   ),
-                  onPressed: () => notifier
-                      .setCurrentWeight(notifier.currentSet.weight + 2.5),
+                  onPressed: () => notifier.updateWeight(.25),
                   child: Text('+',
                       style:
                           TextStyle(fontSize: 30, color: CustomColors.white)))

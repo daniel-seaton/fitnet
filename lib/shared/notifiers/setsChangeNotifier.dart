@@ -1,44 +1,45 @@
 import 'dart:async';
+import 'dart:collection';
 
+import 'package:fitnet/models/workoutStepInstance.dart';
+import 'package:fitnet/shared/notifiers/parentInstanceChangeNotifier.dart';
 import 'package:fitnet/utils/timeUtil.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fitnet/models/set.dart';
 
-class SetsChangeNotifier extends ChangeNotifier {
-  Set currentSet;
-  num currentIndex;
-  final List<Set> sets;
+import 'instanceChangeNotifier.dart';
+
+class SetsChangeNotifier extends ParentInstanceChangeNotifier<SetBasedStepInstance> {
+  List<Set> get sets => currentStep.sets;
+  Set get currentSet => sets.firstWhere((s) =>!s.isComplete(), orElse: () => null);
+  int get currentSetIndex => sets.indexWhere((s) =>!s.isComplete());
+
 
   Timer _timer;
   Duration _timeElapsed = Duration.zero;
 
-  SetsChangeNotifier({@required this.sets}) {
-    currentSet = sets.firstWhere((s) => s.end == null);
-    currentIndex = sets.indexOf(currentSet);
-    currentSet.actual = currentSet.goal;
+  SetsChangeNotifier({@required InstanceChangeNotifier parent}): super(parent);
+
+  @override
+  void dispose() {
+    if (_timer != null && _timer.isActive) _timer.cancel();
+    super.dispose();
   }
 
-  void finishCurrentSet() {
+  void startRestTimer() {
     if (_timer != null && _timer.isActive) _timer.cancel();
-    currentSet.end = DateTime.now();
-    currentIndex++;
     _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
-      _timeElapsed = DateTime.now().difference(sets[currentIndex - 1].end);
+      _timeElapsed = DateTime.now().difference((currentSet == null ? sets[sets.length - 1] : sets[currentSetIndex - 1]).end);
       notifyListeners();
     });
-
-    if (currentIndex < sets.length) {
-      currentSet = sets[currentIndex];
-      currentSet.actual = currentSet.goal;
-    }
     notifyListeners();
   }
 
-  void startNextSet() {
+  void startSetTimer() {
     if (_timer != null && _timer.isActive) {
       _timer.cancel();
     }
-    currentSet.start = DateTime.now();
+
     _timer = Timer.periodic(Duration(milliseconds: 100), (timer) {
       _timeElapsed = DateTime.now().difference(currentSet.start);
       notifyListeners();
@@ -46,16 +47,30 @@ class SetsChangeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setCurrentActual(num value) {
-    currentSet.actual = value;
-    notifyListeners();
+  void completeSet() {
+    var step = currentStep;
+    var index = currentStepIndex;
+    currentSet.complete();
+    startRestTimer();
+    if(currentSet == null) step.complete();
+    update(step, index);
   }
 
-  void setCurrentWeight(num value) {
-    sets.sublist(currentIndex).forEach((s) {
-      s.weight = value;
-    });
-    notifyListeners();
+  void startSet() {
+    currentSet.begin();
+    startSetTimer();
+    if(!currentStep.isStarted) currentStep.begin();
+    update(currentStep);
+  }
+
+  void updateWeight(num step) {
+    sets.sublist(currentSetIndex).forEach((s) => s.weight+=step);
+    update(currentStep);
+  }
+
+  void updateActual(num value) {
+    currentSet.actual = value;
+    update(currentStep);
   }
 
   String getTimeElapsed() {

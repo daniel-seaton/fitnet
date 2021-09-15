@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../utils/customColors.dart';
-import '../filterChangeNotifier.dart';
+import '../workoutPageChangeNotifier.dart';
 
 class WorkoutSearchBar extends StatelessWidget {
   @override
@@ -25,7 +25,7 @@ class WorkoutSearchBar extends StatelessWidget {
             size: 30.0,
           ),
           Expanded(
-            child: Consumer<FilterChangeNotifier>(
+            child: Consumer<WorkoutPageChangeNotifier>(
               builder: (_, notifier, __) => TextField(
                 onSubmitted: (value) {
                   notifier.setFilter(value);

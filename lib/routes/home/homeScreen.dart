@@ -1,14 +1,15 @@
+import 'package:fitnet/models/appUser.dart';
 import 'package:fitnet/routes/home/profile/profilePage.dart';
 import 'package:fitnet/routes/home/workout/workoutPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../shared/tabScreen/tabScreen.dart';
+import '../authChangeNotifier.dart';
 
 class HomeScreen extends StatelessWidget {
-  final String userId;
-
-  HomeScreen({@required this.userId});
+  HomeScreen();
 
   @override
   Widget build(BuildContext context) {
@@ -27,28 +28,33 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height - 80,
-          child: TabScreen(
-            lowerTabs: [
-              Tab(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [Icon(Icons.whatshot_outlined), Text('Workout')],
+      body: ProxyProvider<AuthChangeNotifier, AppUser>(
+        create: (ctx) => Provider.of<AuthChangeNotifier>(ctx, listen: false).user, 
+        update: (_, notifier, __) => notifier.user,
+        builder: (_, __) => 
+          SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height - 80,
+            child: TabScreen(
+              lowerTabs: [
+                Tab(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [Icon(Icons.whatshot_outlined), Text('Workout')],
+                  ),
                 ),
-              ),
-              Tab(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [Icon(Icons.person_outline), Text('Profile')],
+                Tab(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [Icon(Icons.person_outline), Text('Profile')],
+                  ),
                 ),
-              ),
-            ],
-            tabPages: [
-              WorkoutPage(userId: userId),
-              ProfilePage(userId: userId)
-            ],
+              ],
+              tabPages: [
+                WorkoutPage(),
+                ProfilePage()
+              ],
+            ),
           ),
         ),
       ),

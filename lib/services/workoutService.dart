@@ -1,43 +1,66 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:convert';
+
 import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/models/workoutInstance.dart';
 import 'package:fitnet/services/workoutInstanceService.dart';
+import 'package:http/http.dart';
 
 import '../serviceInjector.dart';
 
 class WorkoutService {
-  final FirebaseFirestore firestore = injector<FirebaseFirestore>();
-  final WorkoutInstanceService instanceService =
-      injector<WorkoutInstanceService>();
-  final String workoutCollection = 'workouts';
+  final String authority = '1cmd7l9wb5.execute-api.us-east-1.amazonaws.com';
+  final String basePath = 'dev/workout';
+  final Map<String, String> headers = {'Content-type': 'application/json','Accept': 'application/json'};
 
-  Stream<List<Workout>> getWorkoutStreamForUser(String uid) {
-    CollectionReference workoutRef = firestore.collection(workoutCollection);
-    return workoutRef
-        .where('uid', isEqualTo: uid)
-        .snapshots()
-        .map((QuerySnapshot query) {
+  Future<List<Workout>> getWorkoutForUser(String uid) async {
+    try {
+      Uri url = Uri.https(authority, '$basePath/user/$uid');
+      Response res = await get(url, headers: headers);
+      if(res.statusCode < 200 || res.statusCode > 299) {
+        throw 'returned status code ${res.statusCode}: ${res.body}';
+      }
       List<Workout> workouts = [];
-      query.docs.forEach((doc) =>
-          workouts.add(Workout.fromMap({...doc.data(), 'wid': doc.id})));
-      workouts.sort((x, y) => x.updated.isBefore(y.updated) ? 1 : -1);
+      jsonDecode(res.body).forEach((map) { 
+        workouts.add(Workout.fromMap(map));
+      });
       return workouts;
-    });
+    } catch (e) {
+      print('Unable to get workouts for user $uid: $e');
+    }
+    return [];
   }
 
-  Future<void> addOrUpdateWorkout(Workout workout) async {
-    CollectionReference workoutRef = firestore.collection(workoutCollection);
-    if (workout.wid == null)
-      await workoutRef.add(workout.toMap());
-    else {
-      workout.updated = DateTime.now();
-      await workoutRef.doc(workout.wid).update(workout.toMap());
+  Future<Workout> addOrUpdateWorkout(Workout workout) async {
+    if (workout.wid == null) {
+      return await addWorkout(workout);
+    } else {
+      return await updateWorkout(workout);
     }
   }
 
+  Future<Workout> addWorkout(Workout workout) async {
+    Uri url = Uri.https(authority, '$basePath');
+    Response res = await post(url, body: jsonEncode(workout.toMap()), headers: headers);
+    if(res.statusCode < 200 || res.statusCode > 299) {
+      throw 'Unable to add workout: statusCode ${res.statusCode}: ${res.body}';
+    }
+    return Workout.fromMap(jsonDecode(res.body));
+  }
+
+  Future<Workout> updateWorkout(Workout workout) async {
+    Uri url = Uri.https(authority, '$basePath/${workout.wid}');
+    Response res = await put(url, body: jsonEncode(workout.toMap()), headers: headers);
+    if(res.statusCode < 200 || res.statusCode > 299) {
+      throw 'Unable to update workout ${workout.wid}: statusCode ${res.statusCode}: ${res.body}';
+    }
+    return workout;
+  }
+
   deleteWorkout(Workout workout) async {
-    CollectionReference workoutRef = firestore.collection(workoutCollection);
-    workoutRef.doc(workout.wid).delete();
-    instanceService.deleteInstancesByWid(workout.wid);
+    Uri url = Uri.https(authority, '$basePath/${workout.wid}');
+    Response res = await delete(url, headers: headers);
+    if(res.statusCode < 200 || res.statusCode > 299) {
+      throw 'Unable to delete workout ${workout.wid}: statusCode ${res.statusCode}: ${res.body}';
+    }
   }
 }

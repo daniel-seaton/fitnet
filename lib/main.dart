@@ -1,4 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import 'package:amplify_flutter/amplify.dart';
+import 'package:fitnet/amplifyconfiguration.dart';
+//import 'package:firebase_core/firebase_core.dart';
 import 'package:fitnet/serviceinjector.dart';
 import 'package:fitnet/routes/authRouter.dart';
 import 'package:fitnet/utils/customColors.dart';
@@ -7,7 +10,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  //await Firebase.initializeApp();
+  Amplify.addPlugin(AmplifyAuthCognito());
+  Amplify.configure(amplifyconfig);
   setupServiceInjector();
   runApp(Fitnet());
 }

@@ -2,22 +2,19 @@
 import 'package:flutter/material.dart';
 
 class LoginPageNotifier extends ChangeNotifier {
-  String email;
+  String username;
   String password;
 
   LoginPageNotifier() {
-    print("constructor");
   }
 
-  void setEmail(value) {
-    email = value;
-    print("$value $email $password");
+  void setUsername(value) {
+    username = value;
     notifyListeners();
   }
 
   void setPassword(value) {
     password = value;
-    print("$value $email $password");
     notifyListeners();
   }
 }

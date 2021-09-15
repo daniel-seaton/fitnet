@@ -40,7 +40,7 @@ class AMRAPStepMetaDisplay extends StatelessWidget {
   }
 
   String getTimeDifference() {
-    if (!stepInstance.isCompleted() || !stepInstance.isStarted()) {
+    if (!stepInstance.isCompleted || !stepInstance.isStarted) {
       return '-:--.-';
     }
     Duration timeElapsed = stepInstance.end.difference(stepInstance.start);

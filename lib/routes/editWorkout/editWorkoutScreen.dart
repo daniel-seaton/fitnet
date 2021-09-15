@@ -56,8 +56,8 @@ class EditWorkoutScreen extends StatelessWidget {
   void saveWorkout(
       EditWorkoutChangeNotifier notifier, BuildContext context) async {
     if (_formKey.currentState.validate() == true) {
-      await workoutService.addOrUpdateWorkout(notifier.workout);
-      Navigator.of(context).pop();
+      Workout workout = await workoutService.addOrUpdateWorkout(notifier.workout);
+      Navigator.of(context).pop(workout);
     }
   }
 }

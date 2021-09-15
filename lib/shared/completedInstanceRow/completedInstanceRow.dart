@@ -16,14 +16,14 @@ class CompletedInstanceRow extends StatelessWidget {
       Expanded(
         flex: 2,
         child: ProgressCircle(
-          completionPercentage: instance.percentComplete(),
+          completionPercentage: instance.percentComplete,
           completeColor:
-              CustomColors.getColorForCompletion(instance.percentComplete()),
+              CustomColors.getColorForCompletion(instance.percentComplete),
           incompleteColor: CustomColors.lightGrey,
           strokeWidth: 5,
           size: this.circleSize,
           child: Text(
-            '${instance.percentComplete()}%',
+            '${instance.percentComplete}%',
             style: Theme.of(context).textTheme.subtitle1,
           ),
         ),

@@ -25,9 +25,9 @@ class Workout {
     name = map['name'];
     defaultFormat = Format.forType(map['defaultFormat']);
     created =
-        DateTime.fromMillisecondsSinceEpoch(map['created'].seconds * 1000);
+        DateTime.fromMillisecondsSinceEpoch(map['created']);
     updated =
-        DateTime.fromMillisecondsSinceEpoch(map['updated'].seconds * 1000);
+        DateTime.fromMillisecondsSinceEpoch(map['updated']);
 
     if (map['steps'] != null) {
       List<WorkoutStep> mappedSteps = [];
@@ -42,8 +42,8 @@ class Workout {
     Map<String, dynamic> map = {
       'uid': uid,
       'name': name,
-      'created': created != null ? created : DateTime.now(),
-      'updated': updated != null ? updated : DateTime.now(),
+      'created': created != null ? created.millisecondsSinceEpoch : DateTime.now().millisecondsSinceEpoch,
+      'updated': updated != null ? updated.millisecondsSinceEpoch : DateTime.now().millisecondsSinceEpoch,
     };
     if (defaultFormat != null) map['defaultFormat'] = defaultFormat.value;
     if (steps != null)

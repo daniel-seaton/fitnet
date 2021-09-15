@@ -1,4 +1,5 @@
 import 'package:fitnet/models/appUser.dart';
+import 'package:fitnet/routes/authChangeNotifier.dart';
 import 'package:fitnet/serviceInjector.dart';
 import 'package:fitnet/services/authService.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,7 +22,10 @@ class UserInfo extends StatelessWidget {
         ProfileImage(),
         Text(userHeightAndWeight(user)),
         ElevatedButton(
-          onPressed: () => authService.signOut(),
+          onPressed: () => authService.signOut().then((success) {
+            Provider.of<AuthChangeNotifier>(context, listen:false).setUser(null);
+            Provider.of<AuthChangeNotifier>(context, listen:false).setIsConfirmed(false);
+          }),
           child: Text('Log Out'),
         )
       ],

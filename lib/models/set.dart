@@ -12,9 +12,9 @@ class Set {
     if (map['actual'] != null) actual = map['actual'];
     if (map['weight'] != null) weight = map['weight'];
     if (map['start'] != null)
-      start = DateTime.fromMillisecondsSinceEpoch(map['start'].seconds * 1000);
+      start = DateTime.fromMillisecondsSinceEpoch(map['start']);
     if (map['end'] != null)
-      end = DateTime.fromMillisecondsSinceEpoch(map['end'].seconds * 1000);
+      end = DateTime.fromMillisecondsSinceEpoch(map['end']);
   }
 
   Map<String, dynamic> toMap() {
@@ -24,17 +24,25 @@ class Set {
 
     if (weight != null) map['weight'] = weight;
     if (actual != null) map['actual'] = actual;
-    if (start != null) map['start'] = start;
-    if (end != null) map['end'] = end;
+    if (start != null) map['start'] = start.millisecondsSinceEpoch;
+    if (end != null) map['end'] = end.millisecondsSinceEpoch;
     return map;
   }
 
-  isComplete() {
+  bool isComplete() {
     return start != null && end != null;
   }
 
-  isInProgress() {
+  bool isInProgress() {
     return start != null && end == null;
+  }
+
+  begin() {
+    start = DateTime.now();
+  }
+
+  complete() {
+    end = DateTime.now();
   }
 
   goalMet() {
