@@ -1,7 +1,9 @@
 import 'package:fitnet/models/workoutInstance.dart';
 import 'package:fitnet/services/workoutInstanceService.dart';
+import 'package:fitnet/shared/mixins/timerControlMixin.dart';
+import 'package:fitnet/shared/notifiers/listChangeNotifier.dart';
+import 'package:fitnet/shared/notifiers/timerChangeNotifier.dart';
 import 'package:fitnet/shared/progressCircle/progressCircle.dart';
-import 'package:fitnet/shared/notifiers/timeElapsedNotifier.dart';
 import 'package:fitnet/utils/customColors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -29,23 +31,23 @@ class InProgressInstanceRow extends StatelessWidget {
         Expanded(
           flex: 2,
           child: ProgressCircle(
-            completionPercentage: instance.percentComplete(),
+            completionPercentage: instance.percentComplete,
             completeColor:
-                CustomColors.getColorForCompletion(instance.percentComplete()),
+                CustomColors.getColorForCompletion(instance.percentComplete),
             incompleteColor: CustomColors.lightGrey,
             strokeWidth: 5,
             size: circleSize,
             child: Text(
-              '${instance.percentComplete()}%',
+              '${instance.percentComplete}%',
               style: Theme.of(context).textTheme.subtitle1,
             ),
           ),
         ),
         Expanded(
           flex: 4,
-          child: ChangeNotifierProvider<TimeElapsedNotifier>.value(
-            value: TimeElapsedNotifier(instance.start),
-            builder: (ctx, _) => Consumer<TimeElapsedNotifier>(
+          child: ChangeNotifierProvider<TimerControlMixin>(
+            create: (_) => TimerChangeNotifier(instance.start),
+            builder: (ctx, _) => Consumer<TimerControlMixin>(
               builder: (_, notifier, __) => Text(
                 'In Progress\nTime Elapsed: ${notifier.getTimeElapsed()}',
                 textAlign: TextAlign.center,
@@ -71,12 +73,8 @@ class InProgressInstanceRow extends StatelessWidget {
   confirmCompleteWorkout(BuildContext context) async {
     var completeWorkout = await showDialog<bool>(
         context: context, builder: (context) => ConfirmCompleteWorkoutModal());
-    if (completeWorkout) {
-      instance.end = DateTime.now();
-      instance.steps
-          .firstWhere((step) => step.isStarted() && !step.isCompleted())
-          .end = instance.end;
-      await instanceService.updateInstance(instance);
-    }
+    if (completeWorkout) instance.complete();
+    var provider = Provider.of<ListChangeNotifier<WorkoutInstance>>(context, listen: false);
+    provider.update(instance, 0);
   }
 }

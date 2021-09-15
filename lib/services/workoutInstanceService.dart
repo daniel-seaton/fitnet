@@ -1,20 +1,19 @@
 import 'dart:convert';
 
-import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/models/workoutInstance.dart';
+import 'package:fitnet/utils/debouncer.dart';
 import 'package:http/http.dart';
 
-import '../serviceInjector.dart';
-
 class WorkoutInstanceService {
-  final String authority = '0nbeytk3f4.execute-api.us-east-1.amazonaws.com';
+  final String authority = '1cmd7l9wb5.execute-api.us-east-1.amazonaws.com';
   final String basePath = 'dev/workoutInstance';
   final Map<String, String> headers = {'Content-type': 'application/json','Accept': 'application/json'};
+  final Debouncer _debouncer = Debouncer(milliseconds: 500);
 
-  Future<WorkoutInstance> addNewInstance(WorkoutInstance instance) async {
+  Future<WorkoutInstance> addInstance(WorkoutInstance instance) async {
     Uri url = Uri.https(authority, '$basePath');
     Response res = await post(url, body: jsonEncode(instance.toMap()), headers: headers);
-    if(res.statusCode < 200 || res.statusCode > 299) {
+    if (res.statusCode < 200 || res.statusCode > 299) {
       throw 'Unable to add instance: statusCode ${res.statusCode}: ${res.body}';
     }
     return WorkoutInstance.fromMap(jsonDecode(res.body));
@@ -22,10 +21,12 @@ class WorkoutInstanceService {
 
   Future<WorkoutInstance> updateInstance(WorkoutInstance instance) async {
     Uri url = Uri.https(authority, '$basePath/${instance.iid}');
-    Response res = await put(url, body: jsonEncode(instance.toMap()), headers: headers);
-    if(res.statusCode < 200 || res.statusCode > 299) {
-      throw 'Unable to update instance ${instance.wid}: statusCode ${res.statusCode}: ${res.body}';
-    }
+    _debouncer.run(() async {
+      Response res = await put(url, body: jsonEncode(instance.toMap()), headers: headers);
+      if (res.statusCode < 200 || res.statusCode > 299) {
+        throw 'Unable to update instance ${instance.iid}: statusCode ${res.statusCode}: ${res.body}';
+      }
+    });
     return instance;
   }
 
@@ -33,7 +34,7 @@ class WorkoutInstanceService {
     try {
       Uri url = Uri.https(authority, '$basePath/workout/$wid');
       Response res = await get(url, headers: headers);
-      if(res.statusCode < 200 || res.statusCode > 299) {
+      if (res.statusCode < 200 || res.statusCode > 299) {
         throw 'returned status code ${res.statusCode}: ${res.body}';
       }
       List<WorkoutInstance> instances = [];

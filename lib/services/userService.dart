@@ -9,7 +9,7 @@ import 'package:http/http.dart';
 import '../serviceinjector.dart';
 
 class UserService {
-  final String authority = '0nbeytk3f4.execute-api.us-east-1.amazonaws.com';
+  final String authority = '1cmd7l9wb5.execute-api.us-east-1.amazonaws.com';
   final String basePath = 'dev/appUsers';
   final Map<String, String> headers = {'Content-type': 'application/json','Accept': 'application/json'};
 

@@ -13,9 +13,6 @@ import 'package:uuid/uuid.dart';
 GetIt injector = GetIt.instance;
 
 setupServiceInjector() {
-//  injector.registerSingleton<FirebaseFirestore>(FirebaseFirestore.instance);
-//  injector.registerSingleton<FirebaseAuth>(FirebaseAuth.instance);
-//  injector.registerSingleton<FirebaseStorage>(FirebaseStorage.instance);
   injector.registerSingleton<Uuid>(Uuid());
   injector.registerSingleton<WorkoutInstanceService>(WorkoutInstanceService());
   injector.registerSingleton<WorkoutService>(WorkoutService());

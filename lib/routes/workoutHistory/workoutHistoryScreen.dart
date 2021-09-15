@@ -1,6 +1,7 @@
 import 'package:fitnet/models/workout.dart';
 import 'package:fitnet/models/workoutInstance.dart';
 import 'package:fitnet/services/workoutInstanceService.dart';
+import 'package:fitnet/shared/notifiers/listChangeNotifier.dart';
 import 'package:fitnet/shared/notifiers/workoutInstancesChangeNotifier.dart';
 import 'package:fitnet/utils/customColors.dart';
 import 'package:flutter/material.dart';
@@ -24,10 +25,10 @@ class WorkoutHistoryScreen extends StatelessWidget {
           initialData: [],
           value: instanceService.getInstancesForWorkout(workout.wid),
         ),
-        ChangeNotifierProxyProvider<List<WorkoutInstance>, WorkoutInstancesChangeNotifier>(
-          create: (_) => WorkoutInstancesChangeNotifier(),
+        ChangeNotifierProxyProvider<List<WorkoutInstance>, ListChangeNotifier<WorkoutInstance>>(
+          create: (_) => ListChangeNotifier<WorkoutInstance>(),
           update: (_, instances, notifier) {
-            notifier.setInstances(instances);
+            notifier.list = instances;
             return notifier;
           }
         )

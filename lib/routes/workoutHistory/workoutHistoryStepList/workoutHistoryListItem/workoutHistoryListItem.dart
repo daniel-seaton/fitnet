@@ -26,7 +26,7 @@ class WorkoutHistoryListItem extends StatelessWidget {
         ),
         title: Container(
           padding: EdgeInsets.all(5),
-          child: instance.isCompleted()
+          child: instance.isCompleted
               ? CompletedInstanceRow(
                   instance: instance,
                   circleSize: 75,

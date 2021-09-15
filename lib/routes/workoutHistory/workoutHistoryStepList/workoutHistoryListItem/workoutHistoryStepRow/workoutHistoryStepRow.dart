@@ -1,12 +1,7 @@
-import 'package:fitnet/models/format.dart';
 import 'package:fitnet/models/workoutStepInstance.dart';
-import 'package:fitnet/routes/workoutHistory/workoutHistoryStepList/workoutHistoryListItem/workoutHistoryStepRow/repsForTimeMetaDisplay/repsForTimeMetaDisplay.dart';
-import 'package:fitnet/routes/workoutHistory/workoutHistoryStepList/workoutHistoryListItem/workoutHistoryStepRow/setBasedStepMetaDisplay/setBasedStepMetaDisplay.dart';
 import 'package:fitnet/utils/customColors.dart';
 import 'package:fitnet/utils/timeUtil.dart';
 import 'package:flutter/material.dart';
-
-import 'AMRAPStepMetaDisplay/AMRAPStepMetaDisplay.dart';
 
 class WorkoutHistoryStepRow extends StatelessWidget {
   final WorkoutStepInstance stepInstance;
@@ -57,9 +52,9 @@ class WorkoutHistoryStepRow extends StatelessWidget {
   }
 
   Widget getStepIcon() {
-    if (stepInstance.isCompleted()) {
+    if (stepInstance.isCompleted) {
       return Icon(Icons.check, color: CustomColors.green, size: 36);
-    } else if (stepInstance.isStarted()) {
+    } else if (stepInstance.isStarted) {
       return Icon(Icons.directions_run, color: CustomColors.yellow, size: 36);
     } else {
       return Icon(Icons.clear, color: CustomColors.red, size: 36);

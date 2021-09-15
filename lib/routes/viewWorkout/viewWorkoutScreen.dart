@@ -1,6 +1,6 @@
 import 'package:fitnet/routes/editWorkout/editWorkoutScreen.dart';
 import 'package:fitnet/routes/viewWorkout/viewWorkoutLatestInstance/viewWorkoutLatestInstance.dart';
-import 'package:fitnet/shared/notifiers/workoutInstancesChangeNotifier.dart';
+import 'package:fitnet/shared/notifiers/listChangeNotifier.dart';
 import 'package:fitnet/routes/viewWorkout/viewWorkoutStartButton/viewWorkoutStartButton.dart';
 import 'package:fitnet/routes/viewWorkout/viewWorkoutStepList/viewWorkoutStepList.dart';
 import 'package:fitnet/models/workout.dart';
@@ -25,16 +25,16 @@ class ViewWorkoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        FutureProvider<List<WorkoutInstance>>.value(
+        FutureProvider<List<WorkoutInstance>>(
           initialData: [],
-          value: instanceService.getInstancesForWorkout(workout.wid),
+          create: (_) => instanceService.getInstancesForWorkout(workout.wid),
         ),
-        ChangeNotifierProxyProvider<List<WorkoutInstance>, WorkoutInstancesChangeNotifier>(
-          create: (_) => WorkoutInstancesChangeNotifier(),
-          update: (_, instances, notifier) {
-            notifier.setInstances(instances);
+        ChangeNotifierProxyProvider<List<WorkoutInstance>, ListChangeNotifier<WorkoutInstance>>(
+          create: (_) => ListChangeNotifier<WorkoutInstance>(),
+          update: (_, list, notifier) {
+            notifier.list = list;
             return notifier;
-          }
+          },
         )
       ],
       builder: (_, __) => Scaffold(
@@ -54,8 +54,8 @@ class ViewWorkoutScreen extends StatelessWidget {
                 onPressed: () => editWorkout(context))
           ],
         ),
-        body: Selector<WorkoutInstancesChangeNotifier, bool>(
-          selector: (_, notifier) => notifier.instances.length > 0,
+        body: Selector<ListChangeNotifier<WorkoutInstance>, bool>(
+          selector: (_, notifier) => notifier.list.length > 0,
           builder: (_, displayLatestInstance, __) => Column(
             children: [
               Expanded(

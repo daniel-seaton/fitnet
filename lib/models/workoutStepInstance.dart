@@ -76,19 +76,21 @@ abstract class WorkoutStepInstance {
     }
   }
 
-  double percentComplete() {
-    return end != null ? 100 : 0;
+  double get percentComplete => end != null ? 100 : 0;
+
+  bool get isCompleted => end != null;
+  
+  bool get isStarted => start != null;
+
+  begin() {
+    start = DateTime.now();
   }
 
-  bool isCompleted() {
-    return end != null;
+  complete() {
+    if(isStarted) end = DateTime.now();
   }
 
-  bool isStarted() {
-    return start != null;
-  }
-
-  Widget getStartStepScreen({@required Function next});
+  Widget getStartStepScreen();
   Widget getHistoryMetaDisplay();
 }
 
@@ -102,7 +104,7 @@ class SetBasedStepInstance extends WorkoutStepInstance {
   SetBasedStepInstance.fromStep(SetBasedStep step) : super.fromStep(step) {
     minimumRest = step.minimumRest;
     sets = List.generate(step.targetSets,
-        (index) => Set(goal: step.targetReps, weight: step.targetWeight));
+        (index) => Set(goal: step.targetReps, actual: step.targetReps, weight: step.targetWeight));
   }
 
   SetBasedStepInstance.fromMap(Map<String, dynamic> map) : super.fromMap(map) {
@@ -122,15 +124,17 @@ class SetBasedStepInstance extends WorkoutStepInstance {
   }
 
   @override
-  double percentComplete() {
+  double get percentComplete {
     var percent = 0.0;
     sets.forEach((s) => percent += s.percentComplete());
     return (percent / sets.length * 10).round() / 10;
   }
 
+  Set get currentSet => sets.firstWhere((s) => !s.isComplete(), orElse: () => null);
+
   @override
-  Widget getStartStepScreen({@required Function next}) {
-    return SetBasedStepScreen(step: this, nextStep: next);
+  Widget getStartStepScreen() {
+    return SetBasedStepScreen();
   }
 
   @override
@@ -161,8 +165,8 @@ class RepsForTimeStepInstance extends WorkoutStepInstance {
   }
 
   @override
-  Widget getStartStepScreen({Function next}) {
-    return RepsForTimeStepScreen(step: this);
+  Widget getStartStepScreen() {
+    return RepsForTimeStepScreen();
   }
 
   @override
@@ -199,16 +203,16 @@ class AMRAPStepInstance extends WorkoutStepInstance {
   }
 
   @override
-  double percentComplete() {
-    if (end == null) {
+  double get percentComplete {
+    if (!isCompleted) {
       return 0;
     }
     return actualReps / targetReps * 100;
   }
 
   @override
-  Widget getStartStepScreen({@required Function next}) {
-    return AMRAPStepScreen(step: this, nextStep: next);
+  Widget getStartStepScreen() {
+    return AMRAPStepScreen();
   }
 
   @override

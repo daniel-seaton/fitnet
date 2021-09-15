@@ -12,38 +12,36 @@ class SetsDisplayRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SetsChangeNotifier setsNotifier =
-        Provider.of<SetsChangeNotifier>(context, listen: false);
-    return ListView.builder(
+    return Consumer<SetsChangeNotifier>(
+      builder: (_, notifier, __) => ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: setsNotifier.sets.length,
+      itemCount: notifier.sets.length,
       itemBuilder: (context, index) => Padding(
         padding: EdgeInsets.fromLTRB(5, 10, 5, 10),
-        child: Consumer<SetsChangeNotifier>(
-          builder: (_, notifier, __) => ProgressCircle(
-              completionPercentage: notifier.sets[index].percentComplete(),
-              completeColor: getRingColor(notifier.sets[index]),
-              incompleteColor: notifier.sets[index].isComplete()
-                  ? CustomColors.lightGrey
-                  : notifier.sets[index].isInProgress()
-                      ? CustomColors.blue
-                      : CustomColors.lightGrey,
-              strokeWidth: 7,
-              size: 110,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(getTimeElapsed(notifier.sets[index]),
-                        style: TextStyle(fontSize: 16)),
-                    Text(
-                      '${notifier.sets[index].isComplete() ? notifier.sets[index].actual : 0}',
-                      style: TextStyle(fontSize: 24),
-                    ),
-                    Text(
-                      '${notifier.sets[index].weight}',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                  ])),
+        child: ProgressCircle(
+          completionPercentage: notifier.sets[index].percentComplete(),
+          completeColor: getRingColor(notifier.sets[index]),
+          incompleteColor: notifier.currentSetIndex == index && notifier.currentSet.isInProgress()
+                  ? CustomColors.blue
+                  : CustomColors.lightGrey,
+          strokeWidth: 7,
+          size: 110,
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(getTimeElapsed(notifier.sets[index]),
+                    style: TextStyle(fontSize: 16)),
+                Text(
+                  '${notifier.sets[index].isComplete() ? notifier.sets[index].actual : 0}',
+                  style: TextStyle(fontSize: 24),
+                ),
+                Text(
+                  '${notifier.sets[index].weight}',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

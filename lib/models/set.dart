@@ -29,12 +29,20 @@ class Set {
     return map;
   }
 
-  isComplete() {
+  bool isComplete() {
     return start != null && end != null;
   }
 
-  isInProgress() {
+  bool isInProgress() {
     return start != null && end == null;
+  }
+
+  begin() {
+    start = DateTime.now();
+  }
+
+  complete() {
+    end = DateTime.now();
   }
 
   goalMet() {
