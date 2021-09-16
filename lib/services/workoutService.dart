@@ -1,16 +1,11 @@
 import 'dart:convert';
 
 import 'package:fitnet/models/workout.dart';
-import 'package:fitnet/models/workoutInstance.dart';
-import 'package:fitnet/services/workoutInstanceService.dart';
+import 'package:fitnet/services/baseService.dart';
 import 'package:http/http.dart';
 
-import '../serviceInjector.dart';
-
-class WorkoutService {
-  final String authority = '1cmd7l9wb5.execute-api.us-east-1.amazonaws.com';
+class WorkoutService with BaseService {
   final String basePath = 'dev/workout';
-  final Map<String, String> headers = {'Content-type': 'application/json','Accept': 'application/json'};
 
   Future<List<Workout>> getWorkoutForUser(String uid) async {
     try {

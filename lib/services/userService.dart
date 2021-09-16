@@ -1,17 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-//import 'package:cloud_firestore/cloud_firestore.dart';
-//import 'package:firebase_storage/firebase_storage.dart';
 import 'package:fitnet/models/appUser.dart';
+import 'package:fitnet/services/baseService.dart';
 import 'package:http/http.dart';
 
-import '../serviceinjector.dart';
-
-class UserService {
-  final String authority = '1cmd7l9wb5.execute-api.us-east-1.amazonaws.com';
+class UserService with BaseService {
   final String basePath = 'dev/appUsers';
-  final Map<String, String> headers = {'Content-type': 'application/json','Accept': 'application/json'};
 
   Future<AppUser> getUser(String uid) async {
     Uri url = Uri.https(authority, '$basePath/$uid');

@@ -1,101 +1,131 @@
 PODS:
-  - Amplify (1.11.0):
-    - Amplify/Default (= 1.11.0)
-  - Amplify/Default (1.11.0)
-  - amplify_auth_cognito (0.0.1):
-    - Amplify (~> 1.11.0)
-    - amplify_core
-    - AmplifyPlugins/AWSCognitoAuthPlugin (~> 1.11.0)
-    - Flutter
-    - ObjectMapper
-  - amplify_core (0.0.1):
-    - Flutter
-  - amplify_flutter (0.0.1):
-    - Amplify (~> 1.11.0)
-    - amplify_core
-    - AmplifyPlugins/AWSCognitoAuthPlugin (~> 1.11.0)
-    - AWSPluginsCore (~> 1.11.0)
-    - Flutter
-  - AmplifyPlugins/AWSCognitoAuthPlugin (1.11.0):
-    - AWSAuthCore (~> 2.24.0)
-    - AWSCognitoIdentityProvider (~> 2.24.0)
-    - AWSCognitoIdentityProviderASF (~> 2.24.0)
-    - AWSCore (~> 2.24.0)
-    - AWSMobileClient (~> 2.24.0)
-    - AWSPluginsCore (= 1.11.0)
-  - AWSAuthCore (2.24.5):
-    - AWSCore (= 2.24.5)
-  - AWSCognitoIdentityProvider (2.24.5):
-    - AWSCognitoIdentityProviderASF (= 2.24.5)
-    - AWSCore (= 2.24.5)
-  - AWSCognitoIdentityProviderASF (2.24.5)
-  - AWSCore (2.24.5)
-  - AWSMobileClient (2.24.5):
-    - AWSAuthCore (= 2.24.5)
-    - AWSCognitoIdentityProvider (= 2.24.5)
-    - AWSCognitoIdentityProviderASF (= 2.24.5)
-    - AWSCore (= 2.24.5)
-  - AWSPluginsCore (1.11.0):
-    - Amplify (= 1.11.0)
-    - AWSCore (~> 2.24.0)
+  - AWSAuth (2.13.6):
+    - AWSAuth/Core (= 2.13.6)
+    - AWSAuth/FacebookSignIn (= 2.13.6)
+    - AWSAuth/GoogleSignIn (= 2.13.6)
+    - AWSAuth/UI (= 2.13.6)
+    - AWSAuth/UserPoolsSignIn (= 2.13.6)
+  - AWSAuth/Core (2.13.6):
+    - AWSAuthCore (= 2.13.6)
+  - AWSAuth/FacebookSignIn (2.13.6):
+    - AWSFacebookSignIn (= 2.13.6)
+  - AWSAuth/GoogleSignIn (2.13.6):
+    - AWSGoogleSignIn (= 2.13.6)
+  - AWSAuth/UI (2.13.6):
+    - AWSAuthUI (= 2.13.6)
+  - AWSAuth/UserPoolsSignIn (2.13.6):
+    - AWSUserPoolsSignIn (= 2.13.6)
+  - AWSAuthCore (2.13.6):
+    - AWSCore (= 2.13.6)
+  - AWSAuthUI (2.13.6):
+    - AWSAuthCore (= 2.13.6)
+    - AWSCore (= 2.13.6)
+  - AWSCognito (2.13.6):
+    - AWSCore (= 2.13.6)
+  - AWSCognitoIdentityProvider (2.13.6):
+    - AWSCognitoIdentityProviderASF (= 1.0.1)
+    - AWSCore (= 2.13.6)
+  - AWSCognitoIdentityProviderASF (1.0.1)
+  - AWSCore (2.13.6)
+  - AWSFacebookSignIn (2.13.6):
+    - AWSAuthCore (= 2.13.6)
+    - FBSDKCoreKit (= 5.8)
+    - FBSDKLoginKit (= 5.8)
+  - AWSGoogleSignIn (2.13.6):
+    - AWSAuthCore (= 2.13.6)
+  - AWSMobileClient (2.13.6):
+    - AWSAuthCore (= 2.13.6)
+    - AWSCognitoIdentityProvider (= 2.13.6)
+  - AWSUserPoolsSignIn (2.13.6):
+    - AWSAuthCore (= 2.13.6)
+    - AWSCognitoIdentityProvider (= 2.13.6)
+  - FBSDKCoreKit (5.8.0):
+    - FBSDKCoreKit/Basics (= 5.8.0)
+    - FBSDKCoreKit/Core (= 5.8.0)
+  - FBSDKCoreKit/Basics (5.8.0)
+  - FBSDKCoreKit/Core (5.8.0):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (5.8.0):
+    - FBSDKLoginKit/Login (= 5.8.0)
+  - FBSDKLoginKit/Login (5.8.0):
+    - FBSDKCoreKit (~> 5.0)
   - Flutter (1.0.0)
+  - flutter_cognito_plugin (0.0.1):
+    - AWSAuth (~> 2.13.0)
+    - AWSAuthUI (~> 2.13.0)
+    - AWSCognito (~> 2.13.0)
+    - AWSMobileClient (~> 2.13.0)
+    - AWSUserPoolsSignIn (~> 2.13.0)
+    - Flutter
+    - plugin_scaffold
   - image_picker (0.0.1):
     - Flutter
-  - ObjectMapper (4.2.0)
   - path_provider (0.0.1):
+    - Flutter
+  - plugin_scaffold (0.0.1):
+    - Flutter
+  - shared_preferences (0.0.1):
     - Flutter
 
 DEPENDENCIES:
-  - amplify_auth_cognito (from `.symlinks/plugins/amplify_auth_cognito/ios`)
-  - amplify_core (from `.symlinks/plugins/amplify_core/ios`)
-  - amplify_flutter (from `.symlinks/plugins/amplify_flutter/ios`)
   - Flutter (from `Flutter`)
+  - flutter_cognito_plugin (from `.symlinks/plugins/flutter_cognito_plugin/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
+  - plugin_scaffold (from `.symlinks/plugins/plugin_scaffold/ios`)
+  - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
 
 SPEC REPOS:
   trunk:
-    - Amplify
-    - AmplifyPlugins
+    - AWSAuth
     - AWSAuthCore
+    - AWSAuthUI
+    - AWSCognito
     - AWSCognitoIdentityProvider
     - AWSCognitoIdentityProviderASF
     - AWSCore
+    - AWSFacebookSignIn
+    - AWSGoogleSignIn
     - AWSMobileClient
-    - AWSPluginsCore
-    - ObjectMapper
+    - AWSUserPoolsSignIn
+    - FBSDKCoreKit
+    - FBSDKLoginKit
 
 EXTERNAL SOURCES:
-  amplify_auth_cognito:
-    :path: ".symlinks/plugins/amplify_auth_cognito/ios"
-  amplify_core:
-    :path: ".symlinks/plugins/amplify_core/ios"
-  amplify_flutter:
-    :path: ".symlinks/plugins/amplify_flutter/ios"
   Flutter:
     :path: Flutter
+  flutter_cognito_plugin:
+    :path: ".symlinks/plugins/flutter_cognito_plugin/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
   path_provider:
     :path: ".symlinks/plugins/path_provider/ios"
+  plugin_scaffold:
+    :path: ".symlinks/plugins/plugin_scaffold/ios"
+  shared_preferences:
+    :path: ".symlinks/plugins/shared_preferences/ios"
 
 SPEC CHECKSUMS:
-  Amplify: cf25ee17b0762b3bacd4d4d49891ddada6bee912
-  amplify_auth_cognito: 38761b51a433d49ecf5927de45488fcbf81a8c29
-  amplify_core: 8b38d20089fe4f225c14db6892f586bd03824a42
-  amplify_flutter: 77665b732c1b8d04ed7f3eeb5a743f0b75838db1
-  AmplifyPlugins: bb73475de41297a7244e8f3fdbf40cdad8115048
-  AWSAuthCore: 73f2e518d32f094b656fea905651bc3288ef05c0
-  AWSCognitoIdentityProvider: d32ff306a4d3aafcdc42ce40bd36e44d3f274201
-  AWSCognitoIdentityProviderASF: 1ccfe4092b617de54f203c1b728e7be6f49716c1
-  AWSCore: 2d4b06b24e2f882deec23567438195818b16a3f2
-  AWSMobileClient: 72e55c9c7162516feab354aa67f4d38dcecdcfc7
-  AWSPluginsCore: 1670f03a8612d60bd84c541ffa34f538e4037052
+  AWSAuth: 8be69810a13a6fe6aadb672d24d9e664bf728d61
+  AWSAuthCore: 62e92b5ffbd66b8ba0eac471e7f90ccfa76cf63b
+  AWSAuthUI: d3bc970e09f49ebc6355694fbfaa4a0fe3da964c
+  AWSCognito: a993c057d32173a7c7a9776684972d4073a6c7f5
+  AWSCognitoIdentityProvider: 05f14f7c892df9ff764268d2ac33b4e95288e603
+  AWSCognitoIdentityProviderASF: f94f1a502e72ef3d0a1de93e10bf7a79c8698118
+  AWSCore: 2b6015f278770e745b4863ac5f45e007e647f298
+  AWSFacebookSignIn: 51f3194c51bef177972dffee941f08f9fd341423
+  AWSGoogleSignIn: 5f1a9797d0ac2473de794d0a04b8777ec926be02
+  AWSMobileClient: 420a899c4691c7f0991daa35daee82a84396ec63
+  AWSUserPoolsSignIn: 81036a9e6516e9ad3d643ca4b1a0baaf0dfd1bf1
+  FBSDKCoreKit: e7dcac0aabcfb09d0166998edd95fe3b05a0ce5d
+  FBSDKLoginKit: 1b0cf04df0370b37404213157b060d6666ede814
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  flutter_cognito_plugin: 1b7f93b023433f702c8c5f953aea379af363fc5b
   image_picker: e06f7a68f000bd36f552c1847e33cda96ed31f1f
-  ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
+  plugin_scaffold: f83b8103defd141436d8ee29ba4a3e1b5230fea1
+  shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: a75497545d4391e2d394c3668e20cfb1c2bbd4aa
 
 COCOAPODS: 1.10.1

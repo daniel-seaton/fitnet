@@ -8,11 +8,13 @@ import 'package:fitnet/services/workoutService.dart';
 
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 GetIt injector = GetIt.instance;
 
-setupServiceInjector() {
+setupServiceInjector() async {
+  injector.registerSingleton<SharedPreferences>(await SharedPreferences.getInstance());
   injector.registerSingleton<Uuid>(Uuid());
   injector.registerSingleton<WorkoutInstanceService>(WorkoutInstanceService());
   injector.registerSingleton<WorkoutService>(WorkoutService());
