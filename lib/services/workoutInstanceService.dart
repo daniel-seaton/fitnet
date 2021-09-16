@@ -1,13 +1,9 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:fitnet/models/workoutInstance.dart';
 import 'package:fitnet/services/baseService.dart';
 import 'package:fitnet/utils/debouncer.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../serviceInjector.dart';
 
 class WorkoutInstanceService with BaseService {
   final String basePath = 'dev/workoutInstance';

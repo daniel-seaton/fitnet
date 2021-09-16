@@ -1,6 +1,3 @@
-//import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
-//import 'package:amplify_flutter/amplify.dart';
-//import 'package:fitnet/amplifyconfiguration.dart';
 import 'package:fitnet/serviceinjector.dart';
 import 'package:fitnet/routes/authRouter.dart';
 import 'package:fitnet/utils/customColors.dart';
@@ -9,7 +6,6 @@ import 'package:flutter_cognito_plugin/flutter_cognito_plugin.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // TODO
-// implement authentication before each request (verify user is logged in, only allow updates/creates with current id)
 // add forgot password
 // stop login on incorrect password
 // add backend validations & update error messages
@@ -19,8 +15,6 @@ import 'package:google_fonts/google_fonts.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Cognito.initialize();
- // Amplify.addPlugin(AmplifyAuthCognito());
- // Amplify.configure(amplifyconfig);
   await setupServiceInjector();
   runApp(Fitnet());
 }

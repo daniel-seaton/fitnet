@@ -48,13 +48,36 @@ Things that DO need to be component tested:
  ```
  The service mock should then be added to `test/testServiceInjector.dart`. This will allow us to use the same injector model described above in our tests in order to fetch the mock services and use them.
 
+
+ ### Initial Setup
+ 
+ In order to get the aws cognito integration to work, you need to create two files, both called `amplifyconfiguration.json`. These files are not commited because they contain sensitive data, and so I didn't want to put them on a public repository.
+
+ Both files are the same. The first should be created in `android/app/src/main/res/raw` and should look like this:
+ ```
+{
+    "IdentityManager": {
+        "Default": {}
+    },
+    "CognitoUserPool": {
+        "Default": {
+            "PoolId": "##-####-#_#########",
+            "AppClientId": "#########################",
+            "AppClientSecret": "####################################################",
+            "Region": "##-####-#"
+        }
+    }
+}
+```
+
+To create the second file, you need to open `ios/Runner.xcworkspace` in xcode, and the add the file to the `Runner/Runner` folder (next to `AppDelegate.swift`)
 ====================================================================
 ## TODO
 
 ### 1.0:
- * implement starting workouts and create the associated components
  * implement graphing of workout data
  * edit workout screen styling
+ * add circuit workout step type
  * add dark mode
  * add user settings
  * add tests where TODOs are

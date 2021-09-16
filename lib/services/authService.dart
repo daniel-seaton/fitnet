@@ -1,11 +1,8 @@
 import 'dart:async';
 
-//import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:fitnet/models/appUser.dart';
 import 'package:fitnet/services/userService.dart';
 import 'package:flutter_cognito_plugin/flutter_cognito_plugin.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
-//import 'package:amplify_flutter/amplify.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
