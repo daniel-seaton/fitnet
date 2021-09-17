@@ -6,13 +6,12 @@ import 'package:flutter_cognito_plugin/flutter_cognito_plugin.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // TODO
-// add forgot password
-// stop login on incorrect password
 // add backend validations & update error messages
 // allow user to upload photo to s3
 // add backend pagination on list requests
 // add change step functionality (change instances to use two lists of completed/pending steps)
 // change all notifiers to be named _____State insteadof change notifier
+// figure out how to use environment variables for different environments: maybe https://binary-studio.com/2020/04/17/flutter-2/ ?
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

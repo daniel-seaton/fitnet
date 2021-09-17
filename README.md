@@ -51,7 +51,7 @@ Things that DO need to be component tested:
 
  ### Initial Setup
  
- In order to get the aws cognito integration to work, you need to create two files, both called `amplifyconfiguration.json`. These files are not commited because they contain sensitive data, and so I didn't want to put them on a public repository.
+ In order to get the aws cognito integration to work, you need to create two files, both called `awsconfiguration.json`. These files are not commited because they contain sensitive data, and so I didn't want to put them on a public repository.
 
  Both files are the same. The first should be created in `android/app/src/main/res/raw` and should look like this:
  ```

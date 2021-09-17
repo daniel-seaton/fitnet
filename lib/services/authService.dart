@@ -22,6 +22,7 @@ class AuthService {
       if (res.signInState == SignInState.DONE) {
         var attrs = await Cognito.getUserAttributes();
         var auth = await Cognito.getTokens();
+        print(auth.idToken);
         await local.setString('jwt', auth.idToken);
         user = await userService.getUser(attrs['custom:uid']);
       }

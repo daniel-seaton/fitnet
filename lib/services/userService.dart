@@ -6,10 +6,10 @@ import 'package:fitnet/services/baseService.dart';
 import 'package:http/http.dart';
 
 class UserService with BaseService {
-  final String basePath = 'dev/appUsers';
+  String get userBasePath => '$basePath/appUsers';
 
   Future<AppUser> getUser(String uid) async {
-    Uri url = Uri.https(authority, '$basePath/$uid');
+    Uri url = Uri.https(authority, '$userBasePath/$uid');
     Response res = await get(url, headers: headers);
     if(res.statusCode < 200 || res.statusCode > 299){
       throw 'unable to get user with id $uid: statusCode ${res.statusCode}, ${res.body}';
@@ -24,7 +24,7 @@ class UserService with BaseService {
     AppUser user =
         AppUser(uid, firstName, lastName, city, state, weight, height);
     try {
-      Uri url = Uri.https(authority, basePath);
+      Uri url = Uri.https(authority, userBasePath);
       Response res = await post(url, body: jsonEncode(user.toMap()), headers: headers);
       if (res.statusCode < 200 || res.statusCode > 299) {
         throw 'post failed with status code ${res.statusCode}: ${res.body}';
