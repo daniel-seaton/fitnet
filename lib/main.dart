@@ -11,6 +11,8 @@ import 'package:google_fonts/google_fonts.dart';
 // add backend validations & update error messages
 // allow user to upload photo to s3
 // add backend pagination on list requests
+// add change step functionality (change instances to use two lists of completed/pending steps)
+// change all notifiers to be named _____State insteadof change notifier
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

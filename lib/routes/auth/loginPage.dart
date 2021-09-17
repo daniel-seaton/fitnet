@@ -1,3 +1,4 @@
+import 'package:fitnet/routes/auth/forgotPasswordScreen.dart';
 import 'package:fitnet/routes/auth/loginPageNotifier.dart';
 import 'package:fitnet/services/authService.dart';
 import 'package:fitnet/routes/authChangeNotifier.dart';
@@ -49,9 +50,18 @@ class LoginPage extends StatelessWidget {
                   },
                   child: Text('Log In'),
                 ),
+                TextButton(
+                  onPressed: () => forgotPassword(context, notifier.username),
+                  child: Text('Forgot Password'),
+                ),
               ],
             ),
         ),
       );
+  }
+
+  Future<void> forgotPassword(context, String username) async {
+    await Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => ForgotPasswordScreen()));
   }
 }

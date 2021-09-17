@@ -66,4 +66,14 @@ class AuthService {
     await local.remove('jwt');
     await Cognito.signOut();
   }
+
+  Future<ForgotPasswordState> forgotPassword(String username) async {
+    ForgotPasswordResult res = await Cognito.forgotPassword(username);
+    return res.state;
+  }
+
+  Future<ForgotPasswordState> confirmForgotPassword(String username, String code, String newPassword) async {
+    ForgotPasswordResult res = await Cognito.confirmForgotPassword(username, newPassword, code);
+    return res.state;
+  }
 }
