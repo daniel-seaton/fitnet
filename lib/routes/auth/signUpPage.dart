@@ -19,23 +19,27 @@ class SignUpPage extends StatelessWidget {
         Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
-            children: notifier.user == null
-              ? getSignUpChildren(ctx, notifier)
-              : getConfirmChildren(ctx, notifier)
+            children: getSignUpChildren(ctx, notifier)
           ),
         ),
     );
   }
 
-  getSignUpChildren(context, authNotifier) {
+  getSignUpChildren(context, AuthChangeNotifier authNotifier) {
     SignUpPageNotifer readonlyNotifier = Provider.of<SignUpPageNotifer>(context, listen: false);
     return [
       TextField(
           decoration: InputDecoration(labelText: 'Username'),
-          onChanged: readonlyNotifier.setUsername),
+          onChanged: (String value) {
+            readonlyNotifier.setUsername(value);
+            authNotifier.setUsername(value);
+          }),
       TextField(
           decoration: InputDecoration(labelText: 'Email'),
-          onChanged: readonlyNotifier.setEmail),
+          onChanged: (String value) {
+            readonlyNotifier.setEmail(value);
+            authNotifier.setEmail(value);
+          }),
       TextField(
           obscureText: true,
           decoration: InputDecoration(labelText: 'Password'),
@@ -49,31 +53,14 @@ class SignUpPage extends StatelessWidget {
       Consumer<SignUpPageNotifer>(builder: (_, notifier, __) =>
         ElevatedButton(
           onPressed: () {
-            authService.signUp(notifier.username, notifier.email, notifier.password, notifier.firstName, notifier.lastName).then((value) => 
-              authNotifier.setUser(value)
-            );
+            authService.signUp(notifier.username, notifier.email, notifier.password, notifier.firstName, notifier.lastName).then((value) {
+              if (value != null) {
+                authNotifier.setUser(value);
+                authNotifier.notifyRequiresConfirmation();
+              }
+            });
           },
           child: Text('Sign up'),
-        ),
-      ),
-    ];
-  }
-
-  getConfirmChildren(context, AuthChangeNotifier authNotifier) {
-    SignUpPageNotifer readonlyNotifier = Provider.of<SignUpPageNotifer>(context, listen: false); 
-    return [
-      Text('A code has been sent to ${readonlyNotifier.email}. Please enter that code below and click Confirm', textAlign: TextAlign.center,),
-      TextField(
-          decoration: InputDecoration(labelText: 'Code'),
-          onChanged: readonlyNotifier.setCode),
-      Consumer<SignUpPageNotifer>(builder: (_, notifier, __) =>
-        ElevatedButton(
-          onPressed: () {
-            authService.confirmSignUp(notifier.username, notifier.code).then((success) => 
-              authNotifier.setIsConfirmed(success)
-            );
-          },
-          child: Text('Confirm'),
         ),
       ),
     ];

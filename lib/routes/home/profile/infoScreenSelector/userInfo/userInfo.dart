@@ -24,7 +24,6 @@ class UserInfo extends StatelessWidget {
         ElevatedButton(
           onPressed: () => authService.signOut().then((success) {
             Provider.of<AuthChangeNotifier>(context, listen:false).setUser(null);
-            Provider.of<AuthChangeNotifier>(context, listen:false).setIsConfirmed(false);
           }),
           child: Text('Log Out'),
         )

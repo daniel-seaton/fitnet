@@ -23,19 +23,21 @@ class LoginPage extends StatelessWidget {
               children: [
                 TextField(
                   decoration: InputDecoration(labelText: 'Username'),
-                  onChanged: notifier?.setUsername,
+                  onChanged: (value) {
+                    notifier.setUsername(value);
+                    Provider.of<AuthChangeNotifier>(context, listen: false).setUsername(value);
+                  }
                 ),
                 TextField(
                   obscureText: true,
                   decoration: InputDecoration(labelText: 'Password'),
-                  onChanged: notifier?.setPassword,
+                  onChanged: notifier.setPassword,
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    authService.login(notifier.username, notifier.password).then((user) {
-                      AuthChangeNotifier authNotifier = Provider.of<AuthChangeNotifier>(context, listen: false);
+                    AuthChangeNotifier authNotifier = Provider.of<AuthChangeNotifier>(context, listen: false);
+                    authService.login(notifier.username, notifier.password, authNotifier.notifyRequiresConfirmation).then((user) {
                       authNotifier.setUser(user);
-                      authNotifier.setIsConfirmed(true);
                     });
                   },
                   child: Text('Log In'),

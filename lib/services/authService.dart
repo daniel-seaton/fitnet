@@ -14,7 +14,7 @@ class AuthService {
 
   final Uuid uuid = injector<Uuid>();
 
-  Future<AppUser> login(String username, String password) async {
+  Future<AppUser> login(String username, String password, Function confirmationRequired) async {
     AppUser user;
     try {
       await signOut();
@@ -25,6 +25,9 @@ class AuthService {
         await local.setString('jwt', auth.idToken);
         user = await userService.getUser(attrs['custom:uid']);
       }
+    } on UserNotConfirmedException catch (e) {
+      await Cognito.resendSignUp(username);
+      confirmationRequired();
     } catch (e) {
       print('Unable to login: $e');
     }
