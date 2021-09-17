@@ -60,7 +60,6 @@ class AuthChangeNotifier extends ChangeNotifier {
       _state = AuthState.SignedOut;
     }
     notifyListeners();
-    print(_state);
   }
 
   notifyRequiresConfirmation() {

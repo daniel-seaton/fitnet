@@ -28,8 +28,6 @@ class AuthService {
     } on UserNotConfirmedException catch (e) {
       await Cognito.resendSignUp(username);
       confirmationRequired();
-    } catch (e) {
-      print('Unable to login: $e');
     }
     return user;
   }
@@ -49,6 +47,7 @@ class AuthService {
         lastName, city, state, weight, height);
     } catch (e) {
       print(e);
+      throw e;
     }
     return user;
   }

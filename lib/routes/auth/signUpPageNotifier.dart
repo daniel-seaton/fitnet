@@ -10,6 +10,12 @@ class SignUpPageNotifer extends ChangeNotifier {
   String lastName;
   String code;
 
+  String _err;
+
+  bool get showErrorMessage => _err != null;
+  String get errorMessage => _err;
+  bool get isValid => email != null && email.isNotEmpty && username != null && username.isNotEmpty && password != null && password.isNotEmpty;
+
   setEmail(String value){
     email = value;
     notifyListeners();
@@ -37,6 +43,11 @@ class SignUpPageNotifer extends ChangeNotifier {
 
   setCode(String value){
     code = value;
+    notifyListeners();
+  }
+
+  setErrorMessage(String value) {
+    _err = value;
     notifyListeners();
   }
 }
