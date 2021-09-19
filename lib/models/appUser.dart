@@ -1,4 +1,10 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:fitnet/models/weightLog.dart';
+import 'package:fitnet/services/userService.dart';
+
+import '../serviceInjector.dart';
 
 class AppUser {
   String uid;
@@ -9,6 +15,8 @@ class AppUser {
   List<WeightLog> weightLogs = [];
   int height;
   num profileImageVersion;
+
+  UserService service = injector<UserService>();
 
   AppUser(this.uid, this.firstName, this.lastName,
       [this.city, this.state, int initialWeight, this.height]) {
@@ -58,4 +66,12 @@ class AppUser {
 
     return map;
   }
+
+  Future<void> setProfileImage(File image) async {
+    // can change this to increment profileImageVersion with every upload if we decide we want to store previous pictures
+    profileImageVersion = profileImageVersion > 0 ? profileImageVersion : 1;
+    await service.uploadImageForUser(this, image);
+  } 
+
+  Future<Uint8List> getProfileImage() async => await service.getImageForUser(this);
 }

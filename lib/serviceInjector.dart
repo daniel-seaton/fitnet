@@ -7,6 +7,7 @@ import 'package:fitnet/services/workoutInstanceService.dart';
 import 'package:fitnet/services/workoutService.dart';
 
 import 'package:get_it/get_it.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
@@ -21,4 +22,5 @@ setupServiceInjector() async {
   injector.registerSingleton<UserService>(UserService());
   injector.registerSingleton<AuthService>(AuthService());
   injector.registerSingleton<ImagePicker>(ImagePicker());
+  injector.registerSingleton<ImageCropper>(ImageCropper());
 }

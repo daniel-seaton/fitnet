@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:fitnet/models/appUser.dart';
 import 'package:fitnet/services/baseService.dart';
@@ -41,26 +42,23 @@ class UserService with BaseService {
   }
 
   Future<void> uploadImageForUser(AppUser user, File image) async {
-    // StorageUploadTask uploadTask = storage.ref().child(user.uid).putFile(image);
-    // await uploadTask.onComplete;
+    Uri url = Uri.https(authority, '$userBasePath/${user.uid}/profileImage/${user.profileImageVersion}');
+    Response res = await put(url, body: jsonEncode({
+      'base64Encoded': base64Encode(await image.readAsBytes())
+    }), headers: headers);
+    if (res.statusCode < 200 || res.statusCode > 299) {
+      print('unable to update proflile image ${user.profileImageVersion} for user ${user.uid}: statusCode ${res.statusCode}, ${res.body}');
+    } 
+  }
 
-    // CollectionReference appUsersRef = firestore.collection(userCollection);
-    // List<QueryDocumentSnapshot> userSnapshots = await appUsersRef
-    //     .where('uid', isEqualTo: user.uid)
-    //     .get()
-    //     .then((QuerySnapshot query) {
-    //   return query.docs;
-    // });
-    // if (userSnapshots.length > 1) {
-    //   print('Too many users exist for credentials');
-    //   throw Exception();
-    // } else if (userSnapshots.length == 0) {
-    //   print('No user exists for uid ${user.uid}');
-    //   return null;
-    // }
-    // return appUsersRef
-    //     .doc(userSnapshots[0].id)
-    //     .update({'profileImageVersion': user.profileImageVersion + 1});
-    return;
+    Future<Uint8List> getImageForUser(AppUser user) async {
+    Uri url = Uri.https(authority, '$userBasePath/${user.uid}/profileImage/${user.profileImageVersion}');
+    Response res = await get(url, headers: headers);
+    if (res.statusCode < 200 || res.statusCode > 299) {
+      print('unable to fetch proflile image ${user.profileImageVersion} for user ${user.uid}: statusCode ${res.statusCode}, ${res.body}');
+      return null;
+    }
+    //print(res.body);
+    return base64Decode(res.body);
   }
 }

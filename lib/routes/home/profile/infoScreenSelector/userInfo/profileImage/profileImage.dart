@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:fitnet/models/appUser.dart';
 import 'package:fitnet/serviceInjector.dart';
 import 'package:fitnet/services/userService.dart';
@@ -16,19 +18,19 @@ class ProfileImage extends StatelessWidget {
     AppUser user = Provider.of<AppUser>(context);
     return Column(children: [
       FutureProvider.value(
-        initialData: null,
+        initialData: Uint8List.fromList([]),
         value: user.profileImageVersion != null && user.profileImageVersion > 0
-            ? userService.getImageDownloadUrl(user.uid)
-            : Future.value(null),
-        child: Consumer<String>(
-          builder: (_, downloadUrl, __) => Container(
+            ? user.getProfileImage()
+            : Future.value(Uint8List.fromList([])),
+        child: Consumer<Uint8List>(
+          builder: (_, imageBytes, __) => Container(
             height: 190,
             width: 190,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
                 fit: BoxFit.fill,
-                image: getProfileImageForUrl(downloadUrl),
+                image: getProfileImage(imageBytes),
               ),
             ),
           ),
@@ -46,15 +48,13 @@ class ProfileImage extends StatelessWidget {
     ]);
   }
 
-  void showPhotoPickerModal(BuildContext context, AppUser user) {
+  void showPhotoPickerModal(BuildContext context, AppUser user) =>
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) => PhotoPickerModal(user: user));
-  }
 
-  ImageProvider getProfileImageForUrl(String downloadUrl) {
-    return downloadUrl != null
-        ? NetworkImage(downloadUrl)
+  ImageProvider getProfileImage(Uint8List bytes) => 
+    bytes.length > 0
+        ? MemoryImage(bytes)
         : AssetImage('assets/images/default-user.jpg');
-  }
 }

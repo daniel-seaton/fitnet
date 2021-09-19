@@ -6,7 +6,6 @@ import 'package:flutter_cognito_plugin/flutter_cognito_plugin.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // TODO
-// add backend validations & update error messages
 // allow user to upload photo to s3
 // add backend pagination on list requests
 // add change step functionality (change instances to use two lists of completed/pending steps)
@@ -16,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Cognito.initialize();
+  Cognito.signOut();
   await setupServiceInjector();
   runApp(Fitnet());
 }
