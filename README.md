@@ -77,12 +77,20 @@ To create the second file, you need to open `ios/Runner.xcworkspace` in xcode, a
 ### 1.0:
  * implement graphing of workout data
  * edit workout screen styling
+ * ability to change steps during the workout (change instances to use two lists of completed/pending steps?)
  * add circuit workout step type
  * add dark mode
  * add user settings
- * add tests where TODOs are
- * add email verifications
+ * add backend pagination on list requests (and filter by uid from the jwt for workout instances)
+ * add more/better validations on backend
+ * add ability to update weight
+ * add tests (opt)
+ * fix bug with set based screen where in progress step isn't turning blue unless you change the weight
+ * change all notifiers to be named _____State insteadof change notifier
+ * change services to only be accessible through the associated entity (exception: auth service)
+ * figure out how to use environment variables for different environments: maybe https://binary-studio.com/2020/04/17/flutter-2/ ?
 ### 2.0
  * Implement 'gyms' feature and other social aspects (paid by number of people in the gym?)
  * Allow users to publish workouts(paid feature?)
  * Allow users to search for published workouts and do them (paid feature?)
+ * Allow meal tracking
